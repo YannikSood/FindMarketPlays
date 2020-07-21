@@ -1,10 +1,110 @@
-.App {
-  text-align: center;
+html, body, #app, #app>div {
+  height: 100%;
 }
 
+body {
+  background-color: #161e30;
+  color: white;
+  font-family: "Lucida Sans Typewriter", "Lucida Console", "monaco", "Bitstream Vera Sans Mono", "monospace"; 
+  text-align: center;
+  height: 100vh;
+}
+
+.App {
+  text-align: center;
+  background-color: #161e30;
+  height: 100vh;
+}
+
+
+.OneStock {
+  color: white;
+  background-color: #161e30;
+  padding-top:100px;
+  padding-bottom:100px;
+}
+
+.DD {
+  color: white;
+  background-color: #161e30;
+  padding-top:100px;
+  padding-bottom:200px;
+}
+
+
+.Dashboard {
+  color: white;
+  background-color: #161e30;
+  /* padding-top:100px;
+  padding-bottom:100px; */
+}
+
+
+
+.Home {
+  color: white;
+  background-color: #161e30;
+  padding-top:100px;
+  width: 100%;
+  padding-bottom:100px;
+}
+
+
+
+.About {
+  color: white;
+  background-color: #161e30;
+  padding-top:100px;
+}
+
+.Title {
+  padding: 20px;
+  background:#383737;
+  padding:20px 25px;
+  border: none;
+  font-size:30px;
+  border-radius:6px;
+  cursor:pointer;
+  color:white;
+  font-weight:bold;
+}
+
+.Subtitle {
+  color: #f7f7f7;
+  font-size: 14px; 
+  font-style: normal; 
+  font-variant: normal; 
+  font-weight: 400; 
+  line-height: 20px;
+}
+/* 
+.Ticker {
+  padding: 20px;
+  color: #f7f7f7;
+  font-size: 24px; 
+  font-style: normal; 
+  font-variant: normal; 
+  font-weight: bold; 
+  line-height: 26px;
+  background-color: #161e30;
+} */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+
+.button {
+  background:#383737;
+  padding:20px 25px;
+  border: none;
+  font-size:22px;
+  border-radius:6px;
+  cursor:pointer;
+  color:white;
+  font-weight:bold;
+  transition:0.3s ease all;
+  box-shadow:1px 2px 3px rgba(0,0,0,0.3);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -13,7 +113,7 @@
   }
 }
 
-.App-header {
+/* .App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -22,7 +122,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
+} */
 
 .App-link {
   color: #61dafb;
@@ -36,3 +136,4 @@
     transform: rotate(360deg);
   }
 }
+
