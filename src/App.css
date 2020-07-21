@@ -5,7 +5,7 @@ html, body, #app, #app>div {
 body {
   background-color: #161e30;
   color: white;
-  font-family: "Lucida Sans Typewriter", "Lucida Console", "monaco", "Bitstream Vera Sans Mono", "monospace"; 
+  font-family: 'Texta-Light', sans-serif;
   text-align: center;
   height: 100vh;
 }
