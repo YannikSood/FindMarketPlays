@@ -1,49 +1,16 @@
-html, body, #app, #app>div {
-  height: 100%;
-}
-
-body {
-  background-color: #161e30;
-  color: white;
-  font-family: 'Texta-Light', sans-serif;
-  text-align: center;
-  height: 100vh;
-}
-
-.App {
-  text-align: center;
-  background-color: #161e30;
-  height: 100vh;
-}
-
-
-.OneStock {
-  color: white;
-  background-color: #161e30;
-  padding-top:100px;
-  padding-bottom:100px;
-}
-
 .DD {
-  color: white;
-  background-color: #161e30;
   padding-top:100px;
   padding-bottom:200px;
 }
 
 
 .Dashboard {
-  color: white;
-  background-color: #161e30;
-  /* padding-top:100px;
-  padding-bottom:100px; */
+
 }
 
 
 
 .Home {
-  color: white;
-  background-color: #161e30;
   padding-top:100px;
   width: 100%;
   padding-bottom:100px;
@@ -52,8 +19,6 @@ body {
 
 
 .About {
-  color: white;
-  background-color: #161e30;
   padding-top:100px;
 }
 
@@ -86,7 +51,6 @@ body {
   font-variant: normal; 
   font-weight: bold; 
   line-height: 26px;
-  background-color: #161e30;
 } */
 .App-logo {
   height: 40vmin;
@@ -121,7 +85,6 @@ body {
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 } */
 
 .App-link {
