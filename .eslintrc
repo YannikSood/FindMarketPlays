@@ -1,0 +1,10 @@
+{
+  "extends": "rhinogram",
+  "parser": "babel-eslint",
+  "rules": {
+    "react/jsx-filename-extension": 0,
+    "react/prop-types": 0,
+    "react/destructuring-assignment": 0,
+    "import/prefer-default-export": 0
+  }
+}
