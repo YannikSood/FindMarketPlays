@@ -1,3 +1,4 @@
+// TODO: This needs a full refactor
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -5,7 +6,6 @@ import Container from 'react-bootstrap/Container';
 import Badge from 'react-bootstrap/Badge';
 import ScrollingWidget from './ScrollingWidget';
 import Wallpapers from './DDItem';
-import Footer from './Footer';
 
 class DD extends React.Component {
   constructor(props) {
@@ -150,35 +150,18 @@ class DD extends React.Component {
         contentJSX = <div className="p-2"><center>Loading...</center></div>;
       }
 
-      const subreddit = 'WallStreetResearch';
-
       return (
         <div className="DD">
           <Container fluid>
             <Row>
               <Col><ScrollingWidget /></Col>
             </Row>
-
             <Row>
               <Col>
                 <h1><Badge variant="light">Find Trade Opportunities</Badge></h1>
               </Col>
             </Row>
-            {/*
-                    <Row>
-                        <Col>
-                        <h4><Badge variant="light">Invest at your own risk. Use the rest of the platform to determine if these trades are worth entering</Badge></h4>
-                        </Col>
-                    </Row> */}
-
-            {/* <br/> */}
             {contentJSX}
-            {/* <br/> */}
-
-            <Row>
-              <Footer />
-            </Row>
-
           </Container>
         </div>
 

@@ -6,7 +6,6 @@ import TAWidget from './TAWidget';
 import SSIWidget from './SingleStockInfo';
 import SSFWidget from './SSFinancials';
 import StockProfile from './StockProfile';
-import Footer from './Footer';
 import { debounce } from '../helpers/SearchHelper';
 
 const OneStock = () => {
@@ -64,9 +63,6 @@ const OneStock = () => {
                 autosize
               />
             </Col>
-          </Row>
-          <Row>
-            <Footer />
           </Row>
         </Container>
       </Fragment>

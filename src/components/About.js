@@ -1,7 +1,6 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Badge from 'react-bootstrap/Badge';
-import Footer from './Footer';
 
 const About = () => (
   <div className="About">
@@ -12,9 +11,7 @@ const About = () => (
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSf7hm_zUyg7aq-5RpidY49DHNpefFwk6um3JxDPpbOwLwYSag/viewform?usp=pp_url"> here. </a>
         Happy Trading!
       </p>
-
     </Container>
-    <Footer />
   </div>
 
 );

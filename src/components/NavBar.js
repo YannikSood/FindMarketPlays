@@ -12,6 +12,9 @@ const Navigation = () => (
     <Nav>
       <Nav.Link href="/">Dashboard</Nav.Link>
       <Nav.Link href="/stock">Stock Research</Nav.Link>
+      <Nav.Link href="/DD">DD </Nav.Link>
+      <Nav.Link href="/optionFeed">Options Feed</Nav.Link>
+      <Nav.Link href="/about">About </Nav.Link>
     </Nav>
   </Navbar>
 );
