@@ -11,6 +11,7 @@ import Chat from './components/Chat';
 import About from './components/About';
 import DD from './components/DD';
 import UnusualOptions from './components/UnusualOptions';
+import NewsFeed from './components/NewsFeed';
 
 
 const App = () => (
@@ -20,6 +21,7 @@ const App = () => (
       <Route component={Chat} path="/chat" />
       <Route component={UnusualOptions} path="/optionFeed" />
       <Route component={OneStock} path="/stock" />
+      <Route component={NewsFeed} path="/newsFeed" />
       <Route component={About} path="/about" />
       <Route component={DD} path="/DD" />
       <Route component={Home} exact path="/" />

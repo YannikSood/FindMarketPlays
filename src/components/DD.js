@@ -3,7 +3,6 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import Badge from 'react-bootstrap/Badge';
 import ScrollingWidget from './ScrollingWidget';
 import Wallpapers from './DDItem';
 
@@ -158,7 +157,7 @@ class DD extends React.Component {
             </Row>
             <Row>
               <Col>
-                <h1><Badge variant="light">Find Trade Opportunities</Badge></h1>
+                <h1>Find Trade Opportunities</h1>
               </Col>
             </Row>
             {contentJSX}

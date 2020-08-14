@@ -6,7 +6,7 @@ const WallpaperItem = ({file}) => {
             console.log(file.data);
             let previewImage = file.data.preview.images[0].resolutions[file.data.preview.images[0].resolutions.length - 1].url;
             previewImage = previewImage.replace(/&amp;/g,"&");
-            let subreddit = "https://reddit.com/r/" + file.data.subreddit;
+            // let subreddit = "https://reddit.com/r/" + file.data.subreddit;
             let post_link = "https://reddit.com" + file.data.permalink;
             return (
                 <div className="col-sm-12 col-md-6 col-lg-4">
@@ -14,9 +14,9 @@ const WallpaperItem = ({file}) => {
                     <div className="card">
                         <div className="card-img-top">
                             <a href={post_link} target="_blank" rel="noopener noreferrer"><button className="btn btn-secondary btn-sm top-right-float">View Post</button></a>
-                            <a href={file.data.url} target="_blank" rel="noopener noreferrer">
+                            {/* <a href={file.data.url} target="_blank" rel="noopener noreferrer">
                                 {(file.data.over_18) ? <div className="p-4">NSFW</div> : <img src={previewImage} className="card-img-top" width="100%" alt={file.data.title}/>}
-                            </a>
+                            </a> */}
                         </div>
                         <div className="card-body">
                             <div className="card-title">   

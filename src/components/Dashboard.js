@@ -3,7 +3,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
-import Welcome from './Welcome';
 import ScrollingWidget from './ScrollingWidget';
 import MarketDataWidget from './MarketDataWidget';
 import EconDataWidget from './EconDataWidget';
@@ -17,7 +16,7 @@ const Dashboard = () => (
       </Row>
       <br />
       <Row>
-        <Welcome />
+      <h1>Dashboard</h1>
       </Row>
       <Row>
         <Col xs={12} md={4}>
