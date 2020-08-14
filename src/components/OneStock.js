@@ -18,55 +18,53 @@ const OneStock = () => {
   };
 
   return (
-    <div className="OneStock">
-      <Fragment>
-        <ScrollingWidget />
-        <Container>
-          <Row className="widget__wrapper">
-            <Col md={7}>
-              <Form>
-                <h1>Research A Single Stock</h1>
-                <h5>ENTER STOCK TICKER</h5>
-                <Form.Group>
-                  <Form.Control
-                    type="text"
-                    value={searchedValue}
-                    onChange={handleInputChange}
-                    placeholder="Enter Stock Ticker"
-                  />
-                </Form.Group>
-              </Form>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={12} lg={6}>
-              <SSIWidget value={searchedValue} />
-            </Col>
-            <Col md={12} lg={6}>
-              <StockProfile value={searchedValue} />
-            </Col>
-          </Row>
-          <Row>
-            <Col md={12} lg={6}>
-              <TAWidget value={searchedValue} />
-            </Col>
-            <Col md={12} lg={6}>
-              <SSFWidget value={searchedValue} />
-            </Col>
-          </Row>
-          <Row>
-            <Col className="widget__col">
-              <TradingViewWidget
-                symbol={searchedValue}
-                theme={Themes.DARK}
-                locale="en"
-                autosize
-              />
-            </Col>
-          </Row>
-        </Container>
-      </Fragment>
-    </div>
+    <Fragment>
+      <ScrollingWidget />
+      <Container>
+        <Row className="widget__wrapper">
+          <Col md={7}>
+            <Form>
+              <h1>Research A Single Stock</h1>
+              <h5>ENTER STOCK TICKER</h5>
+              <Form.Group>
+                <Form.Control
+                  type="text"
+                  value={searchedValue}
+                  onChange={handleInputChange}
+                  placeholder="Enter Stock Ticker"
+                />
+              </Form.Group>
+            </Form>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12} lg={6}>
+            <SSIWidget value={searchedValue} />
+          </Col>
+          <Col md={12} lg={6}>
+            <StockProfile value={searchedValue} />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12} lg={6}>
+            <TAWidget value={searchedValue} />
+          </Col>
+          <Col md={12} lg={6}>
+            <SSFWidget value={searchedValue} />
+          </Col>
+        </Row>
+        <Row>
+          <Col className="widget__col">
+            <TradingViewWidget
+              symbol={searchedValue}
+              theme={Themes.DARK}
+              locale="en"
+              autosize
+            />
+          </Col>
+        </Row>
+      </Container>
+    </Fragment>
   );
 };
 

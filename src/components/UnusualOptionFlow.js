@@ -17,14 +17,16 @@ const UnusualOptionsFlow = props => (
     </thead>
     {props.value.map(item => (
       <tbody key={item.id}>
-        <td>{item.date}</td>
-        <td>{item.ticker}</td>
-        <td>{item.put_call}</td>
-        <td>{item.date_expiration}</td>
-        <td>{item.size}</td>
-        <td>{item.strike_price}</td>
-        <td>{item.sentiment}</td>
-        <td>{item.description}</td>
+        <tr>
+          <td>{item.date}</td>
+          <td>{item.ticker}</td>
+          <td>{item.put_call}</td>
+          <td>{item.date_expiration}</td>
+          <td>{item.size}</td>
+          <td>{item.strike_price}</td>
+          <td>{item.sentiment}</td>
+          <td>{item.description}</td>
+        </tr>
       </tbody>
     ))}
   </Table>
