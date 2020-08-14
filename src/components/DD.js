@@ -3,7 +3,7 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import ScrollingWidget from './ScrollingWidget';
+import ScrollingWidget from './Widgets/ScrollingWidget';
 import Wallpapers from './DDItem';
 
 class DD extends React.Component {
