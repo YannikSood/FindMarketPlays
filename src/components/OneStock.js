@@ -1,11 +1,11 @@
 import React, { useState, Fragment } from 'react';
 import { Row, Col, Container, Form } from 'react-bootstrap';
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
-import ScrollingWidget from './ScrollingWidget';
-import TAWidget from './TAWidget';
-import SSIWidget from './SingleStockInfo';
-import SSFWidget from './SSFinancials';
-import StockProfile from './StockProfile';
+import ScrollingWidget from './Widgets/ScrollingWidget';
+import TAWidget from './Widgets/TAWidget';
+import SSIWidget from './Widgets/SingleStockInfo';
+import SSFWidget from './Widgets/SSFinancials';
+import StockProfile from './Widgets/StockProfile';
 import { debounce } from '../helpers/SearchHelper';
 
 const OneStock = () => {

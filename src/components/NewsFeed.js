@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import ScrollingWidget from './Widgets/ScrollingWidget';
 import Button from 'react-bootstrap/Button';
 import ScrollingWidget from './ScrollingWidget';
 import NewsFlow from './NewsFlow';
