@@ -14,9 +14,9 @@ const WallpaperItem = ({file}) => {
                     <div className="card">
                         <div className="card-img-top">
                             <a href={post_link} target="_blank" rel="noopener noreferrer"><button className="btn btn-secondary btn-sm top-right-float">View Post</button></a>
-                            <a href={file.data.url} target="_blank" rel="noopener noreferrer">
+                            {/* <a href={file.data.url} target="_blank" rel="noopener noreferrer">
                                 {(file.data.over_18) ? <div className="p-4">NSFW</div> : <img src={previewImage} className="card-img-top" width="100%" alt={file.data.title}/>}
-                            </a>
+                            </a> */}
                         </div>
                         <div className="card-body">
                             <div className="card-title">   
