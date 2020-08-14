@@ -16,6 +16,7 @@ const Navigation = () => (
       <Nav.Link href="/optionFeed">Options Feed</Nav.Link>
       <Nav.Link href="/newsFeed">News Feed</Nav.Link>
       <Nav.Link href="/about">About </Nav.Link>
+      <Nav.Link href="/notes">Notes </Nav.Link>
     </Nav>
   </Navbar>
 );
