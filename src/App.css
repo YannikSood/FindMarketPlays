@@ -26,8 +26,8 @@ body,
 }
 
 /* Notes */
-#notes-container {
-  height: 375px;
+.ql-editor {
+  height: 325px;
 }
 
 .ql-editor.ql-blank::before,

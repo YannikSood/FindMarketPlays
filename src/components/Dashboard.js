@@ -3,11 +3,10 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
-import Welcome from './Welcome';
-import ScrollingWidget from './ScrollingWidget';
-import MarketDataWidget from './MarketDataWidget';
-import EconDataWidget from './EconDataWidget';
-import MarketOverviewWidget from './MarketOverviewWidget';
+import ScrollingWidget from './Widgets/ScrollingWidget';
+import MarketDataWidget from './Widgets/MarketDataWidget';
+import EconDataWidget from './Widgets/EconDataWidget';
+import MarketOverviewWidget from './Widgets/MarketOverviewWidget';
 
 const Dashboard = () => (
   <div className="Dashboard">
@@ -17,7 +16,9 @@ const Dashboard = () => (
       </Row>
       <br />
       <Row>
-        <Welcome />
+       <Col>
+          <h1>Dashboard</h1>
+        </Col>
       </Row>
       <Row>
         <Col xs={12} md={4}>

@@ -3,8 +3,7 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import Badge from 'react-bootstrap/Badge';
-import ScrollingWidget from './ScrollingWidget';
+import ScrollingWidget from './Widgets/ScrollingWidget';
 import Wallpapers from './DDItem';
 
 class DD extends React.Component {
@@ -28,6 +27,27 @@ class DD extends React.Component {
     componentDidMount() {
       this.setSubreddit(this.state.subreddit);
     }
+
+    setSubreddit(sub) {
+      this.setState({
+        files: [],
+        currentSubreddit: sub,
+        page: 1,
+      });
+
+      fetch(`${this.url + sub}/${this.state.sort}.json`)
+        .then(res => res.json())
+        .then((data) => {
+          this.setState({
+            files: data.data.children,
+            after: data.data.after,
+            before: data.data.before,
+          });
+          window.scrollTo(0, 0);
+        })
+        .catch(console.log);
+    }
+
 
     nextPage = () => {
       fetch(`${this.url + this.state.subreddit}/${this.state.sort}.json?count=${this.state.page * 25}&after=${this.state.after}`)
@@ -63,10 +83,6 @@ class DD extends React.Component {
     }
 
     changeSort(sort) {
-      /*
-         * Empty the files so we will show 'Loading...'
-         * Reset page to 1
-         */
       this.setState({
         files: [],
         sort,
@@ -84,31 +100,6 @@ class DD extends React.Component {
         })
         .catch(console.log);
     }
-
-    setSubreddit(sub) {
-    /*
-        * Empty the files so we will show 'Loading...'
-        * Reset page to 1
-        */
-      this.setState({
-        files: [],
-        currentSubreddit: sub,
-        page: 1,
-      });
-
-      fetch(`${this.url + sub}/${this.state.sort}.json`)
-        .then(res => res.json())
-        .then((data) => {
-          this.setState({
-            files: data.data.children,
-            after: data.data.after,
-            before: data.data.before,
-          });
-          window.scrollTo(0, 0);
-        })
-        .catch(console.log);
-    }
-
 
     render() {
       let contentJSX;
@@ -158,13 +149,12 @@ class DD extends React.Component {
             </Row>
             <Row>
               <Col>
-                <h1><Badge variant="light">Find Trade Opportunities</Badge></h1>
+                <h1>Find Trade Opportunities</h1>
               </Col>
             </Row>
             {contentJSX}
           </Container>
         </div>
-
       );
     }
 }
