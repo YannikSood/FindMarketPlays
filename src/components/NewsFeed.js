@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import ScrollingWidget from './ScrollingWidget';
+import ScrollingWidget from './Widgets/ScrollingWidget';
 import NewsFlow from './NewsFlow';
 
 import { debounce } from '../helpers/SearchHelper';
@@ -70,10 +70,10 @@ export default NewsFeed;
 //           searchedValue: 'TSLA', //<------- here
 //           items: [],
 //         };
-    
+
 //         this.handleChange = this.handleChange.bind(this);
 //       }
-    
+
 //         toggleBtnHandler = () => this.setState(
 //           {
 //             searchedValue: this.state.value === '' ? 'TSLA' : this.state.value,
@@ -81,11 +81,11 @@ export default NewsFeed;
 //           },
 //           this.fetchData,
 //         )
-        
+
 //         handleChange(event) {
 //             this.setState({ value: event.target.value });
 //           }
-      
+
 //           fetchData() {
 //             const val = this.state.searchedValue;
 //             const url = `https://api.benzinga.com/api/v2/news?pageSize=50&page=0&displayOutput=headline&sort=created%3Adesc&tickers=${val}&token=bd2570cf59734eb9934b3cd886ce958b`;
@@ -99,7 +99,7 @@ export default NewsFeed;
 //                   console.log(this.state.items);
 //                 });
 //               },
-      
+
 //               // Note: it's important to handle errors here
 //               // instead of a catch() block so that we don't swallow
 //               // exceptions from actual bugs in components.
@@ -109,7 +109,7 @@ export default NewsFeed;
 //                 // console.log(this.state.items)
 //               );
 //           }
-      
+
 //           render() {
 //             return (
 //               <div className="OneStock">
@@ -117,14 +117,14 @@ export default NewsFeed;
 //                   <Row>
 //                     <Col><ScrollingWidget /></Col>
 //                   </Row>
-      
+
 //                   <Row>
 //                     <Col>
 //                       <h1><Badge variant="light">Search News Articles</Badge></h1>
 //                     </Col>
 //                   </Row>
-      
-      
+
+
 //                   <Row>
 //                     <Col xs={12} md={4}>
 //                       {/* <Card> */}
@@ -155,17 +155,17 @@ export default NewsFeed;
 //                         </div> */}
 //                       {/* </Card> */}
 //                     </Col>
-      
+
 //                   </Row>
-      
+
 //                   <Row>
 //                     <NewsFlow value={this.state.items} />
 //                   </Row>
 //                 </Container>
 //               </div>
-      
+
 //             );
 //           }
 //       }
-    
+
 //     export default NewsFeed;

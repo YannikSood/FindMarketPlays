@@ -10,6 +10,9 @@ import About from './components/About';
 import DD from './components/DD';
 import UnusualOptions from './components/UnusualOptions';
 import NewsFeed from './components/NewsFeed';
+import Notes from './components/Notes';
+import 'react-quill/dist/quill.snow.css';
+import './App.css';
 import Dashboard from './components/Dashboard';
 
 
@@ -22,6 +25,7 @@ const App = () => (
       <Route component={NewsFeed} path="/newsFeed" />
       <Route component={About} path="/about" />
       <Route component={DD} path="/DD" />
+      <Route component={Notes} path="/notes" />
       <Route component={Dashboard} exact path="/" />
     </div>
     <Footer />

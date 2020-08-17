@@ -28,6 +28,27 @@ class DD extends React.Component {
       this.setSubreddit(this.state.subreddit);
     }
 
+    setSubreddit(sub) {
+      this.setState({
+        files: [],
+        currentSubreddit: sub,
+        page: 1,
+      });
+
+      fetch(`${this.url + sub}/${this.state.sort}.json`)
+        .then(res => res.json())
+        .then((data) => {
+          this.setState({
+            files: data.data.children,
+            after: data.data.after,
+            before: data.data.before,
+          });
+          window.scrollTo(0, 0);
+        })
+        .catch(console.log);
+    }
+
+
     nextPage = () => {
       fetch(`${this.url + this.state.subreddit}/${this.state.sort}.json?count=${this.state.page * 25}&after=${this.state.after}`)
         .then(res => res.json())
@@ -62,10 +83,6 @@ class DD extends React.Component {
     }
 
     changeSort(sort) {
-      /*
-         * Empty the files so we will show 'Loading...'
-         * Reset page to 1
-         */
       this.setState({
         files: [],
         sort,
@@ -83,31 +100,6 @@ class DD extends React.Component {
         })
         .catch(console.log);
     }
-
-    setSubreddit(sub) {
-    /*
-        * Empty the files so we will show 'Loading...'
-        * Reset page to 1
-        */
-      this.setState({
-        files: [],
-        currentSubreddit: sub,
-        page: 1,
-      });
-
-      fetch(`${this.url + sub}/${this.state.sort}.json`)
-        .then(res => res.json())
-        .then((data) => {
-          this.setState({
-            files: data.data.children,
-            after: data.data.after,
-            before: data.data.before,
-          });
-          window.scrollTo(0, 0);
-        })
-        .catch(console.log);
-    }
-
 
     render() {
       let contentJSX;
@@ -163,7 +155,6 @@ class DD extends React.Component {
             {contentJSX}
           </Container>
         </div>
-
       );
     }
 }
