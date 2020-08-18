@@ -14,19 +14,26 @@ import Notes from './components/Notes';
 import 'react-quill/dist/quill.snow.css';
 import './App.css';
 import Dashboard from './components/Dashboard';
+import Login from './components/Auth/Login'
+import Register from './components/Auth/Register';
+import ForgotPassword from './components/Auth/ForgotPassword';
 
+import * as ROUTES from './routes/routes';
 
 const App = () => (
   <Fragment>
     <Navigation />
     <div className="app__wrapper">
-      <Route component={UnusualOptions} path="/optionFeed" />
-      <Route component={OneStock} path="/stock" />
-      <Route component={NewsFeed} path="/newsFeed" />
-      <Route component={About} path="/about" />
-      <Route component={DD} path="/DD" />
-      <Route component={Notes} path="/notes" />
-      <Route component={Dashboard} exact path="/" />
+    <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
+    <Route path={ROUTES.LOGIN} component={Login} />
+    <Route path={ROUTES.REGISTER} component={Register} />
+    <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
+    <Route path={ROUTES.SINGLE_STOCK_RESEARCH} component={OneStock} />
+    <Route path={ROUTES.DD} component={DD} />
+    <Route path={ROUTES.NOTES} component={Notes} />
+    <Route path={ROUTES.UNUSUAL_OPTIONS} component={UnusualOptions} />
+    <Route path={ROUTES.NEWS_FEED} component={NewsFeed} />
+    <Route path={ROUTES.ABOUT} component={About} />
     </div>
     <Footer />
   </Fragment>

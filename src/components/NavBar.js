@@ -3,6 +3,7 @@ import React from 'react';
 //Local Imports
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
 
 // Consider highlighting the active nav link here based on the route param
 
@@ -15,8 +16,9 @@ const Navigation = () => (
       <Nav.Link href="/DD">DD </Nav.Link>
       <Nav.Link href="/optionFeed">Options Feed</Nav.Link>
       <Nav.Link href="/newsFeed">News Feed</Nav.Link>
-      <Nav.Link href="/about">About </Nav.Link>
       <Nav.Link href="/notes">Notes </Nav.Link>
+      <Nav.Link href="/about">About </Nav.Link>
+      <Button href="/login">Login/Signup</Button>
     </Nav>
   </Navbar>
 );
