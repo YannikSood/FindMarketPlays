@@ -1,32 +1,13 @@
-import app from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCU32UjFCylBIswXOL2mSkj01xsr3T5eWE",
-    authDomain: "findmarketplays-f8556.firebaseapp.com",
-    databaseURL: "https://findmarketplays-f8556.firebaseio.com",
-    projectId: "findmarketplays-f8556",
-    storageBucket: "findmarketplays-f8556.appspot.com",
-    messagingSenderId: "230930291400"
-  };
-   
-class Firebase {
-    constructor() {
-        app.initializeApp(firebaseConfig);
+const config = {
+  apiKey: 'AIzaSyCU32UjFCylBIswXOL2mSkj01xsr3T5eWE',
+  authDomain: 'findmarketplays-f8556.firebaseapp.com',
+  databaseURL: 'https://findmarketplays-f8556.firebaseio.com',
+  projectId: 'findmarketplays-f8556',
+  storageBucket: 'findmarketplays-f8556.appspot.com',
+  messagingSenderId: '230930291400',
+};
 
-        this.auth = app.auth();
-    }
-
-    doCreateUserWithEmailAndPassword = (email, password) =>
-    this.auth.createUserWithEmailAndPassword(email, password);
-
-    doSignInWithEmailAndPassword = (email, password) =>
-    this.auth.signInWithEmailAndPassword(email, password);
-
-    doSignOut = () => this.auth.signOut();
-
-    doPasswordUpdate = password =>
-    this.auth.currentUser.updatePassword(password);
-}
-   
-export default Firebase;
+firebase.initializeApp(config);
+export default firebase;

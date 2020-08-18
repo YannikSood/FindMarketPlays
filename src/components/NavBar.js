@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { NavLink } from 'react-router-dom';
 //Local Imports
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -12,14 +12,14 @@ const Navigation = () => (
   <Navbar bg="dark" variant="dark" fixed="top">
     <Navbar.Brand>Platform</Navbar.Brand>
     <Nav>
-      <Nav.Link href={ROUTES.DASHBOARD}>Dashboard</Nav.Link>
-      <Nav.Link href={ROUTES.SINGLE_STOCK_RESEARCH}>Stock Research</Nav.Link>
-      <Nav.Link href={ROUTES.DD}>DD </Nav.Link>
-      <Nav.Link href={ROUTES.UNUSUAL_OPTIONS}>Options Feed</Nav.Link>
-      <Nav.Link href={ROUTES.NEWS_FEED}>News Feed</Nav.Link>
-      <Nav.Link href={ROUTES.NOTES}>Notes </Nav.Link>
-      <Nav.Link href={ROUTES.ABOUT}>About </Nav.Link>
-      <Button href={ROUTES.LOGIN}>Login/Signup</Button>
+      <NavLink className="nav-link" to={ROUTES.DASHBOARD}>Dashboard</NavLink>
+      <NavLink className="nav-link" to={ROUTES.SINGLE_STOCK_RESEARCH}>Stock Research</NavLink>
+      <NavLink className="nav-link" to={ROUTES.DD}>DD </NavLink>
+      <NavLink className="nav-link" to={ROUTES.UNUSUAL_OPTIONS}>Options Feed</NavLink>
+      <NavLink className="nav-link" to={ROUTES.NEWS_FEED}>News Feed</NavLink>
+      <NavLink className="nav-link" to={ROUTES.NOTES}>Notes </NavLink>
+      <NavLink className="nav-link" to={ROUTES.ABOUT}>About </NavLink>
+      <NavLink to={ROUTES.LOGIN}><Button variant="primary">Login/Signup</Button></NavLink>
     </Nav>
   </Navbar>
 );

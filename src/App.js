@@ -3,6 +3,7 @@ import 'firebase/auth';
 import {
   BrowserRouter as Router,
   Route,
+  Switch,
 } from 'react-router-dom';
 
 //Local Imports
@@ -18,7 +19,7 @@ import Notes from './components/Notes';
 import 'react-quill/dist/quill.snow.css';
 import './App.css';
 import Dashboard from './components/Dashboard';
-import Login from './components/Auth/Login'
+import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import * as ROUTES from './routes/routes';
@@ -26,7 +27,7 @@ import * as ROUTES from './routes/routes';
 class App extends React.Component {
   constructor(props) {
     super(props);
- 
+
     this.state = {
       authUser: null,
     };
@@ -49,23 +50,45 @@ class App extends React.Component {
     return (
       <Router>
         <Fragment>
-          <Navigation /> //Add Authenticated User Check
+          <Navigation />
           <div className="app__wrapper">
-          <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
-          <Route path={ROUTES.LOGIN} component={Login} />
-          <Route path={ROUTES.REGISTER} component={Register} />
-          <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
-          <Route path={ROUTES.SINGLE_STOCK_RESEARCH} component={OneStock} />
-          <Route path={ROUTES.DD} component={DD} />
-          <Route path={ROUTES.NOTES} component={Notes} />
-          <Route path={ROUTES.UNUSUAL_OPTIONS} component={UnusualOptions} />
-          <Route path={ROUTES.NEWS_FEED} component={NewsFeed} />
-          <Route path={ROUTES.ABOUT} component={About} />
+            <Switch>
+              <Route exact path={ROUTES.DASHBOARD}>
+                <Dashboard />
+              </Route>
+              <Route path={ROUTES.LOGIN}>
+                <Login />
+              </Route>
+              <Route path={ROUTES.REGISTER}>
+                <Register />
+              </Route>
+              <Route path={ROUTES.FORGOT_PASSWORD}>
+                <ForgotPassword />
+              </Route>
+              <Route path={ROUTES.SINGLE_STOCK_RESEARCH}>
+                <OneStock />
+              </Route>
+              <Route path={ROUTES.DD}>
+                <DD />
+              </Route>
+              <Route path={ROUTES.NOTES}>
+                <Notes />
+              </Route>
+              <Route path={ROUTES.UNUSUAL_OPTIONS}>
+                <UnusualOptions />
+              </Route>
+              <Route path={ROUTES.NEWS_FEED}>
+                <NewsFeed />
+              </Route>
+              <Route path={ROUTES.ABOUT}>
+                <About />
+              </Route>
+            </Switch>
           </div>
           <Footer />
         </Fragment>
       </Router>
-    )
+    );
   }
 }
 
