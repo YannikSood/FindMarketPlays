@@ -2,6 +2,7 @@ import React, { useState, Fragment } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import * as ROUTES from '../../routes/routes';
 
 const Register = () => {
 
@@ -56,9 +57,9 @@ const Register = () => {
 
         <Row>
             <Col>
-                <Button href="/login" variant="primary">Login Page </Button>
+                <Button href={ROUTES.LOGIN} variant="primary">Login Page </Button>
 
-                <Button href="/forgotPassword" variant="secondary">Forgot Password</Button>
+                <Button href={ROUTES.FORGOT_PASSWORD} variant="secondary">Forgot Password</Button>
             </Col>
         </Row>
       </Container>
