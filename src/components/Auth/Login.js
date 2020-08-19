@@ -73,7 +73,7 @@ const Login = ({ isAuthed }) => {
         <Row>
           <Col>
 
-            <Button href={ROUTES.FORGOT_PASSWORD} variant="secondary">Forgot Password</Button>
+            <Button href={ROUTES.FORGOT_PASSWORD} variant="link">Forgot Password</Button>
 
           </Col>
         </Row>

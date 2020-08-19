@@ -64,7 +64,7 @@ const Register = ({ isAuthed }) => {
         <Row>
           <Col>
           
-            <Button href={ROUTES.REGISTER} variant="secondary">New User? Register Here</Button>
+            <Button href={ROUTES.LOGIN} variant="secondary">Back to Login</Button>
 
           </Col>
         </Row>
@@ -72,7 +72,7 @@ const Register = ({ isAuthed }) => {
         <Row>
           <Col>
 
-            <Button href={ROUTES.FORGOT_PASSWORD} variant="secondary">Forgot Password</Button>
+            <Button href={ROUTES.FORGOT_PASSWORD} variant="link">Forgot Password</Button>
 
           </Col>
         </Row>
