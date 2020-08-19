@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import firebase from '../../firebase/firebase';
 
 const Logout = () => {
