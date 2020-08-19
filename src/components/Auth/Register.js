@@ -29,13 +29,15 @@ const Register = () => {
 
         <Row>
           <Col>
-            <h1>Register</h1>
+            <h1>Register to access the full platform.</h1>
           </Col>
         </Row>
 
         <Row>
           <Col>
+
             <Form onSubmit={handleSubmit}>
+
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control name="email" type="email" placeholder="Enter email" onChange={handleChange} value={credentials.email} />
@@ -49,19 +51,28 @@ const Register = () => {
                 <Form.Control name="password" type="password" placeholder="Password" onChange={handleChange} value={credentials.password} />
               </Form.Group>
 
-              <Button variant="success" type="submit">
+              <Button variant="primary" type="submit">
                 Submit
               </Button>
 
             </Form>
+
           </Col>
         </Row>
 
         <Row>
           <Col>
-            <Button href={ROUTES.LOGIN} variant="primary">Login Page </Button>
+          
+            <Button href={ROUTES.REGISTER} variant="secondary">New User? Register Here</Button>
+
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
 
             <Button href={ROUTES.FORGOT_PASSWORD} variant="secondary">Forgot Password</Button>
+
           </Col>
         </Row>
       </Container>

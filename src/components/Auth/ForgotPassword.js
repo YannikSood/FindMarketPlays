@@ -3,24 +3,26 @@ import { Row, Col, Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import * as ROUTES from '../../routes/routes';
+import firebase from '../../firebase/firebase';
 
 const ForgotPassword = () => {
 
-    // onSubmit = event => {
-    //     const { email, password } = this.state;
+    const [credentials, setCredentials] = useState({ email: '' });
 
-    //     this.props.firebase
-    //     .doSignInWithEmailAndPassword(email, password)
-    //     .then(() => {
-    //         this.setState({ ...INITIAL_STATE });
-    //         this.props.history.push(ROUTES.HOME);
-    //     })
-    //     .catch(error => {
-    //         this.setState({ error });
-    //     });
-
-    //     event.preventDefault();
-    // };
+    const handleChange = (e) => {
+        setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    };
+    
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const { email } = credentials;
+        firebase.auth().sendPasswordResetEmail(email)
+        .then(function (user) {
+            alert('Please check your email...')
+        }).catch(function (e) {
+            console.log(e)
+        })
+    };
   return (
     <Fragment>
       <Container>
@@ -33,31 +35,38 @@ const ForgotPassword = () => {
 
         <Row>
             <Col>
-            <Form>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
-                    <Form.Text className="text-muted">
-                    You will get an email to reset your password.
-                    </Form.Text>
-                </Form.Group>
+            <Form onSubmit={handleSubmit}>
+
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control name="email" type="email" placeholder="Enter email" onChange={handleChange} value={credentials.email} />
+                <Form.Text className="text-muted">
+                  We&apos;ll never share your email with anyone else.
+                </Form.Text>
+              </Form.Group>
                 
-                <Button variant="success" type="submit">
+                <Button variant="primary" type="submit">
                     Submit
                 </Button>
                 
-                {/* <Button href="/login">Login</Button>
-                <Button href="/register">Register</Button> */}
             </Form>
             </Col>
         </Row>
 
         <Row>
-            <Col>
-                <Button href={ROUTES.LOGIN}variant="primary">Login Page </Button>
+          <Col>
+          
+          <Button href={ROUTES.LOGIN}variant="secondary">Login Page </Button>
 
-                <Button href={ROUTES.REGISTER} variant="secondary">Register</Button>
-            </Col>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
+
+          <Button href={ROUTES.REGISTER} variant="secondary">Register Page</Button>
+
+          </Col>
         </Row>
       </Container>
     </Fragment>
