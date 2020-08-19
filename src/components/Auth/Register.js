@@ -4,8 +4,9 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import * as ROUTES from '../../routes/routes';
 import firebase from '../../firebase/firebase';
+import { Redirect } from 'react-router-dom';
 
-const Register = () => {
+const Register = ({ isAuthed }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
 
   const handleChange = (e) => {
@@ -76,6 +77,8 @@ const Register = () => {
           </Col>
         </Row>
       </Container>
+
+      <div>{isAuthed ? <Redirect to={ROUTES.DASHBOARD} /> : <Redirect to={ROUTES.REGISTER} />}</div>
     </Fragment>
   );
 };

@@ -68,7 +68,13 @@ class App extends React.Component {
                 </Route>
 
                 <Route path={ROUTES.LOGIN}>
-                  <Login />
+                  <FirebaseAuthConsumer>
+                    {({ isSignedIn }) => {
+                      return (
+                        <Login isAuthed = {isSignedIn}/>
+                      );
+                    }}
+                  </FirebaseAuthConsumer>  
                 </Route>
 
                 <Route path={ROUTES.LOGOUT}>
@@ -76,7 +82,13 @@ class App extends React.Component {
                 </Route>
 
                 <Route path={ROUTES.REGISTER}>
-                  <Register />
+                <FirebaseAuthConsumer>
+                    {({ isSignedIn }) => {
+                      return (
+                        <Register isAuthed = {isSignedIn}/>
+                      );
+                    }}
+                  </FirebaseAuthConsumer>  
                 </Route>
 
                 <Route path={ROUTES.FORGOT_PASSWORD}>
