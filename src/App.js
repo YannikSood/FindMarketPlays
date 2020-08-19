@@ -104,15 +104,33 @@ class App extends React.Component {
                 </Route>
 
                 <Route path={ROUTES.NOTES}>
-                  <Notes />
+                  <FirebaseAuthConsumer>
+                    {({ isSignedIn }) => {
+                      return (
+                        <Notes isAuthed = {isSignedIn}/>
+                      );
+                    }}
+                  </FirebaseAuthConsumer>  
                 </Route>
 
                 <Route path={ROUTES.UNUSUAL_OPTIONS}>
-                  <UnusualOptions />
+                  <FirebaseAuthConsumer>
+                    {({ isSignedIn }) => {
+                      return (
+                        <UnusualOptions isAuthed = {isSignedIn}/>
+                      );
+                    }}
+                  </FirebaseAuthConsumer>  
                 </Route>
 
                 <Route path={ROUTES.NEWS_FEED}>
-                  <NewsFeed />
+                  <FirebaseAuthConsumer>
+                    {({ isSignedIn }) => {
+                      return (
+                        <NewsFeed isAuthed = {isSignedIn}/>
+                      );
+                    }}
+                  </FirebaseAuthConsumer>  
                 </Route>
 
                 <Route path={ROUTES.ABOUT}>

@@ -6,9 +6,11 @@ import Form from 'react-bootstrap/Form';
 import ScrollingWidget from './Widgets/ScrollingWidget';
 import UnusualOptionsFlow from './UnusualOptionFlow';
 import { debounce } from '../helpers/SearchHelper';
+import * as ROUTES from '../routes/routes';
+import { Redirect } from 'react-router-dom';
 
 
-const UnusualOptions = () => {
+const UnusualOptions = ({ isAuthed }) => {
   // Hooks
   const [searchedValue, setSearchedValue] = useState('TSLA');
   const [options, setOptions] = useState([]);
@@ -56,6 +58,7 @@ const UnusualOptions = () => {
           {searchedValue && options.length > 0 && <UnusualOptionsFlow value={options} />}
         </Row>
       </Container>
+      <div>{isAuthed ? <Redirect to={ROUTES.UNUSUAL_OPTIONS} /> : <Redirect to={ROUTES.DASHBOARD} />}</div>
     </Fragment>
   );
 };
