@@ -33,7 +33,7 @@ const Notes = ({ isAuthed }) => {
           </Col>
         </Row>
       </Container>
-      <div>{isAuthed ? <Redirect to={ROUTES.NOTES} /> : <Redirect to={ROUTES.DASHBOARD} />}</div>
+      <div>{isAuthed ? <Redirect to={ROUTES.NOTES} /> : <Redirect to={ROUTES.LOGIN} />}</div>
     </Fragment>
   );
 };

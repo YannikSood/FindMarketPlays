@@ -58,7 +58,7 @@ const NewsFeed = ({ isAuthed }) => {
           {searchedValue && options.length > 0 && <NewsFlow value={options} />}
         </Row>
       </Container>
-      <div>{isAuthed ? <Redirect to={ROUTES.NEWS_FEED} /> : <Redirect to={ROUTES.DASHBOARD} />}</div>
+      <div>{isAuthed ? <Redirect to={ROUTES.NEWS_FEED} /> : <Redirect to={ROUTES.LOGIN} />}</div>
     </Fragment>
   );
 };

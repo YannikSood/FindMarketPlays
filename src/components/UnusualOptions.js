@@ -58,7 +58,7 @@ const UnusualOptions = ({ isAuthed }) => {
           {searchedValue && options.length > 0 && <UnusualOptionsFlow value={options} />}
         </Row>
       </Container>
-      <div>{isAuthed ? <Redirect to={ROUTES.UNUSUAL_OPTIONS} /> : <Redirect to={ROUTES.DASHBOARD} />}</div>
+      <div>{isAuthed ? <Redirect to={ROUTES.UNUSUAL_OPTIONS} /> : <Redirect to={ROUTES.LOGIN} />}</div>
     </Fragment>
   );
 };

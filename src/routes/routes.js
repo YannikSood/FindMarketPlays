@@ -9,3 +9,5 @@ export const NOTES = '/notes';
 export const UNUSUAL_OPTIONS = '/optionFeed';
 export const NEWS_FEED = '/newsFeed';
 export const ABOUT = '/about';
+export const STRIPE_SUBSCRIBE = '/subscribe';
+export const PROFILE = '/profile';

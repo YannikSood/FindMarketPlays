@@ -33,6 +33,8 @@ import Logout from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import * as ROUTES from './routes/routes';
+import StripeSubscribe from './components/Stripe/Subscribe';
+import Profile from './components/Account/Profile';
 // import firebase from './firebase/firebase';
 
 const config = {
@@ -131,6 +133,14 @@ class App extends React.Component {
                       );
                     }}
                   </FirebaseAuthConsumer>  
+                </Route>
+
+                <Route path={ROUTES.STRIPE_SUBSCRIBE}>
+                  <StripeSubscribe />
+                </Route>
+
+                <Route path={ROUTES.PROFILE}>
+                  <Profile />
                 </Route>
 
                 <Route path={ROUTES.ABOUT}>
