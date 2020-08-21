@@ -18,7 +18,12 @@ const Notes = ({ isAuthed, currentUser }) => {
         userId: currentUser.id,
       };
       console.log('Payload for note submission: ', inputValue); // eslint-disable-line
-      firebase.database().ref('notes').set(data);
+      const newNoteKey = firebase.database().ref('notes').push().key;
+      const updates = {};
+      updates[`/notes/${newNoteKey}`] = data;
+      updates[`/user-notes/${currentUser.id}/${newNoteKey}`] = data;
+
+      firebase.database().ref().update(updates);
       setInputValue('');
     } else {
       console.log('Error: User not logged in');
