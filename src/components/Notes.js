@@ -1,17 +1,28 @@
 import React, { useState, Fragment } from 'react';
+import { connect } from 'react-redux';
 import { Row, Col, Container } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
+import { Redirect } from 'react-router-dom';
 import ScrollingWidget from './Widgets/ScrollingWidget';
 import * as ROUTES from '../routes/routes';
-import { Redirect } from 'react-router-dom';
+import firebase from '../firebase/firebase';
 
-const Notes = ({ isAuthed }) => {
+const Notes = ({ isAuthed, currentUser }) => {
   // Hooks
   const [inputValue, setInputValue] = useState('');
   // Handlers
   const handleSubmit = () => {
-    console.log('Payload for note submission: ', inputValue); // eslint-disable-line
-    setInputValue('');
+    if (currentUser) {
+      const data = {
+        note: inputValue,
+        userId: currentUser.id,
+      };
+      console.log('Payload for note submission: ', inputValue); // eslint-disable-line
+      firebase.database().ref('notes').set(data);
+      setInputValue('');
+    } else {
+      console.log('Error: User not logged in');
+    }
   };
 
   return (
@@ -38,4 +49,11 @@ const Notes = ({ isAuthed }) => {
   );
 };
 
-export default Notes;
+const mapStateToProps = (state) => {
+  const { auth } = state;
+
+  return {
+    currentUser: auth.currentUser,
+  };
+};
+export default connect(mapStateToProps)(Notes);
