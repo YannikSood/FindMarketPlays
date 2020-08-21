@@ -5,11 +5,12 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import ScrollingWidget from './Widgets/ScrollingWidget';
 import NewsFlow from './NewsFlow';
-
+import * as ROUTES from '../routes/routes';
+import { Redirect } from 'react-router-dom';
 import { debounce } from '../helpers/SearchHelper';
 
 
-const NewsFeed = () => {
+const NewsFeed = ({ isAuthed }) => {
   // Hooks
   const [searchedValue, setSearchedValue] = useState('TSLA');
   const [options, setOptions] = useState([]);
@@ -57,6 +58,7 @@ const NewsFeed = () => {
           {searchedValue && options.length > 0 && <NewsFlow value={options} />}
         </Row>
       </Container>
+      <div>{isAuthed ? <Redirect to={ROUTES.NEWS_FEED} /> : <Redirect to={ROUTES.DASHBOARD} />}</div>
     </Fragment>
   );
 };

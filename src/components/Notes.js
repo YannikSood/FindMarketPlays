@@ -1,10 +1,11 @@
-
 import React, { useState, Fragment } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import ScrollingWidget from './Widgets/ScrollingWidget';
+import * as ROUTES from '../routes/routes';
+import { Redirect } from 'react-router-dom';
 
-const Notes = () => {
+const Notes = ({ isAuthed }) => {
   // Hooks
   const [inputValue, setInputValue] = useState('');
   // Handlers
@@ -32,6 +33,7 @@ const Notes = () => {
           </Col>
         </Row>
       </Container>
+      <div>{isAuthed ? <Redirect to={ROUTES.NOTES} /> : <Redirect to={ROUTES.DASHBOARD} />}</div>
     </Fragment>
   );
 };

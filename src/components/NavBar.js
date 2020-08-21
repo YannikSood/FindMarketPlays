@@ -1,22 +1,45 @@
 import React from 'react';
-
+import { NavLink } from 'react-router-dom';
 //Local Imports
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
+import * as ROUTES from '../routes/routes';
+import firebase from '../firebase/firebase';
 
 // Consider highlighting the active nav link here based on the route param
 
-const Navigation = () => (
+const Navigation = ({ isAuthed }) => (
+  <div>{isAuthed ? <NavigationAuth /> : <NavigationNonAuth />}</div>
+);
+const NavigationAuth = () => (
   <Navbar bg="dark" variant="dark" fixed="top">
     <Navbar.Brand>Platform</Navbar.Brand>
     <Nav>
-      <Nav.Link href="/">Dashboard</Nav.Link>
-      <Nav.Link href="/stock">Stock Research</Nav.Link>
-      <Nav.Link href="/DD">DD </Nav.Link>
-      <Nav.Link href="/optionFeed">Options Feed</Nav.Link>
-      <Nav.Link href="/newsFeed">News Feed</Nav.Link>
-      <Nav.Link href="/about">About </Nav.Link>
-      <Nav.Link href="/notes">Notes </Nav.Link>
+      <NavLink className="nav-link" to={ROUTES.DASHBOARD}>Dashboard</NavLink>
+      <NavLink className="nav-link" to={ROUTES.SINGLE_STOCK_RESEARCH}>Stock Research</NavLink>
+      <NavLink className="nav-link" to={ROUTES.DD}>DD </NavLink>
+      <NavLink className="nav-link" to={ROUTES.UNUSUAL_OPTIONS}>Options Feed</NavLink>
+      <NavLink className="nav-link" to={ROUTES.NEWS_FEED}>News Feed</NavLink>
+      <NavLink className="nav-link" to={ROUTES.NOTES}>Notes </NavLink>
+      <NavLink className="nav-link" to={ROUTES.ABOUT}>About </NavLink>
+      <Button variant="primary" onClick={() => { firebase.auth().signOut();}}>Sign Out</Button>
+    </Nav>
+  </Navbar>
+);
+
+const NavigationNonAuth = () => (
+  <Navbar bg="dark" variant="dark" fixed="top">
+    <Navbar.Brand>Platform</Navbar.Brand>
+    <Nav>
+      <NavLink className="nav-link" to={ROUTES.DASHBOARD}>Dashboard</NavLink>
+      <NavLink className="nav-link" to={ROUTES.SINGLE_STOCK_RESEARCH}>Stock Research</NavLink>
+      <NavLink className="nav-link" to={ROUTES.DD}>DD </NavLink>
+      {/* <NavLink className="nav-link" to={ROUTES.UNUSUAL_OPTIONS}>Options Feed</NavLink>
+      <NavLink className="nav-link" to={ROUTES.NEWS_FEED}>News Feed</NavLink>
+      <NavLink className="nav-link" to={ROUTES.NOTES}>Notes </NavLink> */}
+      <NavLink className="nav-link" to={ROUTES.ABOUT}>About </NavLink>
+      <NavLink to={ROUTES.LOGIN}><Button variant="primary">Log In/Sign Up</Button></NavLink>
     </Nav>
   </Navbar>
 );
