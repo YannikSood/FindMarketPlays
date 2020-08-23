@@ -7,13 +7,20 @@ import ScrollingWidget from './Widgets/ScrollingWidget';
 import firebase from '../firebase/firebase';
 import Loader from './Loader';
 
-const Notes = () => {
+const Notes = ({ currentUser, isAuthed }) => {
   // Hooks
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
   const [notes, setNotes] = useState([]);
+
   useEffect(() => {
-    firebase.database().ref('/notes').once('value')
+    if (!isAuthed) {
+      history.push('/login');
+    }
+  }, [isAuthed, history]);
+
+  useEffect(() => {
+    firebase.database().ref(`/user-notes/${currentUser.id}`).once('value')
       .then((snapshot) => {
         setNotes(Object.values(snapshot?.val()) || []);
         setIsLoading(false);
@@ -22,7 +29,7 @@ const Notes = () => {
         console.log('error fetching notes: ', err);
         setIsLoading(false);
       });
-  }, []);
+  }, [currentUser.id]);
   // Handlers
 
   const renderNotes = () => {
