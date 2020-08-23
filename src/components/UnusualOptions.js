@@ -1,19 +1,23 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import { useHistory } from 'react-router-dom';
 import ScrollingWidget from './Widgets/ScrollingWidget';
 import UnusualOptionsFlow from './UnusualOptionFlow';
 import { debounce } from '../helpers/SearchHelper';
-import * as ROUTES from '../routes/routes';
-import { Redirect } from 'react-router-dom';
-
 
 const UnusualOptions = ({ isAuthed }) => {
   // Hooks
   const [searchedValue, setSearchedValue] = useState('TSLA');
   const [options, setOptions] = useState([]);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!isAuthed) history.push('/login');
+  }, [isAuthed, history]);
 
   useEffect(() => {
     const fetchData = () => {
@@ -58,9 +62,15 @@ const UnusualOptions = ({ isAuthed }) => {
           {searchedValue && options.length > 0 && <UnusualOptionsFlow value={options} />}
         </Row>
       </Container>
-      <div>{isAuthed ? <Redirect to={ROUTES.UNUSUAL_OPTIONS} /> : <Redirect to={ROUTES.LOGIN} />}</div>
     </Fragment>
   );
 };
 
-export default UnusualOptions;
+const mapStateToProps = (state) => {
+  const { auth } = state;
+
+  return {
+    isAuthed: auth.isAuthed,
+  };
+};
+export default connect(mapStateToProps)(UnusualOptions);

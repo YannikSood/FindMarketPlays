@@ -1,18 +1,10 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Provider, useDispatch } from 'react-redux';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
 } from 'react-router-dom';
-import Firebase from 'firebase/app';
-import 'firebase/auth';
-import {
-  FirebaseAuthProvider,
-  FirebaseAuthConsumer,
-  // IfFirebaseAuthed,
-  // IfFirebaseAuthedAnd
-} from '@react-firebase/auth';
 
 //Local Imports
 import firebase from './firebase/firebase';
@@ -31,7 +23,6 @@ import 'react-quill/dist/quill.snow.css';
 import './App.css';
 import Dashboard from './components/Dashboard';
 import Login from './components/Auth/Login';
-import Logout from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import * as ROUTES from './routes/routes';
@@ -39,28 +30,20 @@ import * as ROUTES from './routes/routes';
 import Profile from './components/Account/Profile';
 import NewNote from './components/NewNote';
 import { receiveUser, clearUser } from './reducers/authReducer';
-// import firebase from './firebase/firebase';
-
-// NOTE: Before this goes live, these should be set as secret keys in environment variables
-const config = {
-  apiKey: 'AIzaSyCU32UjFCylBIswXOL2mSkj01xsr3T5eWE',
-  authDomain: 'findmarketplays-f8556.firebaseapp.com',
-  databaseURL: 'https://findmarketplays-f8556.firebaseio.com',
-  projectId: 'findmarketplays-f8556',
-  storageBucket: 'findmarketplays-f8556.appspot.com',
-  messagingSenderId: '230930291400',
-};
+import Loader from './components/Loader';
 
 const App = () => {
   const dispatch = useDispatch();
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in.
+        setIsLoading(false);
         dispatch(receiveUser(user));
       } else {
         // No user is signed in.
+        setIsLoading(false);
         dispatch(clearUser());
       }
     });
@@ -68,11 +51,12 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <FirebaseAuthProvider firebase={Firebase} {...config}>
+      { isLoading ? (
+        <Loader />
+      ) : (
         <Router>
           <Fragment>
             <Navigation />
-
             <div className="app__wrapper">
               <Switch>
                 <Route exact path={ROUTES.DASHBOARD}>
@@ -80,23 +64,15 @@ const App = () => {
                 </Route>
 
                 <Route path={ROUTES.LOGIN}>
-                  <FirebaseAuthConsumer>
-                    {({ isSignedIn }) => (
-                      <Login isAuthed={isSignedIn} />
-                    )}
-                  </FirebaseAuthConsumer>
+                  <Login />
                 </Route>
 
                 <Route path={ROUTES.LOGOUT}>
-                  <Logout />
+                  <Login />
                 </Route>
 
                 <Route path={ROUTES.REGISTER}>
-                  <FirebaseAuthConsumer>
-                    {({ isSignedIn }) => (
-                      <Register isAuthed={isSignedIn} />
-                    )}
-                  </FirebaseAuthConsumer>
+                  <Register />
                 </Route>
 
                 <Route path={ROUTES.FORGOT_PASSWORD}>
@@ -112,34 +88,23 @@ const App = () => {
                 </Route>
 
                 <Route path={ROUTES.NEW_NOTE}>
-                  <FirebaseAuthConsumer>
-                    {({ isSignedIn }) => (
-                      <NewNote isAuthed={isSignedIn} />
-                    )}
-                  </FirebaseAuthConsumer>
+                  <NewNote />
                 </Route>
 
                 <Route path={ROUTES.NOTES}>
                   <Notes />
                 </Route>
+
                 <Route path={ROUTES.NOTE_DETAIL}>
                   <NoteDetail />
                 </Route>
 
                 <Route path={ROUTES.UNUSUAL_OPTIONS}>
-                  <FirebaseAuthConsumer>
-                    {({ isSignedIn }) => (
-                      <UnusualOptions isAuthed={isSignedIn} />
-                    )}
-                  </FirebaseAuthConsumer>
+                  <UnusualOptions />
                 </Route>
 
                 <Route path={ROUTES.NEWS_FEED}>
-                  <FirebaseAuthConsumer>
-                    {({ isSignedIn }) => (
-                      <NewsFeed isAuthed={isSignedIn} />
-                    )}
-                  </FirebaseAuthConsumer>
+                  <NewsFeed />
                 </Route>
 
                 {/* <Route path={ROUTES.STRIPE_SUBSCRIBE}>
@@ -153,13 +118,12 @@ const App = () => {
                 <Route path={ROUTES.ABOUT}>
                   <About />
                 </Route>
-
               </Switch>
             </div>
             <Footer />
           </Fragment>
         </Router>
-      </FirebaseAuthProvider>
+      )}
     </Provider>
   );
 };

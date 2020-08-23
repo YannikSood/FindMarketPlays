@@ -1,9 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 //Local Imports
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Button from 'react-bootstrap/Button';
+import { Navbar, Nav, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ROUTES from '../routes/routes';
 import firebase from '../firebase/firebase';
@@ -14,7 +12,7 @@ const Navigation = ({ isAuthed }) => (
   <div>{isAuthed ? <NavigationAuth /> : <NavigationNonAuth />}</div>
 );
 const NavigationAuth = () => (
-  <Navbar bg="dark" variant="dark" fixed="top">
+  <Navbar className="justify-content-center" bg="dark" variant="dark" fixed="top">
     <Navbar.Brand>Platform</Navbar.Brand>
     <Nav>
       <NavLink className="nav-link" to={ROUTES.DASHBOARD}>Market Overview</NavLink>
@@ -24,13 +22,13 @@ const NavigationAuth = () => (
       <NavLink className="nav-link" to={ROUTES.UNUSUAL_OPTIONS}>Options Feed</NavLink>
       <NavLink className="nav-link" to={ROUTES.NEWS_FEED}>News Feed</NavLink>
       <NavLink className="nav-link" to={ROUTES.ABOUT}>About </NavLink>
-      <Button variant="primary" onClick={() => { firebase.auth().signOut(); }}>Sign Out</Button>
+      <Button className="ml-2" variant="primary" onClick={() => { firebase.auth().signOut(); }}>Sign Out</Button>
     </Nav>
   </Navbar>
 );
 
 const NavigationNonAuth = () => (
-  <Navbar bg="dark" variant="dark" fixed="top">
+  <Navbar className="justify-content-center" bg="dark" variant="dark" fixed="top">
     <Navbar.Brand>Platform</Navbar.Brand>
     <Nav>
       <NavLink className="nav-link" to={ROUTES.DASHBOARD}>Market Overview</NavLink>
@@ -40,7 +38,7 @@ const NavigationNonAuth = () => (
       <NavLink className="nav-link" to={ROUTES.UNUSUAL_OPTIONS}>Options Feed</NavLink>
       <NavLink className="nav-link" to={ROUTES.NEWS_FEED}>News Feed</NavLink>
       <NavLink className="nav-link" to={ROUTES.ABOUT}>About </NavLink>
-      <NavLink to={ROUTES.LOGIN}><Button variant="primary">Log In/Sign Up</Button></NavLink>
+      <NavLink to={ROUTES.LOGIN}><Button className="ml-2" variant="primary">Log In/Sign Up</Button></NavLink>
     </Nav>
   </Navbar>
 );

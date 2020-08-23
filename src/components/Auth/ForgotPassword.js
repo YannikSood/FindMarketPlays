@@ -1,40 +1,47 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useHistory } from 'react-router-dom';
 import * as ROUTES from '../../routes/routes';
 import firebase from '../../firebase/firebase';
 
-const ForgotPassword = () => {
+const ForgotPassword = ({ isAuthed }) => {
+  const [credentials, setCredentials] = useState({ email: '' });
+  const history = useHistory();
 
-    const [credentials, setCredentials] = useState({ email: '' });
+  useEffect(() => {
+    if (isAuthed) history.push('/');
+  }, [isAuthed, history]);
 
-    const handleChange = (e) => {
-        setCredentials({ ...credentials, [e.target.name]: e.target.value });
-    };
-    
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const { email } = credentials;
-        firebase.auth().sendPasswordResetEmail(email)
-        .then(function (user) {
-            alert('Please check your email...')
-        }).catch(function (e) {
-            console.log(e)
-        })
-    };
+  const handleChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const { email } = credentials;
+    firebase.auth().sendPasswordResetEmail(email)
+      .then((user) => {
+        // Consider using a redirect with history.push('/login') here and displaying a message via props
+        alert('Please check your email...');
+      }).catch((e) => {
+        console.log(e);
+      });
+  };
   return (
     <Fragment>
       <Container>
 
         <Row>
           <Col>
-          <h1>Reset Password</h1>
+            <h1>Reset Password</h1>
           </Col>
         </Row>
 
         <Row>
-            <Col>
+          <Col>
             <Form onSubmit={handleSubmit}>
 
               <Form.Group controlId="formBasicEmail">
@@ -44,19 +51,19 @@ const ForgotPassword = () => {
                   We&apos;ll never share your email with anyone else.
                 </Form.Text>
               </Form.Group>
-                
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-                
+
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+
             </Form>
-            </Col>
+          </Col>
         </Row>
 
         <Row>
           <Col>
-          
-          <Button href={ROUTES.LOGIN}variant="secondary">Login Page </Button>
+
+            <Button href={ROUTES.LOGIN} variant="secondary">Login Page </Button>
 
           </Col>
         </Row>
@@ -64,7 +71,7 @@ const ForgotPassword = () => {
         <Row>
           <Col>
 
-          <Button href={ROUTES.REGISTER} variant="secondary">Register Page</Button>
+            <Button href={ROUTES.REGISTER} variant="secondary">Register Page</Button>
 
           </Col>
         </Row>
@@ -73,4 +80,11 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+const mapStateToProps = (state) => {
+  const { auth } = state;
+
+  return {
+    isAuthed: auth.isAuthed,
+  };
+};
+export default connect(mapStateToProps)(ForgotPassword);

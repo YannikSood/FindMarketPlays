@@ -20,7 +20,7 @@ const NoteDetail = () => {
         console.log('error fetching note: ', err);
         setIsLoading(false);
       });
-  }, []);
+  }, [slug.id]);
   // Handlers
 
 

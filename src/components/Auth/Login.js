@@ -1,9 +1,8 @@
-import React, { useState, Fragment } from 'react';
-import { useDispatch } from 'react-redux';
-import { Row, Col, Container } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect, Fragment } from 'react';
+import { useDispatch, connect } from 'react-redux';
+import { Row, Col, Container, Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import * as ROUTES from '../../routes/routes';
 import firebase from '../../firebase/firebase';
 import { receiveUser } from '../../reducers/authReducer';
@@ -11,9 +10,16 @@ import { receiveUser } from '../../reducers/authReducer';
 const Login = ({ isAuthed }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (isAuthed) history.push('/');
+  }, [isAuthed, history]);
+
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const { email, password } = credentials;
@@ -79,9 +85,15 @@ const Login = ({ isAuthed }) => {
         </Row>
 
       </Container>
-      <div>{isAuthed ? <Redirect to={ROUTES.DASHBOARD} /> : <Redirect to={ROUTES.LOGIN} />}</div>
     </Fragment>
 
   );
 };
-export default Login;
+const mapStateToProps = (state) => {
+  const { auth } = state;
+
+  return {
+    isAuthed: auth.isAuthed,
+  };
+};
+export default connect(mapStateToProps)(Login);

@@ -2,6 +2,7 @@ import React, { useEffect, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import { Row, Col, Container, Button, Table } from 'react-bootstrap';
+import { formattedDateDifference } from '../helpers/DateHelper';
 import ScrollingWidget from './Widgets/ScrollingWidget';
 import firebase from '../firebase/firebase';
 import Loader from './Loader';
@@ -27,15 +28,15 @@ const Notes = () => {
   const renderNotes = () => {
     if (notes.length === 0) return <Row><Col><h4>Nothing here yet...</h4></Col></Row>;
     return notes.map(note => (
-      <tr>
+      <tr key={note.id}>
         <td>
           <Link className="note-title" to={`/note/${note.id}`}>{note.title}</Link>
         </td>
+        <td style={{ width: '25%' }}>{formattedDateDifference(note.createdAt)}</td>
       </tr>
     ));
   };
 
-  console.log(notes);
   return (
     <Fragment>
       <ScrollingWidget />
@@ -44,7 +45,7 @@ const Notes = () => {
           <Col className="d-flex justify-content-between">
             <h1 className="d-inline-block">Notes</h1>
             <div>
-              <Button variant="primary" onClick={() => history.push('/notes/new')}>Create</Button>
+              <Button variant="primary" onClick={() => history.push('/note/new')}>Create</Button>
             </div>
           </Col>
         </Row>
@@ -53,6 +54,10 @@ const Notes = () => {
         ) : (
           <Table striped bordered hover variant="dark">
             <tbody>
+              <tr>
+                <th>Title</th>
+                <th style={{ width: '25%' }}>Posted</th>
+              </tr>
               {renderNotes()}
             </tbody>
           </Table>

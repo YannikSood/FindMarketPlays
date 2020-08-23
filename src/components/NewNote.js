@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Container, Form } from 'react-bootstrap';
+import { Row, Col, Container, Form, Button } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import { useHistory } from 'react-router-dom';
 import ScrollingWidget from './Widgets/ScrollingWidget';
@@ -76,10 +76,8 @@ const NewNote = ({ isAuthed, currentUser }) => {
               id="notes-container"
               placeholder="Compose a note..."
             />
-            <div className="center-block m-2">
-              <button className="btn btn-primary" type="submit" onClick={handleSubmit}>Submit</button>
-              <button className="btn btn-default" type="button" onClick={handleCancel}>Cancel</button>
-            </div>
+            <Button className="mr-3 mt-4" variant="primary" onClick={handleSubmit}>Create</Button>
+            <Button className="mr-3 mt-4" variant="secondary" onClick={handleCancel}>Cancel</Button>
           </Col>
         </Row>
       </Container>
