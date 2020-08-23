@@ -15,6 +15,7 @@ const Notes = ({ currentUser, isAuthed }) => {
 
   useEffect(() => {
     if (!isAuthed) {
+      console.log('here');
       history.push('/login');
     }
   }, [isAuthed, history]);
@@ -79,6 +80,7 @@ const mapStateToProps = (state) => {
 
   return {
     currentUser: auth.currentUser,
+    isAuthed: auth.isAuthed,
   };
 };
 export default connect(mapStateToProps)(Notes);
