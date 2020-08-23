@@ -5,8 +5,13 @@ const authSlice = createSlice({
   name: 'AUTH',
   initialState: {
     currentUser: {},
+    isAuthed: false,
   },
   reducers: {
+    clearUser: () => ({
+      currentUser: {},
+      isAuthed: false,
+    }),
     receiveUser: shapeUser,
   },
 });
@@ -15,19 +20,21 @@ export default authSlice.reducer;
 
 // ACTIONS
 export const {
+  clearUser,
   receiveUser,
 } = authSlice.actions;
 
 // REDUCER HELPERS
 function shapeUser(state, action) {
-  const { user } = action.payload;
+  const { uid, email, displayName } = action.payload;
   return {
     ...state,
     currentUser: {
-      id: user.uid,
-      email: user.email,
-      displayName: user.displayName,
+      id: uid,
+      email,
+      displayName,
     },
+    isAuthed: true,
   };
 }
 // THUNKS -- ASYNC ACTION CREATORS

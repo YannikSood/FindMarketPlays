@@ -19,7 +19,6 @@ const Login = ({ isAuthed }) => {
     const { email, password } = credentials;
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((user) => {
-        console.log('Success signing up', user);
         dispatch(receiveUser(user));
       })
       .catch((error) => {

@@ -10,9 +10,9 @@ const NewsFlow = props => (
     </thead>
     {props.value.map(item => (
       <tbody key={item.id}>
-          <tr>
-            <td><a href={item.url} target="popup">{item.title}</a></td>
-          </tr>
+        <tr>
+          <td><a href={item.url} target="popup">{item.title}</a></td>
+        </tr>
       </tbody>
     ))}
   </Table>

@@ -1,55 +1,63 @@
-import React, { useState, Fragment } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Container } from 'react-bootstrap';
-import ReactQuill from 'react-quill';
-import { Redirect } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
+import { Row, Col, Container, Button, Table } from 'react-bootstrap';
 import ScrollingWidget from './Widgets/ScrollingWidget';
-import * as ROUTES from '../routes/routes';
 import firebase from '../firebase/firebase';
+import Loader from './Loader';
 
-const Notes = ({ isAuthed, currentUser }) => {
+const Notes = () => {
   // Hooks
-  const [inputValue, setInputValue] = useState('');
+  const history = useHistory();
+  const [isLoading, setIsLoading] = useState(true);
+  const [notes, setNotes] = useState([]);
+  useEffect(() => {
+    firebase.database().ref('/notes').once('value')
+      .then((snapshot) => {
+        setNotes(Object.values(snapshot?.val()) || []);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log('error fetching notes: ', err);
+        setIsLoading(false);
+      });
+  }, []);
   // Handlers
-  const handleSubmit = () => {
-    if (currentUser) {
-      const data = {
-        note: inputValue,
-        userId: currentUser.id,
-      };
-      console.log('Payload for note submission: ', inputValue); // eslint-disable-line
-      const newNoteKey = firebase.database().ref('notes').push().key;
-      const updates = {};
-      updates[`/notes/${newNoteKey}`] = data;
-      updates[`/user-notes/${currentUser.id}/${newNoteKey}`] = data;
 
-      firebase.database().ref().update(updates);
-      setInputValue('');
-    } else {
-      console.log('Error: User not logged in');
-    }
+  const renderNotes = () => {
+    if (notes.length === 0) return <Row><Col><h4>Nothing here yet...</h4></Col></Row>;
+    return notes.map(note => (
+      <tr>
+        <td>
+          <Link className="note-title" to={`/note/${note.id}`}>{note.title}</Link>
+        </td>
+      </tr>
+    ));
   };
 
+  console.log(notes);
   return (
     <Fragment>
       <ScrollingWidget />
       <Container>
-        <Row>
-          <Col>
-            <ReactQuill
-              theme="snow"
-              value={inputValue}
-              onChange={setInputValue}
-              id="notes-container"
-              placeholder="Compose a note..."
-            />
-            <div className="center-block m-2">
-              <button className="btn btn-primary" type="submit" onClick={handleSubmit}>Submit</button>
+        <Row className="mb-3">
+          <Col className="d-flex justify-content-between">
+            <h1 className="d-inline-block">Notes</h1>
+            <div>
+              <Button variant="primary" onClick={() => history.push('/notes/new')}>Create</Button>
             </div>
           </Col>
         </Row>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Table striped bordered hover variant="dark">
+            <tbody>
+              {renderNotes()}
+            </tbody>
+          </Table>
+        )}
       </Container>
-      <div>{isAuthed ? <Redirect to={ROUTES.NOTES} /> : <Redirect to={ROUTES.LOGIN} />}</div>
     </Fragment>
   );
 };
