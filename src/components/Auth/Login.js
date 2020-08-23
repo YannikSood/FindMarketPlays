@@ -1,32 +1,38 @@
-import React, { useState, Fragment } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect, Fragment } from 'react';
+import { useDispatch, connect } from 'react-redux';
+import { Row, Col, Container, Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import { useHistory } from 'react-router-dom';
 import * as ROUTES from '../../routes/routes';
 import firebase from '../../firebase/firebase';
-import { Redirect } from 'react-router-dom';
+import { receiveUser } from '../../reducers/authReducer';
 
 const Login = ({ isAuthed }) => {
-    
-    const [credentials, setCredentials] = useState({ email: '', password: ''});
+  const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-    const handleChange = (e) => {
-        setCredentials({ ...credentials, [e.target.name]: e.target.value });
-    };
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const { email, password } = credentials;
-        firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((user) => {
-            console.log('Success signing up', user);
-        })
-        .catch((error) => {
-            // Handle Errors here.
-            console.log('Error signing up: ', error);
-        });
-        
-    };
-    return (
+  useEffect(() => {
+    if (isAuthed) history.push('/');
+  }, [isAuthed, history]);
+
+  const handleChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const { email, password } = credentials;
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        dispatch(receiveUser(user));
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        console.log('Error signing up: ', error);
+      });
+  };
+  return (
     <Fragment>
       <Container>
 
@@ -39,7 +45,7 @@ const Login = ({ isAuthed }) => {
         <Row>
           <Col>
 
-          <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
 
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
@@ -79,10 +85,15 @@ const Login = ({ isAuthed }) => {
         </Row>
 
       </Container>
-      <div>{isAuthed ? <Redirect to={ROUTES.DASHBOARD} /> : <Redirect to={ROUTES.LOGIN} />}</div>
     </Fragment>
-    
-    )
 
+  );
 };
-export default Login;
+const mapStateToProps = (state) => {
+  const { auth } = state;
+
+  return {
+    isAuthed: auth.isAuthed,
+  };
+};
+export default connect(mapStateToProps)(Login);

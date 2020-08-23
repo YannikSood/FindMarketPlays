@@ -1,41 +1,77 @@
-import React, { useState, Fragment } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
-import ReactQuill from 'react-quill';
+import React, { useEffect, useState, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { useHistory, Link } from 'react-router-dom';
+import { Row, Col, Container, Button, Table } from 'react-bootstrap';
+import { formattedDateDifference } from '../helpers/DateHelper';
 import ScrollingWidget from './Widgets/ScrollingWidget';
-import * as ROUTES from '../routes/routes';
-import { Redirect } from 'react-router-dom';
+import firebase from '../firebase/firebase';
+import Loader from './Loader';
 
-const Notes = ({ isAuthed }) => {
+const Notes = () => {
   // Hooks
-  const [inputValue, setInputValue] = useState('');
+  const history = useHistory();
+  const [isLoading, setIsLoading] = useState(true);
+  const [notes, setNotes] = useState([]);
+  useEffect(() => {
+    firebase.database().ref('/notes').once('value')
+      .then((snapshot) => {
+        setNotes(Object.values(snapshot?.val()) || []);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log('error fetching notes: ', err);
+        setIsLoading(false);
+      });
+  }, []);
   // Handlers
-  const handleSubmit = () => {
-    console.log('Payload for note submission: ', inputValue); // eslint-disable-line
-    setInputValue('');
+
+  const renderNotes = () => {
+    if (notes.length === 0) return <Row><Col><h4>Nothing here yet...</h4></Col></Row>;
+    return notes.map(note => (
+      <tr key={note.id}>
+        <td>
+          <Link className="note-title" to={`/note/${note.id}`}>{note.title}</Link>
+        </td>
+        <td style={{ width: '25%' }}>{formattedDateDifference(note.createdAt)}</td>
+      </tr>
+    ));
   };
 
   return (
     <Fragment>
       <ScrollingWidget />
       <Container>
-        <Row>
-          <Col>
-            <ReactQuill
-              theme="snow"
-              value={inputValue}
-              onChange={setInputValue}
-              id="notes-container"
-              placeholder="Compose a note..."
-            />
-            <div className="center-block m-2">
-              <button className="btn btn-primary" type="submit" onClick={handleSubmit}>Submit</button>
+        <Row className="mb-3">
+          <Col className="d-flex justify-content-between">
+            <h1 className="d-inline-block">Notes</h1>
+            <div>
+              <Button variant="primary" onClick={() => history.push('/note/new')}>Create</Button>
             </div>
           </Col>
         </Row>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Table striped bordered hover variant="dark">
+            <tbody>
+              <tr>
+                <th>Title</th>
+                <th style={{ width: '25%' }}>Posted</th>
+              </tr>
+              {renderNotes()}
+            </tbody>
+          </Table>
+        )}
       </Container>
-      <div>{isAuthed ? <Redirect to={ROUTES.NOTES} /> : <Redirect to={ROUTES.DASHBOARD} />}</div>
     </Fragment>
   );
 };
 
-export default Notes;
+const mapStateToProps = (state) => {
+  const { auth } = state;
+
+  return {
+    currentUser: auth.currentUser,
+  };
+};
+export default connect(mapStateToProps)(Notes);
