@@ -10,8 +10,8 @@ const WallpaperItem = ({ file }) => {
       const postLink = `https://reddit.com${file.data.permalink}`;
       return (
         <div className="col-sm-12 col-md-6 col-lg-4">
-          <div className=" card-link">
-            <div className="card">
+          <div className="card-link">
+            <div className="research-card">
               <div className="card-img-top">
                 <a href={postLink} target="_blank" rel="noopener noreferrer"><button className="btn btn-secondary btn-sm top-right-float">View Post</button></a>
                 {/* <a href={file.data.url} target="_blank" rel="noopener noreferrer">
@@ -38,7 +38,7 @@ const WallpaperItem = ({ file }) => {
     return (
       <div className="col-sm-12 col-md-6 col-lg-4">
         <div className=" card-link">
-          <div className="card">
+          <div className="research-card">
             <div className="card-img-top">
               <a href={postLink} target="_blank" rel="noopener noreferrer"><button className="btn btn-secondary btn-sm top-right-float">View Post</button></a>
               {/* <a href={file.data.url} target="_blank" rel="noopener noreferrer">
