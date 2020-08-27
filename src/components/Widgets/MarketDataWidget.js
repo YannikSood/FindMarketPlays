@@ -14,7 +14,7 @@ class MarketDataWidget extends React.Component {
         locale: 'en',
         largeChartUrl: '',
         isTransparent: false,
-        width: '300',
+        width: '310',
         height: '600',
         plotLineColorGrowing: 'rgba(33, 150, 243, 1)',
         plotLineColorFalling: 'rgba(33, 150, 243, 1)',

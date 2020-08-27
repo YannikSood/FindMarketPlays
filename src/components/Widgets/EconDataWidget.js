@@ -9,7 +9,7 @@ class EconDataWidget extends React.Component {
       {
         colorTheme: 'dark',
         isTransparent: false,
-        width: '300',
+        width: '310',
         height: '600',
         locale: 'en',
         importanceFilter: '0,1',
