@@ -2,10 +2,10 @@ import React, { useEffect, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import { Row, Col, Container, Button, Table } from 'react-bootstrap';
-import { formattedDateDifference } from '../helpers/DateHelper';
-import ScrollingWidget from './Widgets/ScrollingWidget';
-import firebase from '../firebase/firebase';
-import Loader from './Loader';
+import { formattedDateDifference } from '../../helpers/DateHelper';
+import ScrollingWidget from '../Widgets/ScrollingWidget';
+import firebase from '../../firebase/firebase';
+import Loader from '../Loader';
 
 const Notes = ({ currentUser, isAuthed }) => {
   // Hooks

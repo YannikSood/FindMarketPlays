@@ -5,20 +5,21 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
+import Axios from "axios";
 
 //Local Imports
 import firebase from './firebase/firebase';
 import store from './store';
 import Footer from './components/Footer';
-import OneStock from './components/OneStock';
+import OneStock from './components/Stocks/OneStock';
 import Navigation from './components/NavBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import About from './components/About';
-import DD from './components/DD';
-import UnusualOptions from './components/UnusualOptions';
-import NewsFeed from './components/NewsFeed';
-import Notes from './components/Notes';
-import NoteDetail from './components/NoteDetail';
+import DD from './components/Research/DD';
+import UnusualOptions from './components/Options/UnusualOptions';
+import NewsFeed from './components/News/NewsFeed';
+import Notes from './components/Notes/Notes';
+import NoteDetail from './components/Notes/NoteDetail';
 import 'react-quill/dist/quill.snow.css';
 import './App.css';
 import Dashboard from './components/Dashboard';
@@ -28,7 +29,7 @@ import ForgotPassword from './components/Auth/ForgotPassword';
 import * as ROUTES from './routes/routes';
 // import StripeSubscribe from './components/Stripe/Subscribe';
 import Profile from './components/Account/Profile';
-import NewNote from './components/NewNote';
+import NewNote from './components//Notes/NewNote';
 import { receiveUser, clearUser } from './reducers/authReducer';
 import Loader from './components/Loader';
 
@@ -48,6 +49,16 @@ const App = () => {
       }
     });
   }, [dispatch]);
+
+  Axios({
+    method: "GET",
+    url: "http://localhost:5000/",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(res => {
+    console.log(res.data.message);
+  });
 
   return (
     <Provider store={store}>

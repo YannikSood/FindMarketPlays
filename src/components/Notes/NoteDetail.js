@@ -1,9 +1,9 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import { Row, Col, Container } from 'react-bootstrap';
-import ScrollingWidget from './Widgets/ScrollingWidget';
-import firebase from '../firebase/firebase';
-import Loader from './Loader';
+import ScrollingWidget from '../Widgets/ScrollingWidget';
+import firebase from '../../firebase/firebase';
+import Loader from '../Loader';
 
 const NoteDetail = () => {
   // Hooks
