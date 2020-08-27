@@ -3,7 +3,7 @@ const express = require("express"),
   cors = require("cors");
 
 app.use(cors());
-app.listen(process.env.PORT || 5000);
+app.listen(process.env.PORT || 3000);
 
 app.get("/", (req, res) => {
   res.send({ message: "We did it!" });

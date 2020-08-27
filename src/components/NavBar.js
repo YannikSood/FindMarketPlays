@@ -12,8 +12,10 @@ const Navigation = ({ isAuthed }) => (
   <div>{isAuthed ? <NavigationAuth /> : <NavigationNonAuth />}</div>
 );
 const NavigationAuth = () => (
-  <Navbar className="justify-content-center" bg="dark" variant="dark" fixed="top">
+  <Navbar collapseOnSelect expand="sm" className="justify-content-center" bg="dark" variant="dark" fixed="top">
     <Navbar.Brand>Platform</Navbar.Brand>
+    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+    <Navbar.Collapse id="responsive-navbar-nav">
     <Nav>
       <NavLink className="nav-link" to={ROUTES.DASHBOARD}>Market Overview</NavLink>
       <NavLink className="nav-link" to={ROUTES.SINGLE_STOCK_RESEARCH}>Stock Lookup</NavLink>
@@ -25,12 +27,14 @@ const NavigationAuth = () => (
       {/* <NavLink className="nav-link" to={ROUTES.ABOUT}>About </NavLink> */}
       <Button className="ml-2" variant="primary" onClick={() => { firebase.auth().signOut(); }}>Sign Out</Button>
     </Nav>
+    </Navbar.Collapse>
   </Navbar>
 );
 
 const NavigationNonAuth = () => (
-  <Navbar className="justify-content-center" bg="dark" variant="dark" fixed="top">
+  <Navbar collapseOnSelect expand="sm" className="justify-content-center" bg="dark" variant="dark" fixed="top">
     <Navbar.Brand>Platform</Navbar.Brand>
+    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Nav>
       <NavLink className="nav-link" to={ROUTES.DASHBOARD}>Market Overview</NavLink>
       <NavLink className="nav-link" to={ROUTES.SINGLE_STOCK_RESEARCH}>Stock Lookup</NavLink>
