@@ -38,17 +38,15 @@ import Loader from './components/Loader';
 
 const App = () => {
 
-  
-
   useEffect(() => {
-    ReactGa.initialize('UA-24344618-3')
+    ReactGa.initialize('UA-176664458-1')
 
     ReactGa.pageview(window.location.pathname)
-  }, []);
+  });
 
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  
+
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {

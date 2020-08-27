@@ -12,6 +12,7 @@ import MarketOverviewWidget from './Widgets/MarketOverviewWidget';
 
 const Dashboard = () => {
   
+  
   return (
      <Fragment>
       <ScrollingWidget />
