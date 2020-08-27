@@ -6,6 +6,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import Axios from "axios";
+import ReactGa from 'react-ga';
 
 //Local Imports
 import firebase from './firebase/firebase';
@@ -33,9 +34,21 @@ import NewNote from './components//Notes/NewNote';
 import { receiveUser, clearUser } from './reducers/authReducer';
 import Loader from './components/Loader';
 
+
+
 const App = () => {
+
+  
+
+  useEffect(() => {
+    ReactGa.initialize('UA-24344618-3')
+
+    ReactGa.pageview(window.location.pathname)
+  }, []);
+
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
+  
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -50,6 +63,7 @@ const App = () => {
     });
   }, [dispatch]);
 
+  
   Axios({
     method: "GET",
     url: "http://localhost:3000/",
