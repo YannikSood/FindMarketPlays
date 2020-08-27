@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import { useHistory } from 'react-router-dom';
-import ScrollingWidget from './Widgets/ScrollingWidget';
+import ScrollingWidget from '../Widgets/ScrollingWidget';
 import UnusualOptionsFlow from './UnusualOptionFlow';
-import { debounce } from '../helpers/SearchHelper';
+import { debounce } from '../../helpers/SearchHelper';
 
 const UnusualOptions = ({ isAuthed }) => {
   // Hooks

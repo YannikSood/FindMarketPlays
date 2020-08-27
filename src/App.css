@@ -15,7 +15,7 @@ body,
 }
 
 a {
-  color: rgba(255,255,255,.5)
+  color: rgba(255,255,255,.9)
 }
 
 a:hover {
@@ -131,5 +131,7 @@ a:hover {
 }
 
 .research-card {
-  background-color: #2C2F33;
+  background-color: #23272A;
+  border-bottom: 1px solid #FFFFFF;
+  border-radius: 1px
 }

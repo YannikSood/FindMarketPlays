@@ -13,7 +13,7 @@ class MarketOverviewWidget extends React.Component {
         locale: 'en',
         largeChartUrl: '',
         isTransparent: false,
-        width: '400',
+        width: '310',
         height: '600',
         plotLineColorGrowing: 'rgba(33, 150, 243, 1)',
         plotLineColorFalling: 'rgba(33, 150, 243, 1)',

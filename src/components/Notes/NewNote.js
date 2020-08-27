@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Row, Col, Container, Form, Button } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import { useHistory } from 'react-router-dom';
-import ScrollingWidget from './Widgets/ScrollingWidget';
-import * as ROUTES from '../routes/routes';
-import firebase from '../firebase/firebase';
+import ScrollingWidget from '../Widgets/ScrollingWidget';
+import * as ROUTES from '../../routes/routes';
+import firebase from '../../firebase/firebase';
 
 const NewNote = ({ isAuthed, currentUser }) => {
   // Hooks

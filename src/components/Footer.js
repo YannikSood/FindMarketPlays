@@ -1,11 +1,12 @@
 import React from 'react';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
+import { Navbar, Nav } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
+import * as ROUTES from '../routes/routes';
 
 const Footer = () => (
   <Navbar bg="dark" variant="dark" fixed="bottom">
     <Nav>
-      <Nav.Link href="/about">Copyright 2020 | FindMarketPlays LLC</Nav.Link>
+      <NavLink className="nav-link" to={ROUTES.DASHBOARD}>Copyright 2020 | FindMarketPlays LLC</NavLink>
     </Nav>
   </Navbar>
 );

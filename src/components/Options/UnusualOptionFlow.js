@@ -6,7 +6,7 @@ const UnusualOptionsFlow = props => (
     <thead>
       <tr>
         <th>Date Of Order</th>
-        <th>Ticker</th>
+        {/* <th>Ticker</th> */}
         <th>Description</th>
         <th>Sentiment</th>
         <th># of Contracts</th>
@@ -20,7 +20,7 @@ const UnusualOptionsFlow = props => (
       <tbody key={item.id}>
         <tr>
           <td>{item.date}</td>
-          <td>{item.ticker}</td>
+          {/* <td>{item.ticker}</td> */}
           <td>{item.description}</td>
           <td>{item.sentiment}</td>
           <td>{item.size}</td>

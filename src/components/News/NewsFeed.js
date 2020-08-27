@@ -5,10 +5,10 @@ import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
-import ScrollingWidget from './Widgets/ScrollingWidget';
+import ScrollingWidget from '../Widgets/ScrollingWidget';
 import NewsFlow from './NewsFlow';
-import * as ROUTES from '../routes/routes';
-import { debounce } from '../helpers/SearchHelper';
+import * as ROUTES from '../../routes/routes';
+import { debounce } from '../../helpers/SearchHelper';
 
 const NewsFeed = ({ isAuthed }) => {
   // Hooks
