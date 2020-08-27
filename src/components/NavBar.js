@@ -16,17 +16,17 @@ const NavigationAuth = () => (
     <Navbar.Brand>Platform</Navbar.Brand>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
-    <Nav>
-      <NavLink className="nav-link" to={ROUTES.DASHBOARD}>Market Overview</NavLink>
-      <NavLink className="nav-link" to={ROUTES.SINGLE_STOCK_RESEARCH}>Stock Lookup</NavLink>
-      <NavLink className="nav-link" to={ROUTES.DD}>Research </NavLink>
-      <NavLink className="nav-link" to={ROUTES.NOTES}>Notes </NavLink>
-      <NavLink className="nav-link" to={ROUTES.UNUSUAL_OPTIONS}>Options Feed</NavLink>
-      <NavLink className="nav-link" to={ROUTES.NEWS_FEED}>News Feed</NavLink>
-      <NavLink className="nav-link" to={ROUTES.PROFILE}>Profile</NavLink>
-      {/* <NavLink className="nav-link" to={ROUTES.ABOUT}>About </NavLink> */}
-      <Button className="ml-2" variant="primary" onClick={() => { firebase.auth().signOut(); }}>Sign Out</Button>
-    </Nav>
+      <Nav>
+        <NavLink className="nav-link" to={ROUTES.DASHBOARD}>Market Overview</NavLink>
+        <NavLink className="nav-link" to={ROUTES.SINGLE_STOCK_RESEARCH}>Stock Lookup</NavLink>
+        <NavLink className="nav-link" to={ROUTES.DD}>Research </NavLink>
+        <NavLink className="nav-link" to={ROUTES.NOTES}>Notes </NavLink>
+        <NavLink className="nav-link" to={ROUTES.UNUSUAL_OPTIONS}>Options Feed</NavLink>
+        <NavLink className="nav-link" to={ROUTES.NEWS_FEED}>News Feed</NavLink>
+        <NavLink className="nav-link" to={ROUTES.PROFILE}>Profile</NavLink>
+        {/* <NavLink className="nav-link" to={ROUTES.ABOUT}>About </NavLink> */}
+        <Button className="ml-2" variant="primary" onClick={() => { firebase.auth().signOut(); }}>Sign Out</Button>
+      </Nav>
     </Navbar.Collapse>
   </Navbar>
 );
@@ -35,16 +35,18 @@ const NavigationNonAuth = () => (
   <Navbar collapseOnSelect expand="sm" className="justify-content-center" bg="dark" variant="dark" fixed="top">
     <Navbar.Brand>Platform</Navbar.Brand>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-    <Nav>
-      <NavLink className="nav-link" to={ROUTES.DASHBOARD}>Market Overview</NavLink>
-      <NavLink className="nav-link" to={ROUTES.SINGLE_STOCK_RESEARCH}>Stock Lookup</NavLink>
-      <NavLink className="nav-link" to={ROUTES.DD}>Research </NavLink>
-      <NavLink className="nav-link" to={ROUTES.NOTES}>Notes </NavLink>
-      <NavLink className="nav-link" to={ROUTES.UNUSUAL_OPTIONS}>Options Feed</NavLink>
-      <NavLink className="nav-link" to={ROUTES.NEWS_FEED}>News Feed</NavLink>
-      {/* <NavLink className="nav-link" to={ROUTES.ABOUT}>About </NavLink> */}
-      <NavLink to={ROUTES.LOGIN}><Button className="ml-2" variant="primary">Log In/Sign Up</Button></NavLink>
-    </Nav>
+    <Navbar.Collapse id="responsive-navbar-nav">
+      <Nav>
+        <NavLink className="nav-link" to={ROUTES.DASHBOARD}>Market Overview</NavLink>
+        <NavLink className="nav-link" to={ROUTES.SINGLE_STOCK_RESEARCH}>Stock Lookup</NavLink>
+        <NavLink className="nav-link" to={ROUTES.DD}>Research </NavLink>
+        <NavLink className="nav-link" to={ROUTES.NOTES}>Notes </NavLink>
+        <NavLink className="nav-link" to={ROUTES.UNUSUAL_OPTIONS}>Options Feed</NavLink>
+        <NavLink className="nav-link" to={ROUTES.NEWS_FEED}>News Feed</NavLink>
+        {/* <NavLink className="nav-link" to={ROUTES.ABOUT}>About </NavLink> */}
+        <NavLink to={ROUTES.LOGIN}><Button className="ml-2" variant="primary">Log In/Sign Up</Button></NavLink>
+      </Nav>
+    </Navbar.Collapse>
   </Navbar>
 );
 const mapStateToProps = (state) => {
