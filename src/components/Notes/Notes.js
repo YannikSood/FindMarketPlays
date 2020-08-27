@@ -35,6 +35,7 @@ const Notes = ({ currentUser, isAuthed }) => {
 
   const renderNotes = () => {
     if (notes.length === 0) return <Row><Col><h4>Nothing here yet...</h4></Col></Row>;
+    console.log(notes)
     return notes.map(note => (
       <tr key={note.id}>
         <td>

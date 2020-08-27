@@ -20,6 +20,7 @@ import UnusualOptions from './components/Options/UnusualOptions';
 import NewsFeed from './components/News/NewsFeed';
 import Notes from './components/Notes/Notes';
 import NoteDetail from './components/Notes/NoteDetail';
+import EditNote from './components/Notes/EditNote';
 import 'react-quill/dist/quill.snow.css';
 import './App.css';
 import Dashboard from './components/Dashboard';
@@ -34,6 +35,7 @@ import { receiveUser, clearUser } from './reducers/authReducer';
 import Loader from './components/Loader';
 
 const App = () => {
+  window.getState = store.getState()
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -100,6 +102,10 @@ const App = () => {
 
                 <Route path={ROUTES.NEW_NOTE}>
                   <NewNote />
+                </Route>
+
+                <Route path={ROUTES.EDIT_NOTE}>
+                  <EditNote />
                 </Route>
 
                 <Route path={ROUTES.NOTES}>
