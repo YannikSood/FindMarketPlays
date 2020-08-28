@@ -6,9 +6,11 @@ import { useHistory } from 'react-router-dom';
 import * as ROUTES from '../../routes/routes';
 import firebase from '../../firebase/firebase';
 import { receiveUser } from '../../reducers/authReducer';
+import LoginErrors from '../Errors/LoginErrors';
 
 const Login = ({ isAuthed }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const [loginErrors, setErrors] = useState({});
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -30,6 +32,10 @@ const Login = ({ isAuthed }) => {
       .catch((error) => {
         // Handle Errors here.
         console.log('Error signing up: ', error);
+        setErrors(error)
+
+        // RENDER ALERT HERE
+
         // set errorsState
         // display errors in a list from errorsState
       });
@@ -46,6 +52,7 @@ const Login = ({ isAuthed }) => {
 
         <Row>
           <Col>
+          {LoginErrors(loginErrors)}
 
             <Form onSubmit={handleSubmit}>
 
