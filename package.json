@@ -25,7 +25,8 @@
     "reactstrap": "^8.5.1",
     "redux": "^4.0.5",
     "serve": "^11.3.2",
-    "stripe": "^8.89.0"
+    "stripe": "^8.89.0",
+    "validator": "^13.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

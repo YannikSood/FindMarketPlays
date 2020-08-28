@@ -6,12 +6,14 @@ import { useHistory } from 'react-router-dom';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
 import * as ROUTES from '../../routes/routes';
 import firebase from '../../firebase/firebase';
+import validateNote from '../../validations/note.js';
 
 const NewNote = ({ isAuthed, currentUser }) => {
   // Hooks
   const history = useHistory();
   const [bodyValue, setBodyValue] = useState('');
   const [titleValue, setTitleValue] = useState('');
+  const[noteErrors, setErrors] = useState({});
 
   useEffect(() => {
     if (!isAuthed) {
@@ -19,8 +21,39 @@ const NewNote = ({ isAuthed, currentUser }) => {
     }
   }, [isAuthed, history]);
 
+  function checkErrors() {
+    const { errors, isValid } = validateNote(titleValue, bodyValue);
+
+    if (!isValid) {
+      setErrors(errors)
+    }
+  }
+
+  function hasErrors () {
+    debugger
+    if (noteErrors != {}) {
+      return (
+        <Container>
+          {Object.values(noteErrors).map((error, i) => {
+            return (
+              <li key={i}>
+                {error}
+              </li>
+            );
+          })}
+        </Container>
+      );
+    }
+  }
+
   // Handlers
   const handleSubmit = () => {
+    checkErrors()
+    if (noteErrors != {}) {
+      return;
+    }
+    
+
     if (currentUser) {
       console.log('Payload for note submission: ', bodyValue); // eslint-disable-line
       const newNoteKey = firebase.database().ref('notes').push().key;
@@ -34,6 +67,7 @@ const NewNote = ({ isAuthed, currentUser }) => {
       const updates = {};
       updates[`/notes/${newNoteKey}`] = data;
       updates[`/user-notes/${currentUser.id}/${newNoteKey}`] = data;
+      
 
       firebase.database().ref().update(updates)
         .then(() => {
@@ -65,7 +99,7 @@ const NewNote = ({ isAuthed, currentUser }) => {
                   type="text"
                   value={titleValue}
                   onChange={e => setTitleValue(e.target.value)}
-                  placeholder="Title"
+                  placeholder="Title (required)"
                 />
               </Form.Group>
             </Form>
@@ -74,10 +108,11 @@ const NewNote = ({ isAuthed, currentUser }) => {
               value={bodyValue}
               onChange={setBodyValue}
               id="notes-container"
-              placeholder="Compose a note..."
+              placeholder="Compose a note (required)"
             />
             <Button className="mr-3 mt-4" variant="primary" onClick={handleSubmit}>Create</Button>
             <Button className="mr-3 mt-4" variant="secondary" onClick={handleCancel}>Cancel</Button>
+            {hasErrors()}
           </Col>
         </Row>
       </Container>
