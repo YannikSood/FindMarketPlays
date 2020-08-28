@@ -35,7 +35,7 @@ import { receiveUser, clearUser } from './reducers/authReducer';
 import Loader from './components/Loader';
 
 const App = () => {
-  window.getState = store.getState()
+  window.state = store.getState()
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {

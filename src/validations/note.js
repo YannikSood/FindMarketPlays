@@ -10,7 +10,6 @@ module.exports = function validateNote(title, body) {
     if (Validator.isEmpty(body)) {
         errors.body = "Body cannot be empty"
     }
-
     return {
         errors,
         isValid: Object.keys(errors).length === 0

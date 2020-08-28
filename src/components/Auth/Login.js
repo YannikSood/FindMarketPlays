@@ -30,6 +30,8 @@ const Login = ({ isAuthed }) => {
       .catch((error) => {
         // Handle Errors here.
         console.log('Error signing up: ', error);
+        // set errorsState
+        // display errors in a list from errorsState
       });
   };
   return (

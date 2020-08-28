@@ -4,11 +4,11 @@ import { Row, Col, Container, Button } from "react-bootstrap";
 import ScrollingWidget from '../Widgets/ScrollingWidget';
 import firebase from '../../firebase/firebase';
 import Loader from '../Loader';
-import { receiveNote } from '../../actions/notes';
+import { receiveNote, receiveErrors } from '../../actions/notes';
 import { useDispatch } from 'react-redux';
 import { connect } from "react-redux";
 
-const NoteDetail = ({currentUser}) => {
+const NoteDetail = ({currentUser, addNote, addErrors}) => {
   // Hooks
 
   const dispatch = useDispatch();
@@ -106,4 +106,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(NoteDetail);
+const mapDispatchToProps = dispatch => ({
+  addNote: (note) => dispatch(receiveNote(note))
+  // addErrors: (errors) => dispatch(receiveErrors(errors))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NoteDetail);

@@ -27,6 +27,8 @@ const Register = ({ isAuthed }) => {
       .catch((error) => {
         // Handle Errors here.
         console.log('Error signing up: ', error);
+        // set errorsState
+        // display in a list
       });
   };
   return (
