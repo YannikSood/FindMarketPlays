@@ -31,13 +31,7 @@ const Login = ({ isAuthed }) => {
       })
       .catch((error) => {
         // Handle Errors here.
-        console.log('Error signing up: ', error);
         setErrors(error)
-
-        // RENDER ALERT HERE
-
-        // set errorsState
-        // display errors in a list from errorsState
       });
   };
   return (
