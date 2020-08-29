@@ -17,6 +17,7 @@ const OneStock = () => {
     debounce(setSearchedValue(event.target.value.toUpperCase()), 300);
   };
 
+
   return (
     <Fragment>
       <ScrollingWidget />
