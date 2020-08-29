@@ -22,11 +22,11 @@ const NewsFeed = ({ isAuthed }) => {
 
   useEffect(() => {
     const fetchData = () => {
-      const url = `https://api.benzinga.com/api/v2/news?pageSize=50&page=0&displayOutput=headline&sort=created%3Adesc&tickers=${searchedValue}&token=bd2570cf59734eb9934b3cd886ce958b`;
+      const url = `/newsAPI/${searchedValue}`;
       fetch(url, { headers: { Accept: 'application/json' } })
         .then(res => res.json()
           .then((json) => {
-            setOptions(json || []);
+            setOptions(json.message || []);
           }))
         .catch(err => console.error(err)); // eslint-disable-line
     };
