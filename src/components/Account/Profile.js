@@ -9,41 +9,59 @@ import { useState, useEffect } from 'react';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import ResetErrors from '../Errors/ResetErrors';
-import ResetSuccess from '../Success/ResetSuccess';
+import EmailSuccess from '../Success/EmailSuccess';
 import PasswordSuccess from '../Success/PasswordSuccess';
+import { useHistory } from "react-router-dom";
+import * as ROUTES from "../../routes/routes";
 
 
-const Profile = ({ currentUser }) => {
+const Profile = ({ currentUser, isAuthed }) => {
   const [emailFlag, emailSwitch] = useState(false);
   const [emailValue, setEmail] = useState(currentUser.email);
   const [tempEmail, setTempEmail] = useState();
   const [resetErrors, setErrors] = useState({});
-  const [resetSuccess, setSuccess] = useState(false);
+  const [emailSuccess, setEmailSuccess] = useState(false);
+  const [passwordSuccess, setPassSuccess] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
-    setEmail(firebase.auth().currentUser.email);
-    setSuccess(false);
-  }, [])
+    console.log("profile leak")
+    if (!isAuthed) {
+      history.push(ROUTES.LOGIN)
+    } else {
+      setEmail(firebase.auth().currentUser.email);
+      setEmailSuccess(false);
+      setPassSuccess(false);
+    }
+  }, [isAuthed, history]);
 
   function resetEmail() {
     ProfileAPI.emailReset(tempEmail)
     .then((res) => {
-      setEmail(tempEmail)
-      emailSwitch(false)
-      setSuccess(true)
+      setEmail(tempEmail);
+      emailSwitch(false);
+      setEmailSuccess(true);
+      setErrors({});
+      if (passwordSuccess) {
+        setPassSuccess(false);
+      };
     })
     .catch(error => {
-        setErrors(error)
+        setErrors(error);
       })
   };
 
   function resetPassword() {
     ProfileAPI.passwordReset()
       .then((res) => {
-        setSuccess(true)
+        setPassSuccess(true);
+        setErrors({});
+        if (emailSuccess) {
+          setEmailSuccess(false);
+        }
       })
       .catch((error) => {
-        setErrors(error)
+        setErrors(error);
       })
   }
 
@@ -78,7 +96,8 @@ const Profile = ({ currentUser }) => {
     } else {
       return (
         <Container>
-          {ResetSuccess(resetSuccess)}
+          {EmailSuccess(emailSuccess)}
+          {PasswordSuccess(passwordSuccess)}
           {ResetErrors(resetErrors)}
           <Row>
             <Col>
@@ -99,7 +118,6 @@ const Profile = ({ currentUser }) => {
               ****
           </Col>
             <Button onClick={() => resetPassword()}>
-              {/* will immediately send, and then needs an alert, "Email sent" */}
             Reset
           </Button>
           </Row>
@@ -129,7 +147,8 @@ const MSTP = (state) => {
   let auth = state.auth;
 
   return {
-    currentUser: auth.currentUser
+    currentUser: auth.currentUser,
+    isAuthed:  auth.isAuthed
   };
 }
 

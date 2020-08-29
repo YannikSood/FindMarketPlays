@@ -1,8 +1,8 @@
 import React from 'react';
 import { Alert } from 'react-bootstrap';
 
-function ResetSuccess(resetSuccess) {
-    if (resetSuccess) {
+function EmailSuccess(emailSuccess) {
+    if (emailSuccess) {
         return (
             <Alert variant="success" >
                 <p>
@@ -14,4 +14,4 @@ function ResetSuccess(resetSuccess) {
 
 }
 
-export default ResetSuccess
+export default EmailSuccess
