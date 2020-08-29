@@ -17,21 +17,22 @@ const NewsFeed = ({ isAuthed }) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (!isAuthed) history.push(ROUTES.LOGIN);
-  }, [isAuthed, history]);
-
-  useEffect(() => {
-    const fetchData = () => {
-      const url = `https://api.benzinga.com/api/v2/news?pageSize=50&page=0&displayOutput=headline&sort=created%3Adesc&tickers=${searchedValue}&token=bd2570cf59734eb9934b3cd886ce958b`;
-      fetch(url, { headers: { Accept: 'application/json' } })
-        .then(res => res.json()
-          .then((json) => {
-            setOptions(json || []);
-          }))
-        .catch(err => console.error(err)); // eslint-disable-line
-    };
-    debounce(fetchData());
-  }, [searchedValue]);
+    if (!isAuthed) {
+      history.push(ROUTES.LOGIN);
+    } else {
+      const fetchData = () => {
+        const url = `https://api.benzinga.com/api/v2/news?pageSize=50&page=0&displayOutput=headline&sort=created%3Adesc&tickers=${searchedValue}&token=bd2570cf59734eb9934b3cd886ce958b`;
+        fetch(url, { headers: { Accept: "application/json" } })
+          .then((res) =>
+            res.json().then((json) => {
+              setOptions(json || []);
+            })
+          )
+          .catch((err) => console.error(err)); // eslint-disable-line
+      };
+      debounce(fetchData());
+    }
+  }, [isAuthed, history, searchedValue]);
 
   // Handlers
   const handleInputChange = (event) => {
