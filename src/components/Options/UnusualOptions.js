@@ -16,21 +16,35 @@ const UnusualOptions = ({ isAuthed }) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (!isAuthed) history.push('/login');
-  }, [isAuthed, history]);
+    if (!isAuthed) {
+      history.push("/login");
+    } else {
+      const fetchData = () => {
+        const url = `https://api.benzinga.com/api/v1/signal/option_activity?page=1&parameters%5Btickers%5D=${searchedValue}&token=bd2570cf59734eb9934b3cd886ce958b`;
+        fetch(url, { headers: { Accept: "application/json" } })
+          .then((res) =>
+            res.json().then((json) => {
+              setOptions(json.option_activity || []);
+            })
+          )
+          .catch((err) => console.error(err)); // eslint-disable-line
+      };
+      debounce(fetchData());
+    }
+  }, [isAuthed, history, searchedValue]);
 
-  useEffect(() => {
-    const fetchData = () => {
-      const url = `https://api.benzinga.com/api/v1/signal/option_activity?page=1&parameters%5Btickers%5D=${searchedValue}&token=bd2570cf59734eb9934b3cd886ce958b`;
-      fetch(url, { headers: { Accept: 'application/json' } })
-        .then(res => res.json()
-          .then((json) => {
-            setOptions(json.option_activity || []);
-          }))
-        .catch(err => console.error(err)); // eslint-disable-line
-    };
-    debounce(fetchData());
-  }, [searchedValue]);
+  // useEffect(() => {
+  //   const fetchData = () => {
+  //     const url = `https://api.benzinga.com/api/v1/signal/option_activity?page=1&parameters%5Btickers%5D=${searchedValue}&token=bd2570cf59734eb9934b3cd886ce958b`;
+  //     fetch(url, { headers: { Accept: 'application/json' } })
+  //       .then(res => res.json()
+  //         .then((json) => {
+  //           setOptions(json.option_activity || []);
+  //         }))
+  //       .catch(err => console.error(err)); // eslint-disable-line
+  //   };
+  //   debounce(fetchData());
+  // }, [searchedValue]);
 
   // Handlers
   const handleInputChange = (event) => {
