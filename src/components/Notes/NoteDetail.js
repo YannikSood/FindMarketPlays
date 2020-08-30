@@ -4,11 +4,11 @@ import { Row, Col, Container, Button } from "react-bootstrap";
 import ScrollingWidget from '../Widgets/ScrollingWidget';
 import firebase from '../../firebase/firebase';
 import Loader from '../Loader';
-import { receiveNote, receiveErrors } from '../../actions/notes';
+import { receiveNote } from '../../actions/notes';
 import { useDispatch } from 'react-redux';
 import { connect } from "react-redux";
 
-const NoteDetail = ({currentUser, addNote, addErrors}) => {
+const NoteDetail = ({currentUser, addNote }) => {
   // Hooks
 
   const dispatch = useDispatch();
@@ -17,7 +17,6 @@ const NoteDetail = ({currentUser, addNote, addErrors}) => {
   const [note, setNote] = useState([]);
   const slug = useParams();
   useEffect(() => {
-    console.log(currentUser)
     firebase
       .database()
       .ref(`/user-notes/${currentUser.id}/${slug.id}`)
@@ -109,7 +108,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   addNote: (note) => dispatch(receiveNote(note))
-  // addErrors: (errors) => dispatch(receiveErrors(errors))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NoteDetail);

@@ -29,7 +29,7 @@ const NewNote = ({ isAuthed, currentUser }) => {
   // Handlers
   const handleSubmit = () => {
     if (currentUser) {
-      console.log('Payload for note submission: ', bodyValue); // eslint-disable-line
+      // console.log('Payload for note submission: ', bodyValue); // eslint-disable-line
       const newNoteKey = firebase.database().ref('notes').push().key;
       const data = {
         title: titleValue,

@@ -5,7 +5,6 @@ const noteReducer = (state={}, action) => {
 
     switch(action.type) {
         case RECEIVE_NOTE:
-            console.log(action.note)
             return action.note
         default: return state
     };

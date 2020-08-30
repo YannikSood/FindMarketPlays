@@ -25,7 +25,6 @@ const Profile = ({ currentUser, isAuthed }) => {
   const history = useHistory();
 
   useEffect(() => {
-    console.log("profile leak")
     if (!isAuthed) {
       history.push(ROUTES.LOGIN)
     } else {

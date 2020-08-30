@@ -14,7 +14,6 @@ const Notes = ({ currentUser, isAuthed }) => {
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    console.log(isAuthed);
     if (!isAuthed) {
       history.push("/login");
     } else {

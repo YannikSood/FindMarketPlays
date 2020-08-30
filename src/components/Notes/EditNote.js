@@ -19,7 +19,9 @@ const EditNote = ({ currentUser, note }) => {
     const ref = useRef();
 
     useEffect(() => {
-      checkNote();
+      if (titleValue === undefined || bodyValue === undefined) {
+        history.push("/notes");
+      }
     }, [])
     
     const update = {
@@ -27,11 +29,6 @@ const EditNote = ({ currentUser, note }) => {
       body: bodyValue
     }
 
-    function checkNote() {
-      if (titleValue === undefined || bodyValue === undefined) {
-        history.push("/notes");
-      }
-    }
     
     function handleSubmit() {
       let bodyText = ref.current.getEditor().getText().replace(/\n/ig, '');

@@ -3,7 +3,6 @@ import { Alert } from 'react-bootstrap';
 
 function NoteErrors(noteErrors) {
     if (Object.keys(noteErrors).length) {
-        console.log("in errors")
         return (
             <Alert variant="danger" >
                 <p>
