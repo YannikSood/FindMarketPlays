@@ -2,7 +2,7 @@
   "name": "kalculated",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://findmarketplays.herokuapp.com",
+  "proxy": "https://findmarketplays.herokuapp.com",
   "dependencies": {
     "@redux-beacon/google-analytics": "^1.2.3",
     "@reduxjs/toolkit": "^1.4.0",
@@ -39,8 +39,7 @@
     "start": "serve -s build",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
