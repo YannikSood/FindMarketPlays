@@ -12,3 +12,5 @@ export const UNUSUAL_OPTIONS = '/optionFeed';
 export const NEWS_FEED = '/newsFeed';
 export const ABOUT = '/about';
 export const PROFILE = '/profile';
+export const EDIT_NOTE = '/note/edit/:id';
+

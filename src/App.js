@@ -10,7 +10,7 @@ import ReactGa from 'react-ga';
 
 //Local Imports
 import firebase from './firebase/firebase';
-import store from './store';
+import { store, persistor } from './store';
 import Footer from './components/Footer';
 import OneStock from './components/Stocks/OneStock';
 import Navigation from './components/NavBar';
@@ -21,6 +21,7 @@ import UnusualOptions from './components/Options/UnusualOptions';
 import NewsFeed from './components/News/NewsFeed';
 import Notes from './components/Notes/Notes';
 import NoteDetail from './components/Notes/NoteDetail';
+import EditNote from './components/Notes/EditNote';
 import 'react-quill/dist/quill.snow.css';
 import './App.css';
 import Dashboard from './components/Dashboard';
@@ -33,6 +34,7 @@ import Profile from './components/Account/Profile';
 import NewNote from './components//Notes/NewNote';
 import { receiveUser, clearUser } from './reducers/authReducer';
 import Loader from './components/Loader';
+import { PersistGate } from 'redux-persist/integration/react';
 
 
 
@@ -74,79 +76,86 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      { isLoading ? (
-        <Loader />
-      ) : (
-        <Router>
-          <Fragment>
-            <Navigation />
-            <div className="app__wrapper">
-              <Switch>
-                <Route exact path={ROUTES.DASHBOARD}>
-                  <Dashboard />
-                </Route>
+      <PersistGate loading={null} persistor={persistor}>
 
-                <Route path={ROUTES.LOGIN}>
-                  <Login />
-                </Route>
+        { isLoading ? (
+          <Loader />
+        ) : (
+          <Router>
+            <Fragment>
+              <Navigation />
+              <div className="app__wrapper">
+                <Switch>
+                  <Route exact path={ROUTES.DASHBOARD}>
+                    <Dashboard />
+                  </Route>
 
-                <Route path={ROUTES.LOGOUT}>
-                  <Login />
-                </Route>
+                  <Route path={ROUTES.LOGIN}>
+                    <Login />
+                  </Route>
 
-                <Route path={ROUTES.REGISTER}>
-                  <Register />
-                </Route>
+                  <Route path={ROUTES.LOGOUT}>
+                    <Login />
+                  </Route>
 
-                <Route path={ROUTES.FORGOT_PASSWORD}>
-                  <ForgotPassword />
-                </Route>
+                  <Route path={ROUTES.REGISTER}>
+                    <Register />
+                  </Route>
 
-                <Route path={ROUTES.SINGLE_STOCK_RESEARCH}>
-                  <OneStock />
-                </Route>
+                  <Route path={ROUTES.FORGOT_PASSWORD}>
+                    <ForgotPassword />
+                  </Route>
 
-                <Route path={ROUTES.DD}>
-                  <DD />
-                </Route>
+                  <Route path={ROUTES.SINGLE_STOCK_RESEARCH}>
+                    <OneStock />
+                  </Route>
 
-                <Route path={ROUTES.NEW_NOTE}>
-                  <NewNote />
-                </Route>
+                  <Route path={ROUTES.DD}>
+                    <DD />
+                  </Route>
 
-                <Route path={ROUTES.NOTES}>
-                  <Notes />
-                </Route>
+                  <Route path={ROUTES.NEW_NOTE}>
+                    <NewNote />
+                  </Route>
 
-                <Route path={ROUTES.NOTE_DETAIL}>
-                  <NoteDetail />
-                </Route>
+                  <Route path={ROUTES.EDIT_NOTE}>
+                    <EditNote />
+                  </Route>
 
-                <Route path={ROUTES.UNUSUAL_OPTIONS}>
-                  <UnusualOptions />
-                </Route>
+                  <Route path={ROUTES.NOTES}>
+                    <Notes />
+                  </Route>
 
-                <Route path={ROUTES.NEWS_FEED}>
-                  <NewsFeed />
-                </Route>
+                  <Route path={ROUTES.NOTE_DETAIL}>
+                    <NoteDetail />
+                  </Route>
 
-                {/* <Route path={ROUTES.STRIPE_SUBSCRIBE}>
-                  <StripeSubscribe />
-                </Route> */}
+                  <Route path={ROUTES.UNUSUAL_OPTIONS}>
+                    <UnusualOptions />
+                  </Route>
 
-                <Route path={ROUTES.PROFILE}>
-                  <Profile />
-                </Route>
+                  <Route path={ROUTES.NEWS_FEED}>
+                    <NewsFeed />
+                  </Route>
 
-                <Route path={ROUTES.ABOUT}>
-                  <About />
-                </Route>
-              </Switch>
-            </div>
-            <Footer />
-          </Fragment>
-        </Router>
-      )}
+                  {/* <Route path={ROUTES.STRIPE_SUBSCRIBE}>
+                    <StripeSubscribe />
+                  </Route> */}
+
+                  <Route path={ROUTES.PROFILE}>
+                    <Profile />
+                  </Route>
+
+                  <Route path={ROUTES.ABOUT}>
+                    <About />
+                  </Route>
+                </Switch>
+              </div>
+              <Footer />
+            </Fragment>
+          </Router>
+        )}
+      </PersistGate>
     </Provider>
   );
 };

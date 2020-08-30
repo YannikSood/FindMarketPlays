@@ -6,10 +6,13 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import * as ROUTES from '../../routes/routes';
 import firebase from '../../firebase/firebase';
+import RegisterErrors from '../Errors/RegisterError';
 
 const Register = ({ isAuthed }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const history = useHistory();
+  const [registerErrors, setErrors] = useState({});
+
   useEffect(() => {
     if (isAuthed) history.push('/');
   }, [isAuthed, history]);
@@ -26,7 +29,7 @@ const Register = ({ isAuthed }) => {
       })
       .catch((error) => {
         // Handle Errors here.
-        console.log('Error signing up: ', error);
+        setErrors(error);
       });
   };
   return (
@@ -39,6 +42,7 @@ const Register = ({ isAuthed }) => {
         </Row>
         <Row>
           <Col>
+          {RegisterErrors(registerErrors)}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>

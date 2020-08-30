@@ -16,22 +16,22 @@ const UnusualOptions = ({ isAuthed }) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (!isAuthed) history.push('/login');
-  }, [isAuthed, history]);
-
-  useEffect(() => {
-    const fetchData = () => {
-      const url = `/optionsAPI/${searchedValue}`;
-      fetch(url, { headers: { Accept: 'application/json' } })
-        .then(res => res.json()
-          .then((json) => {
-            // console.log(json);
-            setOptions(json.message.option_activity || []);
-          }))
-        .catch(err => console.error(err)); // eslint-disable-line
-    };
-    debounce(fetchData());
-  }, [searchedValue]);
+    if (!isAuthed) {
+      history.push("/login");
+    } else {
+        const fetchData = () => {
+          const url = `/optionsAPI/${searchedValue}`;
+          fetch(url, { headers: { Accept: 'application/json' } })
+            .then(res => res.json()
+              .then((json) => {
+                // console.log(json);
+                setOptions(json.message.option_activity || []);
+              }))
+            .catch(err => console.error(err)); // eslint-disable-line
+        };
+        debounce(fetchData());  
+    }
+  }, [isAuthed, history, searchedValue]);
 
   // Handlers
   const handleInputChange = (event) => {
