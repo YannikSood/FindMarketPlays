@@ -6,6 +6,7 @@ const fetch = require("node-fetch");
 
 app.use(cors());
 app.listen(process.env.PORT || 3000);
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
   res.send({ message: "Server Connected" });
@@ -47,6 +48,7 @@ app.get("/newsAPI/:ticker", async (req, res) => {
     res.send({ message: tempJSON });
 });
 
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+app.get("*", function(req, res) {
+    res.sendFile(__dirname, "public", "index.html");
 });
+
