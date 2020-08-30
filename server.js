@@ -46,3 +46,7 @@ app.get("/newsAPI/:ticker", async (req, res) => {
     
     res.send({ message: tempJSON });
 });
+
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
