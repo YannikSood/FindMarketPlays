@@ -2,7 +2,7 @@
   "name": "kalculated",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3000",
+  "proxy": "http://findmarketplays.herokuapp.com",
   "dependencies": {
     "@redux-beacon/google-analytics": "^1.2.3",
     "@reduxjs/toolkit": "^1.4.0",
