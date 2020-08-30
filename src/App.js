@@ -6,6 +6,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import Axios from "axios";
+import ReactGa from 'react-ga';
 
 //Local Imports
 import firebase from './firebase/firebase';
@@ -35,9 +36,19 @@ import { receiveUser, clearUser } from './reducers/authReducer';
 import Loader from './components/Loader';
 import { PersistGate } from 'redux-persist/integration/react';
 
+
+
 const App = () => {
+
+  useEffect(() => {
+    ReactGa.initialize('UA-176664458-1')
+
+    ReactGa.pageview(window.location.pathname + window.location.search)
+  });
+
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -52,6 +63,7 @@ const App = () => {
     });
   }, [dispatch]);
 
+  
   Axios({
     method: "GET",
     url: "http://localhost:3000/",

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment} from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,16 +7,19 @@ import ScrollingWidget from './Widgets/ScrollingWidget';
 import MarketDataWidget from './Widgets/MarketDataWidget';
 import EconDataWidget from './Widgets/EconDataWidget';
 import MarketOverviewWidget from './Widgets/MarketOverviewWidget';
+// import ReactGa from 'react-ga';
 
-const Dashboard = () => (
-  <div className="Dashboard">
-    <Container fluid>
-      <Row>
-        <Col><ScrollingWidget /></Col>
-      </Row>
+
+const Dashboard = () => {
+  
+  
+  return (
+     <Fragment>
+      <ScrollingWidget />
+      <Container >
       <br />
       <Row className="mb-3">
-          <Col className="d-flex justify-content-between">
+          <Col className="d-flex justify-content-center">
             <h1>Market Overview</h1>
         </Col>
       </Row>
@@ -35,11 +38,12 @@ const Dashboard = () => (
           <h3><Badge variant="light">Upcoming Economic Events</Badge></h3>
           <EconDataWidget />
         </Col>
-        
+
       </Row>
     </Container>
-  </div>
+    </Fragment>
+  )
 
-);
+ }
 
 export default Dashboard;
