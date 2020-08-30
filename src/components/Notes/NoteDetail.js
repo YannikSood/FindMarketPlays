@@ -17,6 +17,7 @@ const NoteDetail = ({currentUser, addNote, addErrors}) => {
   const [note, setNote] = useState([]);
   const slug = useParams();
   useEffect(() => {
+    console.log(currentUser)
     firebase
       .database()
       .ref(`/user-notes/${currentUser.id}/${slug.id}`)
