@@ -66,7 +66,7 @@ const App = () => {
   
   Axios({
     method: "GET",
-    url: "https://findmarketplays.herokuapp.com/test",
+    url: "https://findmarketplays.herokuapp.com/",
     headers: {
       "Content-Type": "application/json"
     }
