@@ -1,8 +1,8 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/row';
-import Col from 'react-bootstrap/col';
-import Button from 'react-bootstrap/button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import * as ProfileAPI from '../../util/profileAPI';
 import { useState, useEffect } from 'react';
