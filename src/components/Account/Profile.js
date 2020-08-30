@@ -75,19 +75,20 @@ const Profile = ({ currentUser, isAuthed }) => {
             {ResetErrors(resetErrors)}
             <Form.Group>
               <Form.Label>
-                Email Address
+                <h2>
+                  Email Address
+                </h2>
               </Form.Label>
               <Form.Control
                 placeholder={emailValue}
                 onChange={(e) => handleChange(e)}
               >
-
               </Form.Control>
             </Form.Group>
-            <Button onClick={() => resetEmail()}>
+            <Button className="mt-4" onClick={() => resetEmail()}>
               Save
             </Button>
-            <Button onClick={() => emailSwitch(false)}>
+            <Button className="mt-4 ml-2" variant="secondary" onClick={() => emailSwitch(false)}>
               Cancel
             </Button>
           </Form>
@@ -100,7 +101,7 @@ const Profile = ({ currentUser, isAuthed }) => {
           {ResetErrors(resetErrors)}
           <Row >
             <Col >
-              <h2 className="border border-white rounded pl-3" >
+              <h2 className="border border-white rounded pl-3 pb-2 pt-2" >
                 Email
               </h2> 
               <h6 className="pl-3">
@@ -111,7 +112,7 @@ const Profile = ({ currentUser, isAuthed }) => {
               </Button>
             </Col>
             <Col >
-              <h2 className="border border-white rounded pl-3" >
+              <h2 className="border border-white rounded pl-3 pt-2 pb-2" >
                 Password
               </h2>
               <h6 className="p-2">
