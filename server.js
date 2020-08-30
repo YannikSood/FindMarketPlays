@@ -7,7 +7,7 @@ const fetch = require("node-fetch");
 app.use(cors());
 app.listen(process.env.PORT || 3000);
 
-app.get("/", (req, res) => {
+app.get("/test", (req, res) => {
   res.send({ message: "Server Connected" });
 });
 
