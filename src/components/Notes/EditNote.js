@@ -56,7 +56,7 @@ const EditNote = ({ currentUser, note }) => {
                 </Form>
                 <ReactQuill
                   theme="snow"
-                  value={bodyValue}
+                  value={bodyValue || ""}
                   onChange={setBodyValue}
                   id="notes-container"
                   placeholder="Compose a note..."
