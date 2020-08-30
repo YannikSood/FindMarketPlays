@@ -71,12 +71,14 @@ const EditNote = ({ currentUser, note }) => {
                 />
                 <Button
                   variant="primary"
+                  className="mt-4"
                   onClick={() => {handleSubmit()}}
                 >
                   Save
                 </Button>
                 <Button
-                  variant="primary"
+                  className="ml-2 mt-4"
+                  variant="secondary"
                   onClick={() => history.push("/notes")}
                 >
                   Cancel
