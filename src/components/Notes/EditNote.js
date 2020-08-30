@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useRef } from 'react';
+import React, { useState, Fragment, useRef, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { Row, Col, Container, Form, Button } from "react-bootstrap";
 import ReactQuill from "react-quill";
@@ -17,10 +17,20 @@ const EditNote = ({ currentUser, note }) => {
     const [titleValue, setTitleValue] = useState(note.title);
     const [noteErrors, setErrors] = useState({});
     const ref = useRef();
+
+    useEffect(() => {
+      checkNote();
+    }, [])
     
     const update = {
       title: titleValue,
       body: bodyValue
+    }
+
+    function checkNote() {
+      if (titleValue === undefined || bodyValue === undefined) {
+        history.push("/notes");
+      }
     }
     
     function handleSubmit() {

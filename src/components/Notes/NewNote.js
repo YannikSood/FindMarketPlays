@@ -46,7 +46,6 @@ const NewNote = ({ isAuthed, currentUser }) => {
       const { errors, isValid } = validateNote(titleValue, bodyText);
       if (!isValid) {
         setErrors(errors);
-        console.log(noteErrors)
         dispatch(receiveErrors(errors));
         return;
       } else {
