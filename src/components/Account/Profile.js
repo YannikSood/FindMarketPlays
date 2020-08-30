@@ -98,27 +98,28 @@ const Profile = ({ currentUser, isAuthed }) => {
           {EmailSuccess(emailSuccess)}
           {PasswordSuccess(passwordSuccess)}
           {ResetErrors(resetErrors)}
-          <Row>
-            <Col>
-              Email:
+          <Row >
+            <Col >
+              <h2 className="border border-white rounded pl-3" >
+                Email
+              </h2> 
+              <h6 className="pl-3">
+                {emailValue}  
+              </h6>
+              <Button className="ml-3" onClick={() => emailSwitch(true)}>
+                Reset Email
+              </Button>
             </Col>
-            <Col>
-              {emailValue}
+            <Col >
+              <h2 className="border border-white rounded pl-3" >
+                Password
+              </h2>
+              <h6 className="p-2">
+              </h6>
+              <Button className="ml-3 mt-1" onClick={() => resetPassword()}>
+                Reset Password
+              </Button>
             </Col>
-            <Button onClick={() => emailSwitch(true)}>
-              Reset
-            </Button>
-          </Row>
-          <Row>
-            <Col>
-              Password:
-          </Col>
-            <Col>
-              ****
-          </Col>
-            <Button onClick={() => resetPassword()}>
-            Reset
-          </Button>
           </Row>
         </Container>
       )
@@ -130,7 +131,7 @@ const Profile = ({ currentUser, isAuthed }) => {
     <div className="About">
       <Container fluid>
         <Row>
-          <Col>
+          <Col align="center">
             <h1>My Account Settings</h1>
           </Col>
         </Row>
