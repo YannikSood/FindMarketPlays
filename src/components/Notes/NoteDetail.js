@@ -45,6 +45,7 @@ const NoteDetail = ({currentUser, addNote }) => {
             <h1 className="d-inline-block">{note.title}</h1>
             <div>
               <Button
+                className="mt-1 ml-2 mr-2"
                 variant="primary"
                 onClick={() => {
                   history.push(`/note/edit/${slug.id}`);
@@ -53,6 +54,7 @@ const NoteDetail = ({currentUser, addNote }) => {
                 Edit
               </Button>
               <Button
+                className="mt-1 ml-2 mr-2"
                 variant="primary"
                 onClick={() => {
                   firebase
@@ -66,6 +68,7 @@ const NoteDetail = ({currentUser, addNote }) => {
                 Delete
               </Button>
               <Button
+                className="mt-1 ml-2 mr-2"
                 variant="primary"
                 onClick={() => {
                   history.push(`/notes`);
