@@ -49,9 +49,9 @@ const Notes = ({ currentUser, isAuthed }) => {
     if (notes.length === 0) return <Row><Col><p>Nothing here yet...</p></Col></Row>;
     return notes.map(note => (
       <tr key={note.id}>
-        <td>
-          <Link className="note-title" to={`/note/${note.id}`}>{note.title}</Link>
-        </td>
+          <td>
+            <Link className="note-title" to={`/note/${note.id}`}>{note.title}</Link>
+          </td>
         <td style={{ width: '25%' }}>{formattedDateDifference(note.createdAt)}</td>
       </tr>
     ));

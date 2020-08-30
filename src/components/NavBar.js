@@ -25,9 +25,9 @@ const NavigationAuth = () => (
         <NavLink className="nav-link" to={ROUTES.NEWS_FEED}>News Feed</NavLink>
         <NavLink className="nav-link" to={ROUTES.PROFILE}>Profile</NavLink>
         {/* <NavLink className="nav-link" to={ROUTES.ABOUT}>About </NavLink> */}
-        <Button className="ml-2" variant="primary" onClick={() => { firebase.auth().signOut(); }}>Sign Out</Button>
       </Nav>
     </Navbar.Collapse>
+    <Button className="ml-2" variant="primary" onClick={() => { firebase.auth().signOut(); }}>Sign Out</Button>
   </Navbar>
 );
 

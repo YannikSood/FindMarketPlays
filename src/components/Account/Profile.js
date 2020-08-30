@@ -75,19 +75,20 @@ const Profile = ({ currentUser, isAuthed }) => {
             {ResetErrors(resetErrors)}
             <Form.Group>
               <Form.Label>
-                Email Address
+                <h2>
+                  Email Address
+                </h2>
               </Form.Label>
               <Form.Control
                 placeholder={emailValue}
                 onChange={(e) => handleChange(e)}
               >
-
               </Form.Control>
             </Form.Group>
-            <Button onClick={() => resetEmail()}>
+            <Button className="mt-4" onClick={() => resetEmail()}>
               Save
             </Button>
-            <Button onClick={() => emailSwitch(false)}>
+            <Button className="mt-4 ml-2" variant="secondary" onClick={() => emailSwitch(false)}>
               Cancel
             </Button>
           </Form>
@@ -98,27 +99,28 @@ const Profile = ({ currentUser, isAuthed }) => {
           {EmailSuccess(emailSuccess)}
           {PasswordSuccess(passwordSuccess)}
           {ResetErrors(resetErrors)}
-          <Row>
-            <Col>
-              Email:
+          <Row >
+            <Col >
+              <h2 className="border border-white rounded pl-3 pb-2 pt-2" >
+                Email
+              </h2> 
+              <h6 className="pl-3">
+                {emailValue}  
+              </h6>
+              <Button className="ml-3" onClick={() => emailSwitch(true)}>
+                Reset Email
+              </Button>
             </Col>
-            <Col>
-              {emailValue}
+            <Col >
+              <h2 className="border border-white rounded pl-3 pt-2 pb-2" >
+                Password
+              </h2>
+              <h6 className="p-2">
+              </h6>
+              <Button className="ml-3 mt-1" onClick={() => resetPassword()}>
+                Reset Password
+              </Button>
             </Col>
-            <Button onClick={() => emailSwitch(true)}>
-              Reset
-            </Button>
-          </Row>
-          <Row>
-            <Col>
-              Password:
-          </Col>
-            <Col>
-              ****
-          </Col>
-            <Button onClick={() => resetPassword()}>
-            Reset
-          </Button>
           </Row>
         </Container>
       )
@@ -130,7 +132,7 @@ const Profile = ({ currentUser, isAuthed }) => {
     <div className="About">
       <Container fluid>
         <Row>
-          <Col>
+          <Col align="center">
             <h1>My Account Settings</h1>
           </Col>
         </Row>
