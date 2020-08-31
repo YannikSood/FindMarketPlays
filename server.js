@@ -2,6 +2,8 @@ const express = require("express"),
   app = express(),
   cors = require("cors");
 
+const router = app.router();
+
 const fetch = require("node-fetch");
 
 var path = require('path');
@@ -9,17 +11,17 @@ var path = require('path');
 app.use(cors());
 app.listen(process.env.PORT || 3000);
 // app.use(express.static(path.join(__dirname, "public")));
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
   res.send({ message: "Server Connected" });
 });
 
 
-app.get("/optionsAPI/:ticker", async (req, res) => {
+router.get("/optionsAPI/:ticker", async (req, res) => {
         var tempJSON = [];
         const searchString = `${req.params.ticker}`;
         const url = `https://api.benzinga.com/api/v1/signal/option_activity?page=1&parameters%5Btickers%5D=${searchString}&token=bd2570cf59734eb9934b3cd886ce958b`;
 
-        await fetch(url, { headers: { Accept: 'application/json' } })
+        await fetch(url, { headers: { Accept: 'routerlication/json' } })
         .then(res => res.json()
         .then((json) => {
             
@@ -32,7 +34,7 @@ app.get("/optionsAPI/:ticker", async (req, res) => {
         res.send({ message: tempJSON });
 });
 
-app.get("/newsAPI/:ticker", async (req, res) => {
+router.get("/newsAPI/:ticker", async (req, res) => {
     var tempJSON = [];
     const searchString = `${req.params.ticker}`;
     const url = `https://api.benzinga.com/api/v2/news?pageSize=50&page=0&displayOutput=headline&sort=created%3Adesc&tickers=${searchString}&token=bd2570cf59734eb9934b3cd886ce958b`;
@@ -50,7 +52,7 @@ app.get("/newsAPI/:ticker", async (req, res) => {
     res.send({ message: tempJSON });
 });
 
-app.get('*', function(req, res) {
+app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
