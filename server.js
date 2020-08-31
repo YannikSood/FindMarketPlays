@@ -8,6 +8,17 @@ const path = require('path');
 
 app.use(cors());
 
+app.get('/', function (req, res) {
+  res.send('root')
+})
+
+app.get('/stock', function (req, res) {
+  res.send('stock')
+})
+
+app.get('/optionFeed', function (req, res) {
+  res.send('optionFeed')
+})
 
 app.get("/optionsAPI/:ticker", async (req, res) => {
         var tempJSON = [];
