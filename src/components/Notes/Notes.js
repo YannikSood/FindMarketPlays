@@ -32,10 +32,21 @@ const Notes = ({ currentUser, isAuthed }) => {
     }
   }, [isAuthed, history, currentUser.id]);
 
+  // useEffect(() => {
+  //   firebase.database().ref(`/user-notes/${currentUser.id}`).once('value')
+  //     .then((snapshot) => {
+  //       setNotes(Object.values(snapshot?.val()) || []);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.log('error fetching notes: ', err);
+  //       setIsLoading(false);
+  //     });
+  // }, [currentUser.id]);
   // Handlers
 
   const renderNotes = () => {
-    if (notes.length === 0) return <Row><Col><p className="pl-3 pt-1">Nothing here yet...</p></Col></Row>;
+    if (notes.length === 0) return <Row><Col><p>Nothing here yet...</p></Col></Row>;
     return notes.map(note => (
       <tr key={note.id}>
           <td>

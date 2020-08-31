@@ -1,8 +1,8 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/row';
+import Col from 'react-bootstrap/col';
+import Button from 'react-bootstrap/button';
 import Form from 'react-bootstrap/Form';
 import * as ProfileAPI from '../../util/profileAPI';
 import { useState, useEffect } from 'react';
@@ -104,7 +104,7 @@ const Profile = ({ currentUser, isAuthed }) => {
               <h2 className="border border-white rounded pl-3 pb-2 pt-2" >
                 Email
               </h2> 
-              <h6 className="pl-3 pb-1">
+              <h6 className="pl-3">
                 {emailValue}  
               </h6>
               <Button className="ml-3" onClick={() => emailSwitch(true)}>
@@ -117,7 +117,7 @@ const Profile = ({ currentUser, isAuthed }) => {
               </h2>
               <h6 className="p-2">
               </h6>
-              <Button className="ml-3 mt-2" onClick={() => resetPassword()}>
+              <Button className="ml-3 mt-1" onClick={() => resetPassword()}>
                 Reset Password
               </Button>
             </Col>

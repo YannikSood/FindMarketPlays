@@ -4,20 +4,17 @@ const express = require("express"),
 
 const fetch = require("node-fetch");
 
-var path = require('path');
-
 app.use(cors());
 app.listen(process.env.PORT || 3000);
-app.use(express.static(path.join(__dirname, "public")));
+
 app.get("/", (req, res) => {
   res.send({ message: "Server Connected" });
 });
 
-
 app.get("/optionsAPI/:ticker", async (req, res) => {
         var tempJSON = [];
         const searchString = `${req.params.ticker}`;
-        const url = `https://api.benzinga.com/api/v1/signal/option_activity?page=1&parameters%5Btickers%5D=${searchString}&token=${process.env.REACT_APP_OPTIONS_KEY}`;
+        const url = `https://api.benzinga.com/api/v1/signal/option_activity?page=1&parameters%5Btickers%5D=${searchString}&token=bd2570cf59734eb9934b3cd886ce958b`;
 
         await fetch(url, { headers: { Accept: 'application/json' } })
         .then(res => res.json()
@@ -49,8 +46,3 @@ app.get("/newsAPI/:ticker", async (req, res) => {
     
     res.send({ message: tempJSON });
 });
-
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-

@@ -22,11 +22,9 @@ import NewsFeed from './components/News/NewsFeed';
 import Notes from './components/Notes/Notes';
 import NoteDetail from './components/Notes/NoteDetail';
 import EditNote from './components/Notes/EditNote';
-import TOS from './components/TOS/TOS';
 import 'react-quill/dist/quill.snow.css';
 import './App.css';
 import Dashboard from './components/Dashboard';
-import Splash from './components/Splash/Splash';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import ForgotPassword from './components/Auth/ForgotPassword';
@@ -68,7 +66,7 @@ const App = () => {
   
   Axios({
     method: "GET",
-    url: "https://findmarketplays.herokuapp.com/",
+    url: "http://localhost:3000/",
     headers: {
       "Content-Type": "application/json"
     }
@@ -83,21 +81,13 @@ const App = () => {
         { isLoading ? (
           <Loader />
         ) : (
-          <Router >
+          <Router>
             <Fragment>
               <Navigation />
               <div className="app__wrapper">
                 <Switch>
                   <Route exact path={ROUTES.DASHBOARD}>
                     <Dashboard />
-                  </Route>
-
-                  <Route exact path={ROUTES.TOS}>
-                    <TOS/>
-                  </Route>
-
-                  <Route exact path={ROUTES.SPLASH}>
-                    <Splash />
                   </Route>
 
                   <Route path={ROUTES.LOGIN}>

@@ -42,30 +42,18 @@ const Register = ({ isAuthed }) => {
         </Row>
         <Row>
           <Col>
-            {RegisterErrors(registerErrors)}
+          {RegisterErrors(registerErrors)}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  name="email"
-                  type="email"
-                  placeholder="Enter email"
-                  onChange={handleChange}
-                  value={credentials.email}
-                />
+                <Form.Control name="email" type="email" placeholder="Enter email" onChange={handleChange} value={credentials.email} />
                 <Form.Text className="text-muted">
                   We&apos;ll never share your email with anyone else.
                 </Form.Text>
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  onChange={handleChange}
-                  value={credentials.password}
-                />
+                <Form.Control name="password" type="password" placeholder="Password" onChange={handleChange} value={credentials.password} />
               </Form.Group>
               <Button variant="primary" type="submit">
                 Submit
@@ -75,16 +63,12 @@ const Register = ({ isAuthed }) => {
         </Row>
         <Row>
           <Col>
-            <Button className="mt-2" href={ROUTES.LOGIN} variant="secondary">
-              Back to Login
-            </Button>
+            <Button href={ROUTES.LOGIN} variant="secondary">Back to Login</Button>
           </Col>
         </Row>
         <Row>
           <Col>
-            <Button href={ROUTES.FORGOT_PASSWORD} variant="link">
-              Forgot Password
-            </Button>
+            <Button href={ROUTES.FORGOT_PASSWORD} variant="link">Forgot Password</Button>
           </Col>
         </Row>
       </Container>
