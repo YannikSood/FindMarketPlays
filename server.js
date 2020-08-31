@@ -4,14 +4,9 @@ const express = require("express"),
 
 const fetch = require("node-fetch");
 
-var path = require('path');
+const path = require('path');
 
 app.use(cors());
-app.listen(process.env.PORT || 3000);
-
-// app.get("/", (req, res) => {
-//   res.send({ message: "Server Connected" });
-// });
 
 
 app.get("/optionsAPI/:ticker", async (req, res) => {
@@ -50,7 +45,17 @@ app.get("/newsAPI/:ticker", async (req, res) => {
     res.send({ message: tempJSON });
 });
 
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+}
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+ console.log('Listening on port', port);
 });
+
+// app.get('*', (req,res) => {
+//   res.sendFile(path.join(__dirname, 'client/public/index.html'));
+//  });
 
