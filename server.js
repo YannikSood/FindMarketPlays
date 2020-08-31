@@ -51,6 +51,6 @@ app.get("/newsAPI/:ticker", async (req, res) => {
 });
 
 app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, './public', 'index.html'));
+  res.sendFile('public/index.html', { root: __dirname });
 });
 
