@@ -8,17 +8,17 @@ const path = require('path');
 
 app.use(cors());
 
-app.get('/', function (req, res) {
-  res.send('root')
-})
+// app.get('/', function (req, res) {
+//   res.send('root')
+// })
 
-app.get('/stock', function (req, res) {
-  res.send('stock')
-})
+// app.get('/stock', function (req, res) {
+//   res.send('stock')
+// })
 
-app.get('/optionFeed', function (req, res) {
-  res.send('optionFeed')
-})
+// app.get('/optionFeed', function (req, res) {
+//   res.send('optionFeed')
+// })
 
 app.get("/optionsAPI/:ticker", async (req, res) => {
         var tempJSON = [];
@@ -66,7 +66,11 @@ app.listen(port, () => {
  console.log('Listening on port', port);
 });
 
-// app.get('*', (req,res) => {
-//   res.sendFile(path.join(__dirname, 'client/public/index.html'));
-//  });
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'client/build/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
