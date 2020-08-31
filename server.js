@@ -8,7 +8,7 @@ var path = require('path');
 
 app.use(cors());
 app.listen(process.env.PORT || 3000);
-// app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => {
   res.send({ message: "Server Connected" });
 });
