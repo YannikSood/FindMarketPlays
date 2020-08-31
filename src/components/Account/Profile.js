@@ -104,7 +104,7 @@ const Profile = ({ currentUser, isAuthed }) => {
               <h2 className="border border-white rounded pl-3 pb-2 pt-2" >
                 Email
               </h2> 
-              <h6 className="pl-3">
+              <h6 className="pl-3 pb-1">
                 {emailValue}  
               </h6>
               <Button className="ml-3" onClick={() => emailSwitch(true)}>
@@ -117,7 +117,7 @@ const Profile = ({ currentUser, isAuthed }) => {
               </h2>
               <h6 className="p-2">
               </h6>
-              <Button className="ml-3 mt-1" onClick={() => resetPassword()}>
+              <Button className="ml-3 mt-2" onClick={() => resetPassword()}>
                 Reset Password
               </Button>
             </Col>
