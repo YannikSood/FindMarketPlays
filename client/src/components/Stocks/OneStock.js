@@ -7,6 +7,7 @@ import SSIWidget from '../Widgets/SingleStockInfo';
 import SSFWidget from '../Widgets/SSFinancials';
 import StockProfile from '../Widgets/StockProfile';
 import { debounce } from '../../helpers/SearchHelper';
+import { $ } from 'jquery';
 
 const OneStock = () => {
   // Hooks
@@ -16,7 +17,6 @@ const OneStock = () => {
   const handleInputChange = (event) => {
     debounce(setSearchedValue(event.target.value.toUpperCase()), 300);
   };
-
 
   return (
     <Fragment>
@@ -33,6 +33,7 @@ const OneStock = () => {
                   value={searchedValue}
                   onChange={handleInputChange}
                   placeholder="Enter Stock Ticker"
+                  id="no_enter"
                 />
               </Form.Group>
             </Form>
