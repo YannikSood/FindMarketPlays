@@ -5,7 +5,7 @@ const UnusualOptionsFlow = props => (
   <Table striped bordered hover variant="dark">
     <thead>
       <tr>
-        {/* <th>Date Of Order</th> */}
+        <th>Order Date</th>
         {/* <th>Ticker</th> */}
         <th>Description</th>
         <th>Sentiment</th>
@@ -23,7 +23,7 @@ const UnusualOptionsFlow = props => (
       <tbody key={item.id}>
         
         <tr>
-          {/* <td>{item.date}</td> */}
+          <td>{item.date}</td>
           {/* <td>{item.ticker}</td> */}
           <td>Someone spent {new Intl.NumberFormat("en-US", {
               style: "currency",
