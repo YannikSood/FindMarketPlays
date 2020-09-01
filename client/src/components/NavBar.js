@@ -21,7 +21,7 @@ const NavigationAuth = () => (
     variant="dark"
     fixed="top"
   >
-    <Navbar.Brand href={"/"}>Platform</Navbar.Brand>
+    <Navbar.Brand href={"/"}>FMP</Navbar.Brand>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav>
@@ -58,7 +58,7 @@ const NavigationNonAuth = () => (
     variant="dark"
     fixed="top"
   >
-    <Navbar.Brand href={"/"}>Platform</Navbar.Brand>
+    <Navbar.Brand href={"/"}>FMP</Navbar.Brand>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav>
