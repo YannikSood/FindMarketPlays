@@ -18,8 +18,10 @@ class StockProfile extends React.Component {
     script.innerHTML = JSON.stringify(
       {
         symbol: this.props.value,
-        width: 380,
-        height: 240,
+        width: "100%",
+        // height: "100%",
+        // width: 380,
+        height: 226,
         colorTheme: 'dark',
         isTransparent: false,
         locale: 'en',
