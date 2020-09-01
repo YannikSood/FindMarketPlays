@@ -5,8 +5,11 @@ const express = require("express"),
 const fetch = require("node-fetch");
 
 const path = require('path');
+// var enforce = require('express-sslify');
 
 app.use(cors());
+
+// app.use(enforce.HTTPS());
 
 // app.get('/', function (req, res) {
 //   res.send('root')
