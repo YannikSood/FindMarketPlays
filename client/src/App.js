@@ -23,12 +23,14 @@ import Notes from './components/Notes/Notes';
 import NoteDetail from './components/Notes/NoteDetail';
 import EditNote from './components/Notes/EditNote';
 import 'react-quill/dist/quill.snow.css';
+import TOS from "./components/TOS/TOS";
 import './App.css';
 import Dashboard from './components/Dashboard';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import * as ROUTES from './routes/routes';
+import Splash from "./components/Splash/Splash";
 // import StripeSubscribe from './components/Stripe/Subscribe';
 import Profile from './components/Account/Profile';
 import NewNote from './components/Notes/NewNote';
@@ -79,8 +81,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-
-        { isLoading ? (
+        {isLoading ? (
           <Loader />
         ) : (
           <Router>
@@ -143,6 +144,14 @@ const App = () => {
                   {/* <Route path={ROUTES.STRIPE_SUBSCRIBE}>
                     <StripeSubscribe />
                   </Route> */}
+
+                  <Route exact path={ROUTES.TOS}>
+                    <TOS />
+                  </Route>
+
+                  <Route exact path={ROUTES.SPLASH}>
+                    <Splash />
+                  </Route>
 
                   <Route path={ROUTES.PROFILE}>
                     <Profile />

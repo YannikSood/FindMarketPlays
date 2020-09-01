@@ -13,7 +13,7 @@ const Navigation = ({ isAuthed }) => (
 );
 const NavigationAuth = () => (
   <Navbar collapseOnSelect expand="sm" className="justify-content-center" bg="dark" variant="dark" fixed="top">
-    <Navbar.Brand>Platform</Navbar.Brand>
+    <Navbar.Brand href={"/"}>Platform</Navbar.Brand>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav>
@@ -23,7 +23,7 @@ const NavigationAuth = () => (
         <NavLink className="nav-link" to={ROUTES.NOTES}>Notes </NavLink>
         <NavLink className="nav-link" to={ROUTES.UNUSUAL_OPTIONS}>Options Feed</NavLink>
         <NavLink className="nav-link" to={ROUTES.NEWS_FEED}>News Feed</NavLink>
-        <NavLink className="nav-link" to={ROUTES.PROFILE}>Profile</NavLink>
+        <NavLink className="nav-link" to={ROUTES.PROFILE}>Account</NavLink>
         {/* <NavLink className="nav-link" to={ROUTES.ABOUT}>About </NavLink> */}
       </Nav>
     </Navbar.Collapse>
@@ -33,7 +33,7 @@ const NavigationAuth = () => (
 
 const NavigationNonAuth = () => (
   <Navbar collapseOnSelect expand="sm" className="justify-content-center" bg="dark" variant="dark" fixed="top">
-    <Navbar.Brand>Platform</Navbar.Brand>
+    <Navbar.Brand href={'/'}>Platform</Navbar.Brand>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav>
@@ -44,9 +44,9 @@ const NavigationNonAuth = () => (
         <NavLink className="nav-link" to={ROUTES.UNUSUAL_OPTIONS}>Options Feed</NavLink>
         <NavLink className="nav-link" to={ROUTES.NEWS_FEED}>News Feed</NavLink>
         {/* <NavLink className="nav-link" to={ROUTES.ABOUT}>About </NavLink> */}
-        <NavLink to={ROUTES.LOGIN}><Button className="ml-2" variant="primary">Log In/Sign Up</Button></NavLink>
       </Nav>
-    </Navbar.Collapse>
+      </Navbar.Collapse>
+      <NavLink to={ROUTES.LOGIN}><Button className="ml-2" variant="primary">Log In/Sign Up</Button></NavLink>
   </Navbar>
 );
 const mapStateToProps = (state) => {

@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 // NOTE: Before this goes live, these should be set as secret keys in environment variables
 const config = {
-  apiKey: 'AIzaSyCU32UjFCylBIswXOL2mSkj01xsr3T5eWE',
+  apiKey: `${process.env.REACT_APP_FIREBASE_KEY}`,
   authDomain: 'findmarketplays-f8556.firebaseapp.com',
   databaseURL: 'https://findmarketplays-f8556.firebaseio.com',
   projectId: 'findmarketplays-f8556',

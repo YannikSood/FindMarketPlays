@@ -13,4 +13,6 @@ export const NEWS_FEED = '/newsFeed';
 export const ABOUT = '/about';
 export const PROFILE = '/profile';
 export const EDIT_NOTE = '/note/edit/:id';
+export const SPLASH ='/';
+export const TOS = "/tos";
 
