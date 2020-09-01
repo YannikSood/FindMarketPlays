@@ -30,7 +30,7 @@ const UnusualOptionsFlow = props => (
               currency: "USD",
               minimumFractionDigits: 0,
               maximumFractionDigits: 0
-            }).format( item.cost_basis)} on {item.size} {item.ticker} ${item.strike_price} {item.put_call} options, expiring on {item.date_expiration}. Current price is {item.strike_price}.</td>
+            }).format( item.cost_basis)} on {item.size} {item.ticker} ${item.strike_price} {item.put_call} options, expiring on {item.date_expiration}.</td>
           <td>{item.sentiment}</td>
           {/* <td>{item.size}</td> */}
           {/* <td>{item.put_call}</td>
