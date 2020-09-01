@@ -12,13 +12,13 @@ const Splash = () => {
       <Container>
         <Row>
           <Col className="text-center pt-5 mt-5">
-            <h1>FindMarketPlays</h1>
+            <h1>FindMarketPlays.com</h1>
           </Col>
         </Row>
         <Row>
           <Col className="text-center pt-2">
             <p>
-                Simplifying trading research
+                Simple trading research is here
             </p>
           </Col>
         </Row>
