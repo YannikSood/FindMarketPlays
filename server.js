@@ -4,15 +4,29 @@ const express = require("express"),
 
 const fetch = require("node-fetch");
 
-var path = require('path');
+const path = require('path');
 
 app.use(cors());
+<<<<<<< HEAD
 app.listen(process.env.PORT || 3000);
 app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => {
   res.send({ message: "Server Connected" });
 });
+=======
+>>>>>>> eaa09047a8e927f5519f9a7bec0dcf3b986fa0be
 
+// app.get('/', function (req, res) {
+//   res.send('root')
+// })
+
+// app.get('/stock', function (req, res) {
+//   res.send('stock')
+// })
+
+// app.get('/optionFeed', function (req, res) {
+//   res.send('optionFeed')
+// })
 
 app.get("/optionsAPI/:ticker", async (req, res) => {
         var tempJSON = [];
@@ -50,7 +64,21 @@ app.get("/newsAPI/:ticker", async (req, res) => {
     res.send({ message: tempJSON });
 });
 
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+}
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+ console.log('Listening on port', port);
 });
+
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'client/build/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
