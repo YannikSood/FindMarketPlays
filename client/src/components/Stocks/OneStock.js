@@ -17,7 +17,6 @@ const OneStock = () => {
     debounce(setSearchedValue(event.target.value.toUpperCase()), 300);
   };
 
-
   return (
     <Fragment>
       <ScrollingWidget />
@@ -33,6 +32,7 @@ const OneStock = () => {
                   value={searchedValue}
                   onChange={handleInputChange}
                   placeholder="Enter Stock Ticker"
+                  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                 />
               </Form.Group>
             </Form>

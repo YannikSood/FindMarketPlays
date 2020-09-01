@@ -9,12 +9,19 @@ import ScrollingWidget from '../Widgets/ScrollingWidget';
 import NewsFlow from './NewsFlow';
 import * as ROUTES from '../../routes/routes';
 import { debounce } from '../../helpers/SearchHelper';
+import SymbolErrors from '../Errors/SymbolErrors';
 
 const NewsFeed = ({ isAuthed }) => {
   // Hooks
-  const [searchedValue, setSearchedValue] = useState('AMZN');
+  const [searchedValue, setSearchedValue] = useState('MSFT');
   const [options, setOptions] = useState([]);
   const history = useHistory();
+
+  const showErr = () => {
+    if (!Object.values(options).length) {
+      return SymbolErrors()
+    }
+  }
 
   useEffect(() => {
     if (!isAuthed) {
@@ -54,9 +61,11 @@ const NewsFeed = ({ isAuthed }) => {
                   value={searchedValue}
                   onChange={handleInputChange}
                   placeholder="Enter Stock Ticker"
+                  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                 />
               </Form.Group>
             </Form>
+            {showErr()}
           </Col>
         </Row>
         <Row>

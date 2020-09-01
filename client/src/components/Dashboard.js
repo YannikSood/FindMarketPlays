@@ -23,8 +23,8 @@ const Dashboard = () => {
             <h1>Market Overview</h1>
         </Col>
       </Row>
-      <Row>
-        <Col  md={12} lg={4}>
+      <Row className="d-flex align-content-center">
+          <Col md={12} lg={4} >
           <h3><Badge variant="light">Biggest Movers Today</Badge></h3>
           <MarketDataWidget />
         </Col>

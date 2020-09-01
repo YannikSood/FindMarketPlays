@@ -8,12 +8,19 @@ import { useHistory } from 'react-router-dom';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
 import UnusualOptionsFlow from './UnusualOptionFlow';
 import { debounce } from '../../helpers/SearchHelper';
+import SymbolErrors from '../Errors/SymbolErrors';
 
 const UnusualOptions = ({ isAuthed }) => {
   // Hooks
-  const [searchedValue, setSearchedValue] = useState('MSFT');
+  const [searchedValue, setSearchedValue] = useState('AMZN');
   const [options, setOptions] = useState([]);
   const history = useHistory();
+
+  const showErr = () => {
+    if (!Object.values(options).length) {
+      return SymbolErrors()
+    }
+  }
 
   useEffect(() => {
     if (!isAuthed) {
@@ -27,7 +34,7 @@ const UnusualOptions = ({ isAuthed }) => {
                 // console.log(json);
                 setOptions(json.message.option_activity || []);
               }))
-            .catch(err => console.error(err)); // eslint-disable-line
+            .catch(err => console.log(err)); // eslint-disable-line
         };
         debounce(fetchData());  
     }
@@ -54,9 +61,11 @@ const UnusualOptions = ({ isAuthed }) => {
                   value={searchedValue}
                   onChange={handleInputChange}
                   placeholder="Enter Stock Ticker"
+                  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                 />
               </Form.Group>
             </Form>
+            {showErr()}
           </Col>
         </Row>
         <Row>

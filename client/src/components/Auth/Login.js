@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { Row, Col, Container, Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import { useHistory } from 'react-router-dom';
+import { useHistory, withRouter} from 'react-router-dom';
 import * as ROUTES from '../../routes/routes';
 import firebase from '../../firebase/firebase';
 import { receiveUser } from '../../reducers/authReducer';
@@ -15,7 +15,7 @@ const Login = ({ isAuthed }) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (isAuthed) history.push('/');
+    if (isAuthed) history.go(-1);
   }, [isAuthed, history]);
 
   const handleChange = (e) => {
@@ -99,4 +99,4 @@ const mapStateToProps = (state) => {
     isAuthed: auth.isAuthed,
   };
 };
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(withRouter(Login));
