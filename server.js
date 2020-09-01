@@ -7,14 +7,6 @@ const fetch = require("node-fetch");
 const path = require('path');
 
 app.use(cors());
-<<<<<<< HEAD
-app.listen(process.env.PORT || 3000);
-app.use(express.static(path.join(__dirname, "public")));
-app.get("/", (req, res) => {
-  res.send({ message: "Server Connected" });
-});
-=======
->>>>>>> eaa09047a8e927f5519f9a7bec0dcf3b986fa0be
 
 // app.get('/', function (req, res) {
 //   res.send('root')
