@@ -18,7 +18,7 @@ class SSIWidget extends React.Component {
       script.innerHTML = JSON.stringify(
         {
           symbol: this.props.value,
-          width: 380,
+          width: 360,
           locale: 'en',
           colorTheme: 'dark',
           isTransparent: false,

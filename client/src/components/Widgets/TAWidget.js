@@ -18,7 +18,7 @@ class TAWidget extends React.Component {
     script.innerHTML = JSON.stringify(
       {
         interval: '1m',
-        width: 380,
+        width: 360,
         isTransparent: false,
         height: 450,
         symbol: this.props.value,
