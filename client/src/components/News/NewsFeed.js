@@ -54,6 +54,7 @@ const NewsFeed = ({ isAuthed }) => {
                   value={searchedValue}
                   onChange={handleInputChange}
                   placeholder="Enter Stock Ticker"
+                  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                 />
               </Form.Group>
             </Form>
