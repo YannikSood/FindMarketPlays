@@ -8,8 +8,6 @@ const path = require('path');
 
 app.use(cors());
 
-app.require('dotenv').config();
-
 // app.get('/', function (req, res) {
 //   res.send('root')
 // })
@@ -25,7 +23,7 @@ app.require('dotenv').config();
 app.get("/optionsAPI/:ticker", async (req, res) => {
         var tempJSON = [];
         const searchString = `${req.params.ticker}`;
-        const url = `https://api.benzinga.com/api/v1/signal/option_activity?page=1&parameters%5Btickers%5D=${searchString}&token=${process.env.OPTIONS_ID}`;
+        const url = `https://api.benzinga.com/api/v1/signal/option_activity?page=1&parameters%5Btickers%5D=${searchString}&token=bd2570cf59734eb9934b3cd886ce958b`;
 
         await fetch(url, { headers: { Accept: 'application/json' } })
         .then(res => res.json()
@@ -43,7 +41,7 @@ app.get("/optionsAPI/:ticker", async (req, res) => {
 app.get("/newsAPI/:ticker", async (req, res) => {
     var tempJSON = [];
     const searchString = `${req.params.ticker}`;
-    const url = `https://api.benzinga.com/api/v2/news?pageSize=50&page=0&displayOutput=headline&sort=created%3Adesc&tickers=${searchString}&token=${process.env.OPTIONS_ID}`;
+    const url = `https://api.benzinga.com/api/v2/news?pageSize=50&page=0&displayOutput=headline&sort=created%3Adesc&tickers=${searchString}&token=bd2570cf59734eb9934b3cd886ce958b`;
 
     await fetch(url, { headers: { Accept: 'application/json' } })
     .then(res => res.json()
