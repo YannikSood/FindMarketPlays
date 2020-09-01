@@ -5,7 +5,7 @@ import { Navbar, Nav, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ROUTES from '../routes/routes';
 import firebase from '../firebase/firebase';
-import { $ } from 'jquery';
+// import { $ } from 'jquery';
 
 // Consider highlighting the active nav link here based on the route param
 

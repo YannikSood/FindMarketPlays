@@ -11,7 +11,7 @@ import { debounce } from '../../helpers/SearchHelper';
 
 const UnusualOptions = ({ isAuthed }) => {
   // Hooks
-  const [searchedValue, setSearchedValue] = useState('MSFT');
+  const [searchedValue, setSearchedValue] = useState('AMZN');
   const [options, setOptions] = useState([]);
   const history = useHistory();
 

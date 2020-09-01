@@ -12,7 +12,7 @@ import { debounce } from '../../helpers/SearchHelper';
 
 const NewsFeed = ({ isAuthed }) => {
   // Hooks
-  const [searchedValue, setSearchedValue] = useState('AMZN');
+  const [searchedValue, setSearchedValue] = useState('MSFT');
   const [options, setOptions] = useState([]);
   const history = useHistory();
 
