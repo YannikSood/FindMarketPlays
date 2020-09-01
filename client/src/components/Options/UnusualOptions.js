@@ -3,15 +3,19 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
+import InputGroup from "react-bootstrap/InputGroup";
 import Form from 'react-bootstrap/Form';
+import Button from "react-bootstrap/Button";
 import { useHistory } from 'react-router-dom';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
 import UnusualOptionsFlow from './UnusualOptionFlow';
 import { debounce } from '../../helpers/SearchHelper';
 import SymbolErrors from '../Errors/SymbolErrors';
+import AdvancedSearch from './AdvancedSearch';
 
 const UnusualOptions = ({ isAuthed }) => {
   // Hooks
+  const [advancedSearch, setAdvancedSearch] = useState(false);
   const [searchedValue, setSearchedValue] = useState('AMZN');
   const [options, setOptions] = useState([]);
   const history = useHistory();
@@ -55,7 +59,12 @@ const UnusualOptions = ({ isAuthed }) => {
             <Form>
               <h1>Find Unusual Options Trades</h1>
               <h5>ENTER STOCK TICKER</h5>
-              <Form.Group>
+              <InputGroup>
+                <InputGroup.Append>
+                  <Button>
+                    Advanced Search
+                  </Button>
+                </InputGroup.Append>
                 <Form.Control
                   type="text"
                   value={searchedValue}
@@ -63,7 +72,7 @@ const UnusualOptions = ({ isAuthed }) => {
                   placeholder="Enter Stock Ticker"
                   onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                 />
-              </Form.Group>
+              </InputGroup>
             </Form>
             {showErr()}
           </Col>
