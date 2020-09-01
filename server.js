@@ -8,6 +8,8 @@ const path = require('path');
 
 app.use(cors());
 
+app.require('dotenv').config();
+
 // app.get('/', function (req, res) {
 //   res.send('root')
 // })
