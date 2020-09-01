@@ -18,13 +18,13 @@ const Splash = () => {
         <Row>
           <Col className="text-center pt-2">
             <p>
-                Simple trading research is here
+                Simple trading research is overdue
             </p>
           </Col>
         </Row>
         <Row>
           <Col className="text-center">
-            <Button onClick={() => history.push("/market")} variant="light">Get Started</Button>
+            <Button onClick={() => history.push("/stock")} variant="light">Get Started</Button>
           </Col>
         </Row>
         <Row>
