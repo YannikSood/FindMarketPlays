@@ -1,4 +1,6 @@
 import firebase from 'firebase';
+require("dotenv").config();
+
 // NOTE: Before this goes live, these should be set as secret keys in environment variables
 const config = {
   apiKey: `${process.env.FIREBASE_ID}`,
