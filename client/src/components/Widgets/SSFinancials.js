@@ -22,6 +22,7 @@ class SSFWidget extends React.Component {
          isTransparent: false,
          largeChartUrl: '',
          displayMode: 'regular',
+
          width: 360,
          height: 450,
          locale: 'en',

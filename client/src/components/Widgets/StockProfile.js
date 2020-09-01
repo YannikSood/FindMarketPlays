@@ -19,7 +19,7 @@ class StockProfile extends React.Component {
       {
         symbol: this.props.value,
         width: 360,
-        height: 240,
+        height: 226,
         colorTheme: 'dark',
         isTransparent: false,
         locale: 'en',
