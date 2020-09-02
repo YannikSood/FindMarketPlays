@@ -9,17 +9,23 @@ import Button from "react-bootstrap/Button";
 import { useHistory } from 'react-router-dom';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
 import DatePicker from 'react-datepicker';
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const AdvancedSearch = ( {ticker} ) => {
-    const [afterDate, setAfterDate] = useState(new Date(2020, 7, 5));
-    const [beforeDate, setBeforeDate] = useState(new Date(2020, 7, 1));
+    const [afterDate, setAfterDate] = useState(false);
+    const [beforeDate, setBeforeDate] = useState(false);
 
     const search = () => {
-      // const url = `/beforeSearch/${beforeDate}/${afterDate}/${ticker}`;
-      const url = `https://api.benzinga.com/api/v1/signal/option_activity?parameters%5Bdate_from%5D=${beforeDate}&parameters%5Bdate_to%5D=${afterDate}&parameters%5Btickers%5D=${ticker}&token=bd2570cf59734eb9934b3cd886ce958b`
+      const url = `/beforeSearch/${beforeDate}/${afterDate}/${ticker}`;
+      console.log(beforeDate)
+      console.log('--')
+      console.log(afterDate)
+      // const url = `https://api.benzinga.com/api/v1/signal/option_activity?parameters%5Bdate_from%5D=${beforeDate}&parameters%5Bdate_to%5D=${afterDate}&parameters%5Btickers%5D=${ticker}&token=bd2570cf59734eb9934b3cd886ce958b`
       fetch(url, { headers: { Accept: 'application/json' } })
+        // .then(res => console.log(res)
         .then(res => res.json()
+        
           .then((json) => {
             console.log(json);
             // setOptions(json.message.option_activity || []);
@@ -29,34 +35,37 @@ const AdvancedSearch = ( {ticker} ) => {
 
     return (
       <Container>
-        <Row>
-          <Col>
+        <Row className="d-flex justify-content-center">
+          <Col >
             {/* <h1>Advanced Search</h1> */}
             <InputGroup>
-              <Col className="align=center">
-                <Row>
-                    <Form.Check name="date" inline label="On" type="radio"/>
-                    <Form.Check name="date" inline label="Before" type="radio"/>
-                    <Form.Check name="date" inline label="After" type="radio"/>
-                    <Form.Check name="date" inline label="Between" type="radio"/>
-
-                </Row>
-                <Row>
+              <Row >
+                <Col>
                   <DatePicker
+                    placeholderText="From this date"
                     selected={beforeDate}
                     onChange={(date) => setBeforeDate(date)}
                   />
-                </Row>
-                <Row>
+                </Col>
+                <Col>
                   <DatePicker
+                    placeholderText="To this date"
                     selected={afterDate}
                     onChange={(date) => setAfterDate(date)}
                   />
+                </Col>
+                <Col >
+                <Row>
+                  <Button onClick={() => search()}>
+                    Search
+                  </Button>
+
+                  
                 </Row>
-              </Col>          
-              <Button onClick={() => search()}>
-                Search
-              </Button>
+                </Col>
+                {/* <Col>
+                </Col> */}
+              </Row>          
             </InputGroup>
           </Col>
         </Row>

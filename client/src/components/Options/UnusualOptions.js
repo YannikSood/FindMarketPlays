@@ -28,12 +28,27 @@ const UnusualOptions = ({ isAuthed, sendTicker }) => {
           <Row>
             <Col>
               <AdvancedSearch/>
-              <Button onClick={() => setAdvancedSearch(false)} variant="secondary">Close</Button>
             </Col>
           </Row>
 
         </Container>
       );
+    }
+  }
+
+  const SwitchButtons = () => {
+    if (advancedSearch) {
+      return (
+        <Button variant="secondary" onClick={() => setAdvancedSearch(false)}>
+          Close
+        </Button>
+      )
+    } else {
+      return (
+        <Button onClick={() => setAdvancedSearch(true)}>
+          Advanced Search
+        </Button>
+      )
     }
   }
 
@@ -85,9 +100,7 @@ const UnusualOptions = ({ isAuthed, sendTicker }) => {
                   onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                 />
                 <InputGroup.Append>
-                  <Button onClick={() => setAdvancedSearch(true)}>
-                    Advanced Search
-                  </Button>
+                  <SwitchButtons/>
                 </InputGroup.Append>
               </InputGroup>
             </Form>
