@@ -8,6 +8,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from "react-bootstrap/Button";
 import { useHistory } from 'react-router-dom';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
+import Axios from "axios";
+
 // import DatePicker from 'react-datepicker';
 // import fetch from 'node-fetch';
 // import moment from "moment";
@@ -30,20 +32,21 @@ const AdvancedSearch = ( {ticker} ) => {
     
     const search = () => {
       const url = `/beforeSearch/${beforeDate}/${afterDate}/${ticker}`;
-      console.log(typeof beforeDate)
-      console.log('--')
-      console.log(typeof afterDate)
-      console.log(afterDate)
+      // console.log(url)
       // const url = `https://api.benzinga.com/api/v1/signal/option_activity?parameters%5Bdate_from%5D=${beforeDate}&parameters%5Bdate_to%5D=${afterDate}&parameters%5Btickers%5D=${ticker}&token=bd2570cf59734eb9934b3cd886ce958b`
-      fetch(url, { headers: { Accept: 'application/json' } })
-        // .then(res => console.log(res)
-        .then(res => res.json()
+      // fetch(url, { headers: { Accept: 'application/json' } })
+      //   // .then(res => console.log(res)
+      //   .then(res => res.json()
         
-          .then((json) => {
-            console.log(json);
-            // setOptions(json.message.option_activity || []);
-          }))
-        .catch(err => console.log("hey you have an error" + err))
+      //     .then((json) => {
+      //       console.log(json);
+      //       // setOptions(json.message.option_activity || []);
+      //     }))
+      //   .catch(err => console.log("hey you have an error" + err))
+      Axios.get(url, {
+        headers: {"Content-Type": "application/json"}
+      })
+      .then(res => console.log(res.data))
     }
 
     return (
