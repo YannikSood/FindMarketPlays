@@ -16,15 +16,16 @@ const AdvancedSearch = ( {ticker} ) => {
     const [beforeDate, setBeforeDate] = useState(new Date(2020, 7, 1));
 
     const search = () => {
-      // const url = `/beforeSearch/${beforeDate}/${afterDate}/${ticker}`;
-      const url = `https://api.benzinga.com/api/v1/signal/option_activity?parameters%5Bdate_from%5D=${beforeDate}&parameters%5Bdate_to%5D=${afterDate}&parameters%5Btickers%5D=${ticker}&token=bd2570cf59734eb9934b3cd886ce958b`
-      fetch(url, { headers: { Accept: 'application/json' } })
-        .then(res => res.json()
-          .then((json) => {
-            console.log(json);
-            // setOptions(json.message.option_activity || []);
-          }))
-        .catch(err => console.log("hey you have an error" + err))
+      const url = `/beforeSearch/${beforeDate}/${afterDate}/${ticker}`;
+      // const url = `https://api.benzinga.com/api/v1/signal/option_activity?parameters%5Bdate_from%5D=${beforeDate}&parameters%5Bdate_to%5D=${afterDate}&parameters%5Btickers%5D=${ticker}&token=bd2570cf59734eb9934b3cd886ce958b`
+      console.log(url);
+        fetch(url, { headers: { Accept: 'application/json' } })
+          .then(res => res.json()
+            .then((json) => {
+              // setOptions(json.message.option_activity || []);
+              console.log(json);
+            }))
+          .catch(err => console.log(err)); // eslint-disable-line
     }
 
     return (
