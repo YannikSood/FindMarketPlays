@@ -8,19 +8,31 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from "react-bootstrap/Button";
 import { useHistory } from 'react-router-dom';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
-import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
 // import fetch from 'node-fetch';
-import 'react-datepicker/dist/react-datepicker.css';
+// import moment from "moment";
+// import 'react-datepicker/dist/react-datepicker.css';
 
 const AdvancedSearch = ( {ticker} ) => {
-    const [afterDate, setAfterDate] = useState(false);
-    const [beforeDate, setBeforeDate] = useState(false);
+    const [afterDate, setAfterDate] = useState();
+    const [beforeDate, setBeforeDate] = useState();
 
+    const reformatDate = (date, flag) => {
+      console.log(date)
+      // let newDate = moment(date).format("YYYY-MM-DD");
+      
+      // if (flag === 'before') {
+      //   setBeforeDate(newDate);
+      // } else {
+      //   setAfterDate(newDate);
+      // }
+    }
+    
     const search = () => {
       const url = `/beforeSearch/${beforeDate}/${afterDate}/${ticker}`;
-      console.log(beforeDate)
+      console.log(typeof beforeDate)
       console.log('--')
-      console.log(afterDate)
+      console.log(typeof afterDate)
       // const url = `https://api.benzinga.com/api/v1/signal/option_activity?parameters%5Bdate_from%5D=${beforeDate}&parameters%5Bdate_to%5D=${afterDate}&parameters%5Btickers%5D=${ticker}&token=bd2570cf59734eb9934b3cd886ce958b`
       fetch(url, { headers: { Accept: 'application/json' } })
         // .then(res => console.log(res)
@@ -36,36 +48,44 @@ const AdvancedSearch = ( {ticker} ) => {
     return (
       <Container>
         <Row className="d-flex justify-content-center">
-          <Col >
+          <Col>
             {/* <h1>Advanced Search</h1> */}
             <InputGroup>
-              <Row >
+              <Row>
                 <Col>
-                  <DatePicker
+                  <InputGroup.Append>From this date</InputGroup.Append>
+                  <Form.Control
+                    placeholder="YYYY-MM-DD"
+                    onChange={(e) => setAfterDate(e.target.value)}
+                  ></Form.Control>
+                  {/* <DatePicker
+                    dateFormat="yyyy-MM-dd"
                     placeholderText="From this date"
-                    selected={beforeDate}
-                    onChange={(date) => setBeforeDate(date)}
-                  />
+                    selected={afterDate}
+                    onChange={(date) => reformatDate(date, "after")}
+                  /> */}
                 </Col>
                 <Col>
-                  <DatePicker
+                  <InputGroup.Append>To this date</InputGroup.Append>
+                  <Form.Control
+                    placeholder="YYYY-MM-DD"
+                    onChange={(e) => setBeforeDate(e.target.value)}
+                  ></Form.Control>
+                  {/* <DatePicker
+                    dateFormat="yyyy-MM-dd"
                     placeholderText="To this date"
-                    selected={afterDate}
-                    onChange={(date) => setAfterDate(date)}
-                  />
+                    selected={beforeDate}
+                    onChange={(date) => reformatDate(date, "before")}
+                  /> */}
                 </Col>
-                <Col >
-                <Row>
-                  <Button onClick={() => search()}>
-                    Search
-                  </Button>
-
-                  
-                </Row>
+                <Col>
+                  <Row>
+                    <Button onClick={() => search()}>Search</Button>
+                  </Row>
                 </Col>
                 {/* <Col>
                 </Col> */}
-              </Row>          
+              </Row>
             </InputGroup>
           </Col>
         </Row>
