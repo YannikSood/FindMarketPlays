@@ -3,17 +3,45 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
+import InputGroup from "react-bootstrap/InputGroup";
 import Form from 'react-bootstrap/Form';
+import Button from "react-bootstrap/Button";
 import { useHistory } from 'react-router-dom';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
 import UnusualOptionsFlow from './UnusualOptionFlow';
 import { debounce } from '../../helpers/SearchHelper';
+import SymbolErrors from '../Errors/SymbolErrors';
+import AdvancedSearch from './AdvancedSearch';
+import { receiveTicker } from '../../actions/advancedSearch';
 
-const UnusualOptions = ({ isAuthed }) => {
+const UnusualOptions = ({ isAuthed, sendTicker }) => {
   // Hooks
+  const [advancedSearch, setAdvancedSearch] = useState(false);
   const [searchedValue, setSearchedValue] = useState('AMZN');
   const [options, setOptions] = useState([]);
   const history = useHistory();
+
+  const displayAdvancedSearch = () => {
+    if (advancedSearch) {
+      return (
+        <Container>
+          <Row>
+            <Col>
+              <AdvancedSearch/>
+              <Button onClick={() => setAdvancedSearch(false)} variant="secondary">Close</Button>
+            </Col>
+          </Row>
+
+        </Container>
+      );
+    }
+  }
+
+  const showErr = () => {
+    if (!Object.values(options).length) {
+      return SymbolErrors()
+    }
+  }
 
   useEffect(() => {
     if (!isAuthed) {
@@ -24,12 +52,12 @@ const UnusualOptions = ({ isAuthed }) => {
           fetch(url, { headers: { Accept: 'application/json' } })
             .then(res => res.json()
               .then((json) => {
-                // console.log(json);
                 setOptions(json.message.option_activity || []);
               }))
-            .catch(err => console.error(err)); // eslint-disable-line
+            .catch(err => console.log(err)); // eslint-disable-line
         };
-        debounce(fetchData());  
+        debounce(fetchData());
+        sendTicker(searchedValue);
     }
   }, [isAuthed, history, searchedValue]);
 
@@ -48,15 +76,23 @@ const UnusualOptions = ({ isAuthed }) => {
             <Form>
               <h1>Find Unusual Options Trades</h1>
               <h5>ENTER STOCK TICKER</h5>
-              <Form.Group>
+              <InputGroup>
                 <Form.Control
                   type="text"
                   value={searchedValue}
                   onChange={handleInputChange}
                   placeholder="Enter Stock Ticker"
+                  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                 />
-              </Form.Group>
+                <InputGroup.Append>
+                  <Button onClick={() => setAdvancedSearch(true)}>
+                    Advanced Search
+                  </Button>
+                </InputGroup.Append>
+              </InputGroup>
             </Form>
+            {showErr()}
+            {displayAdvancedSearch()}
           </Col>
         </Row>
         <Row>
@@ -74,4 +110,8 @@ const mapStateToProps = (state) => {
     isAuthed: auth.isAuthed,
   };
 };
-export default connect(mapStateToProps)(UnusualOptions);
+
+const mapDispatchToProps = (dispatch) => ({
+  sendTicker: (ticker) => dispatch(receiveTicker(ticker))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(UnusualOptions);

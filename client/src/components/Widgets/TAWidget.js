@@ -20,6 +20,7 @@ class TAWidget extends React.Component {
         interval: '1m',
         width: 360,
         isTransparent: false,
+        // height: '100%',
         height: 450,
         symbol: this.props.value,
         showIntervalTabs: true,
@@ -33,7 +34,7 @@ class TAWidget extends React.Component {
 
   render() {
     return (
-      <div id="TAWidget" className="widget__wrapper" />
+      <div style={{paddingBottom: 20 + 'px'}} id="TAWidget" className="widget__wrapper" />
     );
   }
 }
