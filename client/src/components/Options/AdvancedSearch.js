@@ -33,6 +33,7 @@ const AdvancedSearch = ( {ticker} ) => {
       console.log(typeof beforeDate)
       console.log('--')
       console.log(typeof afterDate)
+      console.log(afterDate)
       // const url = `https://api.benzinga.com/api/v1/signal/option_activity?parameters%5Bdate_from%5D=${beforeDate}&parameters%5Bdate_to%5D=${afterDate}&parameters%5Btickers%5D=${ticker}&token=bd2570cf59734eb9934b3cd886ce958b`
       fetch(url, { headers: { Accept: 'application/json' } })
         // .then(res => console.log(res)
@@ -56,7 +57,7 @@ const AdvancedSearch = ( {ticker} ) => {
                   <InputGroup.Append>From this date</InputGroup.Append>
                   <Form.Control
                     placeholder="YYYY-MM-DD"
-                    onChange={(e) => setAfterDate(e.target.value)}
+                    onChange={(e) => setBeforeDate(e.target.value)}
                   ></Form.Control>
                   {/* <DatePicker
                     dateFormat="yyyy-MM-dd"
@@ -69,7 +70,7 @@ const AdvancedSearch = ( {ticker} ) => {
                   <InputGroup.Append>To this date</InputGroup.Append>
                   <Form.Control
                     placeholder="YYYY-MM-DD"
-                    onChange={(e) => setBeforeDate(e.target.value)}
+                    onChange={(e) => setAfterDate(e.target.value)}
                   ></Form.Control>
                   {/* <DatePicker
                     dateFormat="yyyy-MM-dd"
