@@ -15,7 +15,7 @@ const Login = ({ isAuthed }) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (isAuthed) history.go(-1);
+    if (isAuthed) history.push('/market');
   }, [isAuthed, history]);
 
   const handleChange = (e) => {
