@@ -52,7 +52,7 @@ const Notes = ({ currentUser, isAuthed }) => {
       <Container>
         <Row className="mb-3">
           <Col className="d-flex justify-content-between">
-            <h1 className="d-inline-block">Notes</h1>
+            <h1 className="d-inline-block">My Research</h1>
             <div>
               <Button variant="primary" onClick={() => history.push('/note/new')}>Create</Button>
             </div>
