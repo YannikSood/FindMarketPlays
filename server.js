@@ -23,7 +23,7 @@ app.use(cors());
 //   res.send('optionFeed')
 // })
 
-app.get('/beforeSearch/:fromDate/:toDate/:ticker', async (req, res) => {
+app.get('/betweenSearch/:fromDate/:toDate/:ticker', async (req, res) => {
   let tempJSON = [];
   const fromDate = `${req.params.fromDate}`;
   const toDate = `${req.params.toDate}`;

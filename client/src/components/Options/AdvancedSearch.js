@@ -20,30 +20,8 @@ const AdvancedSearch = ( {ticker, receiveResults} ) => {
     const [afterDate, setAfterDate] = useState();
     const [beforeDate, setBeforeDate] = useState();
 
-    const reformatDate = (date, flag) => {
-      console.log(date)
-      // let newDate = moment(date).format("YYYY-MM-DD");
-      
-      // if (flag === 'before') {
-      //   setBeforeDate(newDate);
-      // } else {
-      //   setAfterDate(newDate);
-      // }
-    }
-    
     const search = () => {
-      const url = `/beforeSearch/${beforeDate}/${afterDate}/${ticker}`;
-      // console.log(url)
-      // const url = `https://api.benzinga.com/api/v1/signal/option_activity?parameters%5Bdate_from%5D=${beforeDate}&parameters%5Bdate_to%5D=${afterDate}&parameters%5Btickers%5D=${ticker}&token=bd2570cf59734eb9934b3cd886ce958b`
-      // fetch(url, { headers: { Accept: 'application/json' } })
-      //   // .then(res => console.log(res)
-      //   .then(res => res.json()
-        
-      //     .then((json) => {
-      //       console.log(json);
-      //       // setOptions(json.message.option_activity || []);
-      //     }))
-      //   .catch(err => console.log("hey you have an error" + err))
+      const url = `/betweenSearch/${beforeDate}/${afterDate}/${ticker}`;
       Axios.get(url, {
         headers: {"Content-Type": "application/json"}
       })
@@ -54,7 +32,6 @@ const AdvancedSearch = ( {ticker, receiveResults} ) => {
       <Container>
         <Row className="d-flex justify-content-center">
           <Col>
-            {/* <h1>Advanced Search</h1> */}
             <InputGroup>
               <Row>
                 <Col>
@@ -63,12 +40,6 @@ const AdvancedSearch = ( {ticker, receiveResults} ) => {
                     placeholder="YYYY-MM-DD"
                     onChange={(e) => setBeforeDate(e.target.value)}
                   ></Form.Control>
-                  {/* <DatePicker
-                    dateFormat="yyyy-MM-dd"
-                    placeholderText="From this date"
-                    selected={afterDate}
-                    onChange={(date) => reformatDate(date, "after")}
-                  /> */}
                 </Col>
                 <Col>
                   <InputGroup.Append>To this date</InputGroup.Append>
@@ -76,20 +47,12 @@ const AdvancedSearch = ( {ticker, receiveResults} ) => {
                     placeholder="YYYY-MM-DD"
                     onChange={(e) => setAfterDate(e.target.value)}
                   ></Form.Control>
-                  {/* <DatePicker
-                    dateFormat="yyyy-MM-dd"
-                    placeholderText="To this date"
-                    selected={beforeDate}
-                    onChange={(date) => reformatDate(date, "before")}
-                  /> */}
                 </Col>
                 <Col>
                   <Row>
                     <Button onClick={() => search()}>Search</Button>
                   </Row>
                 </Col>
-                {/* <Col>
-                </Col> */}
               </Row>
             </InputGroup>
           </Col>

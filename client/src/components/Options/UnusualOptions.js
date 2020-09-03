@@ -14,7 +14,7 @@ import SymbolErrors from '../Errors/SymbolErrors';
 import AdvancedSearch from './AdvancedSearch';
 import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
 
-const UnusualOptions = ({ isAuthed, sendTicker, sendResults, results }) => {
+const UnusualOptions = ({ isAuthed, sendTicker, resetResults, results }) => {
   // Hooks
   const [advancedSearch, setAdvancedSearch] = useState(false);
   const [searchedValue, setSearchedValue] = useState('AMZN');
@@ -58,34 +58,30 @@ const UnusualOptions = ({ isAuthed, sendTicker, sendResults, results }) => {
     }
   }
 
-  // the reason for it not updating again should be here in useEffect
   useEffect(() => {
-    // this useEffect sets the advanced search results. tried this to see if it works, but it broke the old useEffect 
-    if (results) setOptions(results);
+    if(advancedSearch && results) {
+      setOptions(results)
+    }
   })
 
   useEffect(() => {
-    // this is the old useEffect
     if (!isAuthed) {
       history.push("/login");
-    } else if (results) {
-        console.log("printing results: " + results)
-        setOptions(results)
     } else {
         const fetchData = () => {
-                  const url = `/optionsAPI/${searchedValue}`;
-                  fetch(url, { headers: { Accept: 'application/json' } })
-                    .then(res => res.json()
-                      .then((json) => {
-                        setOptions(json.message.option_activity || []);
-                      }))
-                    .catch(err => console.log(err)); // eslint-disable-line
-                };
-                debounce(fetchData());
-                sendTicker(searchedValue);
-                sendResults();
-    }
-  }, [isAuthed, history, searchedValue]);
+          const url = `/optionsAPI/${searchedValue}`;
+          fetch(url, { headers: { Accept: 'application/json' } })
+            .then(res => res.json()
+              .then((json) => {
+                setOptions(json.message.option_activity || []);
+              }))
+            .catch(err => console.log(err)); // eslint-disable-line
+        };
+        debounce(fetchData());
+        sendTicker(searchedValue);
+        resetResults();
+      }
+  }, [isAuthed, history, searchedValue, advancedSearch]);
 
   // Handlers
   const handleInputChange = (event) => {
@@ -138,6 +134,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   sendTicker: (ticker) => dispatch(receiveTicker(ticker)),
-  sendResults: () => dispatch(receiveResults({}))
+  resetResults: () => dispatch(receiveResults({}))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(UnusualOptions);
