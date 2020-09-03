@@ -14,22 +14,18 @@ const Notes = ({ currentUser, isAuthed }) => {
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    if (!isAuthed) {
-      history.push("/login");
-    } else {
-      firebase
-        .database()
-        .ref(`/user-notes/${currentUser.id}`)
-        .once("value")
-        .then((snapshot) => {
-          setNotes(Object.values(snapshot?.val()) || []);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          console.log("error fetching notes: ", err);
-          setIsLoading(false);
-        });
-    }
+    firebase
+      .database()
+      .ref(`/user-notes/${currentUser.id}`)
+      .once("value")
+      .then((snapshot) => {
+        setNotes(Object.values(snapshot?.val()) || []);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("error fetching notes: ", err);
+        setIsLoading(false);
+      });
   }, [isAuthed, history, currentUser.id]);
 
   // Handlers
