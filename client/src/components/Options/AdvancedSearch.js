@@ -9,13 +9,14 @@ import Button from "react-bootstrap/Button";
 import { useHistory } from 'react-router-dom';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
 import Axios from "axios";
+import { receiveResults } from '../../actions/advancedSearch';
 
 // import DatePicker from 'react-datepicker';
 // import fetch from 'node-fetch';
 // import moment from "moment";
 // import 'react-datepicker/dist/react-datepicker.css';
 
-const AdvancedSearch = ( {ticker} ) => {
+const AdvancedSearch = ( {ticker, receiveResults} ) => {
     const [afterDate, setAfterDate] = useState();
     const [beforeDate, setBeforeDate] = useState();
 
@@ -46,7 +47,7 @@ const AdvancedSearch = ( {ticker} ) => {
       Axios.get(url, {
         headers: {"Content-Type": "application/json"}
       })
-      .then(res => console.log(res.data))
+      .then(res => receiveResults(res.data.message.option_activity))
     }
 
     return (
@@ -98,7 +99,11 @@ const AdvancedSearch = ( {ticker} ) => {
 };
 
 const MSTP = (state) => ({
-  ticker: state.advancedSearch
+  ticker: state.advancedSearch.ticker
 })
 
-export default connect(MSTP)(AdvancedSearch)
+const MDTP = dispatch => ({
+  receiveResults: (results) => dispatch(receiveResults(results))
+})
+
+export default connect(MSTP, MDTP)(AdvancedSearch)
