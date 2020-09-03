@@ -9,9 +9,7 @@ const AdvancedUnusualOptionsFlow = props => (
         {/* <th>Ticker</th> */}
         <th>Cost Basis</th>
         <th>Contracts</th>
-        <th>Order Size</th>
-        <th>Volume</th>
-        <th>Open Interest</th>
+        <th>Vol/OI</th>
         <th>Trade Type</th> 
       </tr>
     </thead>
@@ -21,18 +19,15 @@ const AdvancedUnusualOptionsFlow = props => (
         
         <tr>
           <td>{item.date}</td>
-          <td>Someone spent {new Intl.NumberFormat("en-US", {
+          <td>{new Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "USD",
               minimumFractionDigits: 0,
               maximumFractionDigits: 0
             }).format( item.cost_basis)}</td>
 
-          <td>{item.ticker} ${item.strike_price} {item.put_call} options</td>
-          <td>{item.size}</td> 
-         
-          <td>{item.volume}</td>
-          <td>{item.open_interest}</td>
+          <td>{item.size} {item.ticker} ${item.strike_price} {item.put_call}S expiring {item.date_expiration}</td>
+          <td>{item.volume}/{item.open_interest}</td>
           <td>{item.option_activity_type}</td>
         </tr>
       </tbody>

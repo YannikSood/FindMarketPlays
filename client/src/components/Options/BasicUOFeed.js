@@ -11,61 +11,41 @@ import ScrollingWidget from '../Widgets/ScrollingWidget';
 import BasicOptionsFlow from './BasicOptionsFlow';
 import { debounce } from '../../helpers/SearchHelper';
 import SymbolErrors from '../Errors/SymbolErrors';
+import Axios from "axios";
 // import AdvancedSearch from './AdvancedSearch';
 // import Sort from './Sort';
 // import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
 // import { oldestSort, greatestSort, leastSort } from '../../util/sort';
 
-const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort }) => {
+const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, sort }) => {
   // Hooks
   // const [advancedSearch, setAdvancedSearch] = useState(false);
-  const [searchedValue, setSearchedValue] = useState('AMZN');
   const [options, setOptions] = useState([]);
   const history = useHistory();
-
-  // useEffect(() => {
-  //   if (sort != "Recent") {
-  //     sortBy();
-  //   }
-  // })
   
   useEffect(() => {
       const fetchData = () => {
-        const url = `/optionsAPI/${searchedValue}`;
+        const url = `/optionsAPI/BasicFeed`;
         fetch(url, { headers: { Accept: 'application/json' } })
           .then(res => res.json()
             .then((json) => {
               setOptions(json.message.option_activity || []);
             }))
-          .catch(err => console.log(err)); // eslint-disable-line
+          .catch(err => console.log(err));
       };
       debounce(fetchData());
-  }, [isAuthed, history, searchedValue]);
-
-  // const sortBy = () => {
-  //   if (sort === "Oldest") {
-  //     oldestSort(results);
-  //     setOptions(results);
-  //   } else if (sort === "Greatest") {
-  //     greatestSort(results);
-  //     setOptions(results);
-  //   } else if (sort === "Least") {
-  //     leastSort(results);
-  //     setOptions(results);
-  //   }
-  // }
-
-  const showErr = () => {
-    if (!Object.values(options).length) {
-      return SymbolErrors()
-    }
-  }
+  }, [isAuthed, history]);
 
 
-  // Handlers
-  const handleInputChange = (event) => {
-    setSearchedValue(event.target.value.toUpperCase());
-  };
+
+  const refresh = () => {
+    const url = `/optionsAPI/BasicFeed`;
+    Axios.get(url, {
+        headers: { "Content-Type": "application/json" }
+    })
+        .then(res => setOptions(res.data.message.option_activity))
+        .catch(err => console.log(err))
+    }   
 
 
   return (
@@ -74,25 +54,13 @@ const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort
       <Container>
         <Row className="widget__wrapper">
           <Col md={7}>
-            <Form>
-              <h1>Find Unusual Options By Ticker [Basic]</h1>
-              <h5>ENTER STOCK TICKER</h5>
-              <InputGroup>
-                <Form.Control
-                  type="text"
-                  value={searchedValue}
-                  onChange={handleInputChange}
-                  placeholder="Enter Stock Ticker"
-                  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
-                />
-              </InputGroup>
-            </Form>
-            {showErr()}
+            <Button onClick={() => refresh()}>Refresh</Button>
+            
             {/* {displayAdvancedSearch()} */}
           </Col>
         </Row>
         <Row>
-          {searchedValue && options.length > 0 && <BasicOptionsFlow value={options} />}
+          {<BasicOptionsFlow value={options} />}
         </Row>
       </Container>
     </Fragment>
@@ -113,4 +81,4 @@ const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort
 //   sendTicker: (ticker) => dispatch(receiveTicker(ticker)),
 //   resetResults: () => dispatch(receiveResults({}))
 // })
-export default (BasicUnusualOptions);
+export default (BasicUnusualOptionsFeed);
