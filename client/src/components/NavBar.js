@@ -24,27 +24,56 @@ const NavigationAuth = (location) => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav activeKey={location.pathname}>
-          <Nav.Link className="nav-link" href={`${ROUTES.DASHBOARD}`}>Market Overview</Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
-            Stock Lookup
-          </Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.DD}`}>Research </Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.NOTES}`}>Notes </Nav.Link>
           <DropdownButton
-            title="Options Feed"
-            size="sm"
+            title="Stocks Hub"
+            size="md"
+            variant="primary"
+          >
+            <Dropdown.Item href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
+              Single Stock Lookup
+            </Dropdown.Item>
+            <Dropdown.Item href={`${ROUTES.DASHBOARD}`}>
+              Market Overview
+            </Dropdown.Item>
+          </DropdownButton>
+          
+          <DropdownButton
+            title="Research Hub"
+            size="md"
             variant="secondary"
           >
-              <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
-                Basic
-              </Dropdown.Item>
-              <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS}`}>
-                Advanced
-              </Dropdown.Item>
+            <Dropdown.Item href={`${ROUTES.DD}`}>
+              Reddit Research
+            </Dropdown.Item>
+            <Dropdown.Item href={`${ROUTES.NEWS_FEED}`}>
+              News Search
+            </Dropdown.Item>
+            <Dropdown.Item href={`${ROUTES.NOTES}`}>
+              My Research
+            </Dropdown.Item>
+
           </DropdownButton>
-          <Nav.Link className="nav-link" href={`${ROUTES.NEWS_FEED}`}>News Feed</Nav.Link>
+
+          <DropdownButton
+            title="Unusual Options"
+            size="md"
+            variant="success"
+          >
+
+            <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
+                Basic Search
+            </Dropdown.Item>
+            <Dropdown.Item>
+              Basic Feed
+            </Dropdown.Item>
+            <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS}`}>
+              Advanced Search
+            </Dropdown.Item>
+            <Dropdown.Item>
+              Advanced Feed
+            </Dropdown.Item>
+          </DropdownButton>
           <Nav.Link className="nav-link" href={`${ROUTES.PROFILE}`}>Account</Nav.Link>
-          {/* <Nav.Link className="nav-link" to={ROUTES.ABOUT}>About </Nav.Link> */}
         </Nav>
       </Navbar.Collapse>
       <Button
