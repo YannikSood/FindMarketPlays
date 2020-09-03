@@ -22,7 +22,9 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
   // Hooks
   // const [advancedSearch, setAdvancedSearch] = useState(false);
   const [options, setOptions] = useState([]);
+  const[loader, setLoader] = useState(true);
   const history = useHistory();
+  
   
   useEffect(() => {
       const fetchData = () => {
@@ -32,13 +34,28 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
           .then(res => res.json()
             .then((json) => {
               setOptions(json.message.option_activity || []);
+              setLoader(false);
             }))
           .catch(err => console.log(err));
       };
       debounce(fetchData());
-  }, [isAuthed, history]);
+  }, []);
 
-
+  const loading = () => {
+    if (loader) {
+      return (
+        <Container>
+          <Row>
+            <Col>
+              <h1>
+                Loading data. . . 
+              </h1>
+            </Col>
+          </Row>
+        </Container>
+      )
+    }
+  }
 
   const refresh = () => {
     const url = `/optionsAPI`;
@@ -46,7 +63,8 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
     Axios.get(url, {
         headers: { "Content-Type": "application/json" }
     })
-        .then(res => setOptions(res.data.message.option_activity))
+        // .then(res => setOptions(res.data.message.option_activity))
+        .then(res => console.log(res))
         .catch(err => console.log(err))
     }   
 
@@ -56,15 +74,16 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
       <ScrollingWidget />
       <Container>
         <Row className="widget__wrapper">
-            <Col md={7}>
-              <h1>Basic Unusual Options Feed</h1>
-                <Button onClick={() => refresh()}>Refresh</Button>
+          <Col align="center" md={4}>
+            <h1>Basic Unusual Options Feed</h1>
+            <Button onClick={() => refresh()}>Refresh</Button>
             
             {/* {displayAdvancedSearch()} */}
           </Col>
         </Row>
         <Row>
-          {<BasicUOFeedFlow value={options} />}
+          {<BasicOptionsFlow value={options} />}
+          {loading()}
         </Row>
       </Container>
     </Fragment>

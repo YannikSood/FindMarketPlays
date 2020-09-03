@@ -62,14 +62,11 @@ app.get("/optionsAPI/:ticker", async (req, res) => {
 app.get("/optionsAPI", async (req, res) => {
   var tempJSON = [];
   const url = `https://api.benzinga.com/api/v1/signal/option_activity?token=bd2570cf59734eb9934b3cd886ce958b`;
-
   await fetch(url, { headers: { Accept: 'application/json' } })
   .then(res => res.json()
   .then((json) => {
-      
       tempJSON = json;
-      // console.log(tempJSON);
-  }))
+    }))
   .catch(err => console.error(err)); // eslint-disable-line
   
   
