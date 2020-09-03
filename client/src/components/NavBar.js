@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, useHistory, withRouter } from 'react-router-dom';
 //Local Imports
-import { Navbar, Nav, Button, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Navbar, Nav, Button, Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ROUTES from '../routes/routes';
 import firebase from '../firebase/firebase';
@@ -24,6 +24,7 @@ const NavigationAuth = (location) => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav activeKey={location.pathname}>
+          
           <DropdownButton
             title="Stocks Hub"
             size="md"
@@ -39,7 +40,7 @@ const NavigationAuth = (location) => {
           
             
           </DropdownButton>
-          
+
           <DropdownButton
             title="Research Hub"
             size="md"
