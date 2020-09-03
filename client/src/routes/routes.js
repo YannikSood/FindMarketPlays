@@ -9,6 +9,7 @@ export const NOTES = '/notes';
 export const NEW_NOTE = '/note/new';
 export const NOTE_DETAIL = '/note/:id';
 export const BASIC_UNUSUAL_OPTIONS = '/basicOptionFeed';
+export const ADVANCED_UNUSUAL_OPTIONS = '/advancedOptionFeed';
 export const NEWS_FEED = '/newsFeed';
 export const ABOUT = '/about';
 export const PROFILE = '/profile';
