@@ -12,6 +12,7 @@ import BasicOptionsFlow from './BasicOptionsFlow';
 import { debounce } from '../../helpers/SearchHelper';
 import SymbolErrors from '../Errors/SymbolErrors';
 import Axios from "axios";
+import BasicUOFeedFlow from './BasicUOFeedFlow';
 // import AdvancedSearch from './AdvancedSearch';
 // import Sort from './Sort';
 // import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
@@ -55,14 +56,15 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
       <ScrollingWidget />
       <Container>
         <Row className="widget__wrapper">
-          <Col md={4}>
-            <Button onClick={() => refresh()}>Refresh</Button>
+            <Col md={7}>
+              <h1>Basic Unusual Options Feed</h1>
+                <Button onClick={() => refresh()}>Refresh</Button>
             
             {/* {displayAdvancedSearch()} */}
           </Col>
         </Row>
         <Row>
-          {<BasicOptionsFlow value={options} />}
+          {<BasicUOFeedFlow value={options} />}
         </Row>
       </Container>
     </Fragment>

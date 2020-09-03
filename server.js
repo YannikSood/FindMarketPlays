@@ -68,7 +68,7 @@ app.get("/optionsAPI", async (req, res) => {
   .then((json) => {
       
       tempJSON = json;
-      console.log(tempJSON);
+      // console.log(tempJSON);
   }))
   .catch(err => console.error(err)); // eslint-disable-line
   
