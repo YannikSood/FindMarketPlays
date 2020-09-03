@@ -149,7 +149,7 @@ class DD extends React.Component {
             </Row>
             <Row>
               <Col>
-                <h1>Find Trade Opportunities</h1>
+                <h1>Research from Reddit</h1>
               </Col>
             </Row>
             {contentJSX}

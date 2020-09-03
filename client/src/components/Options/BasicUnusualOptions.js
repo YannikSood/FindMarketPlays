@@ -75,7 +75,7 @@ const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort
         <Row className="widget__wrapper">
           <Col md={7}>
             <Form>
-              <h1>Find Unusual Options Trades</h1>
+              <h1>Find Unusual Options Trades By Ticker</h1>
               <h5>ENTER STOCK TICKER</h5>
               <InputGroup>
                 <Form.Control

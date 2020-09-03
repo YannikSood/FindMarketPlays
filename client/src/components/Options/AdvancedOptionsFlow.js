@@ -7,15 +7,12 @@ const AdvancedUnusualOptionsFlow = props => (
       <tr>
         <th>Order Date</th>
         {/* <th>Ticker</th> */}
-        <th>Description</th>
-        <th>Sentiment</th>
-        <th># of Contracts</th>
-        <th>Put/Call</th>
-        <th>Expiration</th>
-        <th>Strike</th> 
-
-        <th>Cost</th>
-        <th>Type</th> 
+        <th>Cost Basis</th>
+        <th>Contracts</th>
+        <th>Order Size</th>
+        <th>Volume</th>
+        <th>Open Interest</th>
+        <th>Trade Type</th> 
       </tr>
     </thead>
     {props.value.map(item => (
@@ -24,20 +21,18 @@ const AdvancedUnusualOptionsFlow = props => (
         
         <tr>
           <td>{item.date}</td>
-          {/* <td>{item.ticker}</td> */}
           <td>Someone spent {new Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "USD",
               minimumFractionDigits: 0,
               maximumFractionDigits: 0
-            }).format( item.cost_basis)} on {item.size} {item.ticker} ${item.strike_price} {item.put_call} options, expiring on {item.date_expiration}.</td>
-          <td>{item.sentiment}</td>
-          <td>{item.size}</td> 
-          <td>{item.put_call}</td>
-          <td>{item.date_expiration}</td>
-          <td>{item.strike_price}</td>
+            }).format( item.cost_basis)}</td>
 
-          <td>{item.cost_basis}</td>
+          <td>{item.ticker} ${item.strike_price} {item.put_call} options</td>
+          <td>{item.size}</td> 
+         
+          <td>{item.volume}</td>
+          <td>{item.open_interest}</td>
           <td>{item.option_activity_type}</td>
         </tr>
       </tbody>
