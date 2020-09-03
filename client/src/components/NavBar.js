@@ -29,12 +29,15 @@ const NavigationAuth = (location) => {
             size="md"
             variant="primary"
           >
-            <Dropdown.Item href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
-              Single Stock Lookup
-            </Dropdown.Item>
             <Dropdown.Item href={`${ROUTES.DASHBOARD}`}>
               Market Overview
             </Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
+              Single Stock Lookup
+            </Dropdown.Item>
+          
+            
           </DropdownButton>
           
           <DropdownButton
@@ -45,9 +48,11 @@ const NavigationAuth = (location) => {
             <Dropdown.Item href={`${ROUTES.DD}`}>
               Reddit Research
             </Dropdown.Item>
+          <Dropdown.Divider />
             <Dropdown.Item href={`${ROUTES.NEWS_FEED}`}>
               News Search
             </Dropdown.Item>
+         <Dropdown.Divider />
             <Dropdown.Item href={`${ROUTES.NOTES}`}>
               My Research
             </Dropdown.Item>
@@ -63,12 +68,15 @@ const NavigationAuth = (location) => {
             <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
               Basic Search
             </Dropdown.Item>
+          <Dropdown.Divider />
             <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS_FEED}`}>
               Basic Feed
             </Dropdown.Item>
+          <Dropdown.Divider />  
             <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS}`}>
               Advanced Search
             </Dropdown.Item>
+          <Dropdown.Divider />
             <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}`}>
               Advanced Feed
             </Dropdown.Item>
