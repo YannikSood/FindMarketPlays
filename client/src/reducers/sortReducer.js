@@ -1,6 +1,6 @@
 import { RECEIVE_SORT } from '../actions/sort';
 
-const sortReducer = (state={}, action) => {
+const sortReducer = (state="Recent", action) => {
     Object.freeze(state);
     switch(action.type) {
         case RECEIVE_SORT: 

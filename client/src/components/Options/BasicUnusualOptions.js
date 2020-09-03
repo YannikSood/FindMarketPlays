@@ -12,14 +12,60 @@ import UnusualOptionsFlow from './UnusualOptionFlow';
 import { debounce } from '../../helpers/SearchHelper';
 import SymbolErrors from '../Errors/SymbolErrors';
 import AdvancedSearch from './AdvancedSearch';
+// import Sort from './Sort';
 import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
+// import { oldestSort, greatestSort, leastSort } from '../../util/sort';
 
-const UnusualOptions = ({ isAuthed, sendTicker, resetResults, results }) => {
+const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort }) => {
   // Hooks
   const [advancedSearch, setAdvancedSearch] = useState(false);
   const [searchedValue, setSearchedValue] = useState('AMZN');
   const [options, setOptions] = useState([]);
   const history = useHistory();
+
+  // useEffect(() => {
+  //   if (sort != "Recent") {
+  //     sortBy();
+  //   }
+  // })
+  
+  useEffect(() => {
+    if(advancedSearch && results) {
+      setOptions(results);
+    }
+  })
+  
+  useEffect(() => {
+    if (!isAuthed) {
+      history.push("/login");
+    } else {
+        const fetchData = () => {
+          const url = `/optionsAPI/${searchedValue}`;
+          fetch(url, { headers: { Accept: 'application/json' } })
+            .then(res => res.json()
+              .then((json) => {
+                setOptions(json.message.option_activity || []);
+              }))
+            .catch(err => console.log(err)); // eslint-disable-line
+        };
+        debounce(fetchData());
+        sendTicker(searchedValue);
+        resetResults();
+      }
+  }, [isAuthed, history, searchedValue, advancedSearch]);
+
+  // const sortBy = () => {
+  //   if (sort === "Oldest") {
+  //     oldestSort(results);
+  //     setOptions(results);
+  //   } else if (sort === "Greatest") {
+  //     greatestSort(results);
+  //     setOptions(results);
+  //   } else if (sort === "Least") {
+  //     leastSort(results);
+  //     setOptions(results);
+  //   }
+  // }
 
   const displayAdvancedSearch = () => {
     if (advancedSearch) {
@@ -27,7 +73,7 @@ const UnusualOptions = ({ isAuthed, sendTicker, resetResults, results }) => {
         <Container>
           <Row>
             <Col>
-              <AdvancedSearch/>
+              <AdvancedSearch/>          
             </Col>
           </Row>
 
@@ -58,30 +104,6 @@ const UnusualOptions = ({ isAuthed, sendTicker, resetResults, results }) => {
     }
   }
 
-  useEffect(() => {
-    if(advancedSearch && results) {
-      setOptions(results)
-    }
-  })
-
-  useEffect(() => {
-    if (!isAuthed) {
-      history.push("/login");
-    } else {
-        const fetchData = () => {
-          const url = `/optionsAPI/${searchedValue}`;
-          fetch(url, { headers: { Accept: 'application/json' } })
-            .then(res => res.json()
-              .then((json) => {
-                setOptions(json.message.option_activity || []);
-              }))
-            .catch(err => console.log(err)); // eslint-disable-line
-        };
-        debounce(fetchData());
-        sendTicker(searchedValue);
-        resetResults();
-      }
-  }, [isAuthed, history, searchedValue, advancedSearch]);
 
   // Handlers
   const handleInputChange = (event) => {
@@ -109,6 +131,9 @@ const UnusualOptions = ({ isAuthed, sendTicker, resetResults, results }) => {
                 <InputGroup.Append>
                   <SwitchButtons/>
                 </InputGroup.Append>
+                {/* <InputGroup.Append>
+                  <Sort />  
+                </InputGroup.Append> */}
               </InputGroup>
             </Form>
             {showErr()}
@@ -124,11 +149,12 @@ const UnusualOptions = ({ isAuthed, sendTicker, resetResults, results }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { auth, advancedSearch } = state;
+  const { auth, advancedSearch, sort } = state;
 
   return {
     isAuthed: auth.isAuthed,
-    results: advancedSearch.results
+    results: advancedSearch.results,
+    sort: sort
   };
 };
 
@@ -136,4 +162,4 @@ const mapDispatchToProps = (dispatch) => ({
   sendTicker: (ticker) => dispatch(receiveTicker(ticker)),
   resetResults: () => dispatch(receiveResults({}))
 })
-export default connect(mapStateToProps, mapDispatchToProps)(UnusualOptions);
+export default connect(mapStateToProps, mapDispatchToProps)(BasicUnusualOptions);
