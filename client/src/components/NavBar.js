@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, useHistory, withRouter } from 'react-router-dom';
 //Local Imports
-import { Navbar, Nav, Button } from 'react-bootstrap';
+import { Navbar, Nav, Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ROUTES from '../routes/routes';
 import firebase from '../firebase/firebase';
@@ -30,7 +30,18 @@ const NavigationAuth = (location) => {
           </Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.DD}`}>Research </Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.NOTES}`}>Notes </Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.UNUSUAL_OPTIONS}`}>Options Feed</Nav.Link>
+          <DropdownButton
+            title="Options Feed"
+            size="sm"
+            variant="secondary"
+          >
+              <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
+                Basic
+              </Dropdown.Item>
+              <Dropdown.Item>
+                Advanced
+              </Dropdown.Item>
+          </DropdownButton>
           <Nav.Link className="nav-link" href={`${ROUTES.NEWS_FEED}`}>News Feed</Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.PROFILE}`}>Account</Nav.Link>
           {/* <Nav.Link className="nav-link" to={ROUTES.ABOUT}>About </Nav.Link> */}
@@ -70,16 +81,16 @@ const NavigationNonAuth = (location) => {
           </Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.DD}`}>Research </Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.NOTES}`}>Notes </Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.UNUSUAL_OPTIONS}`}>Options Feed</Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.NEWS_FEED}`}>News Feed</Nav.Link> */}
+          <Nav.Link className="nav-link" href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>Options Feed</Nav.Link>
+          <Nav.Link className="nav-link" href={`${ROUTES.NEWS_FEED}`}>News Feed</Nav.Link>
           {/* <Nav.Link className="nav-link" to={ROUTES.ABOUT}>About </Nav.Link> */}
         {/* </Nav> */}
       </Navbar.Collapse>
-      <NavLink to={ROUTES.LOGIN}>
+      {/* <NavLink to={ROUTES.LOGIN}>
         <Button className="ml-2" variant="primary">
           Log In / Sign Up
         </Button>
-      </NavLink>
+      </NavLink> */}
     </Navbar>
   )
 };

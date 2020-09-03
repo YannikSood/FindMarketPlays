@@ -14,7 +14,7 @@ const Register = ({ isAuthed }) => {
   const [registerErrors, setErrors] = useState({});
 
   useEffect(() => {
-    if (isAuthed) history.push('/');
+    if (isAuthed) history.push('/market');
   }, [isAuthed, history]);
 
   const handleChange = (e) => {

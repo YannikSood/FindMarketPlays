@@ -17,7 +17,7 @@ import Navigation from './components/NavBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import About from './components/About';
 import DD from './components/Research/DD';
-import UnusualOptions from './components/Options/UnusualOptions';
+import BasicUnusualOptions from './components/Options/BasicUnusualOptions';
 import NewsFeed from './components/News/NewsFeed';
 import Notes from './components/Notes/Notes';
 import NoteDetail from './components/Notes/NoteDetail';
@@ -133,8 +133,8 @@ const App = () => {
                     <NoteDetail />
                   </Route>
 
-                  <Route path={ROUTES.UNUSUAL_OPTIONS}>
-                    <UnusualOptions />
+                  <Route path={ROUTES.BASIC_UNUSUAL_OPTIONS}>
+                    <BasicUnusualOptions />
                   </Route>
 
                   <Route path={ROUTES.NEWS_FEED}>
