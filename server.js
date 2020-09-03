@@ -32,13 +32,12 @@ app.get('/betweenSearch/:fromDate/:toDate/:ticker', async (req, res) => {
   console.log(url)
   await fetch(url, { headers: { Accept: 'application/json' } })
     .then(res => res.json()
-      .then(json => {
-        tempJSON = json;
-        console.log(tempJSON)
-      })
-      .catch(err => console.log(err))
-    )
-    .catch(err => console.log(err));
+    .then((json) => {
+            
+      tempJSON = json;
+      console.log(tempJSON);
+    }))
+    .catch(err => console.error(err)); // eslint-disable-line
     res.send({ message: tempJSON });  
 })
 
