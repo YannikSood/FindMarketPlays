@@ -33,17 +33,6 @@ const AdvancedUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, s
             .then(res => setOptions(res.data.message.option_activity))
             .catch(err => console.log(err))
     }
-    // useEffect(() => {
-    //   if (sort != "Recent") {
-    //     sortBy();
-    //   }
-    // })
-
-    // useEffect(() => {
-    //     if (filterFlag && options) {
-    //         setOptions(results);
-    //     }
-    // })
 
     useEffect(() => {
         const fetchData = () => {
@@ -144,7 +133,7 @@ const AdvancedUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, s
                 <Row className="widget__wrapper">
                     <Col md={7}>
                         <Form>
-                            <h1>Find Unusual Options Trades</h1>
+                            <h1>Find Unusual Options By Ticker [Advanced]</h1>
                             <h5>ENTER STOCK TICKER</h5>
                             <InputGroup>
                                 <Form.Control
