@@ -21,7 +21,7 @@ const AdvancedUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, s
     const [afterDate, setAfterDate] = useState();
     const [beforeDate, setBeforeDate] = useState();
     const [filterFlag, setFilter] = useState(false);
-    const [searchedValue, setSearchedValue] = useState('AMZN');
+    const [searchedValue, setSearchedValue] = useState('AMZN,TSLA');
     const [options, setOptions] = useState([]);
     const history = useHistory();
 
@@ -133,22 +133,19 @@ const AdvancedUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, s
                 <Row className="widget__wrapper">
                     <Col md={7}>
                         <Form>
-                            <h1>Find Unusual Options By Ticker [Advanced]</h1>
-                            <h5>ENTER STOCK TICKER</h5>
+                            <h1>Advanced Unusual Options Search</h1>
+                            <h5>ENTER ONE OR MORE STOCK TICKERS [Comma Separated]</h5>
                             <InputGroup>
                                 <Form.Control
                                     type="text"
                                     value={searchedValue}
                                     onChange={handleInputChange}
-                                    placeholder="Enter Stock Ticker"
+                                    placeholder="AMZN,TSLA"
                                     onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                                 />
                                 <InputGroup.Append>
                                     <SwitchButtons />
                                 </InputGroup.Append>
-                                {/* <InputGroup.Append>
-                  <Sort />  
-                </InputGroup.Append> */}
                             </InputGroup>
                         </Form>
                         {showErr()}
