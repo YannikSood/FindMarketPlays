@@ -17,7 +17,6 @@ const AdvancedSearch = ( {ticker} ) => {
 
     const search = () => {
       const url = `/beforeSearch/${beforeDate}/${afterDate}/${ticker}`;
-      // const url = `https://api.benzinga.com/api/v1/signal/option_activity?parameters%5Bdate_from%5D=${beforeDate}&parameters%5Bdate_to%5D=${afterDate}&parameters%5Btickers%5D=${ticker}&token=bd2570cf59734eb9934b3cd886ce958b`
       console.log(url);
         fetch(url, { headers: { Accept: 'application/json' } })
           .then(res => res.json()
