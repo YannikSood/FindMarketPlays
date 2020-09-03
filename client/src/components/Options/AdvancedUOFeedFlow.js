@@ -1,14 +1,17 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 
-const BasicOptionsFlow = props => (
+const AdvancedUOFeedFlow = props => (
   <Table striped bordered hover variant="dark">
     <thead>
       <tr>
         <th>Order Date</th>
         <th>Ticker</th>
-        <th>Description</th>
-        <th>Sentiment</th>
+        {/* <th>Ticker</th> */}
+        <th>Cost Basis</th>
+        <th>Contracts</th>
+        <th>Vol/OI</th>
+        <th>Trade Type</th> 
       </tr>
     </thead>
     {props.value.map(item => (
@@ -18,17 +21,20 @@ const BasicOptionsFlow = props => (
         <tr>
           <td>{item.date}</td>
           <td>{item.ticker}</td>
-          <td>Someone spent {new Intl.NumberFormat("en-US", {
+          <td>{new Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "USD",
               minimumFractionDigits: 0,
               maximumFractionDigits: 0
-            }).format( item.cost_basis)} on {item.size} {item.ticker} ${item.strike_price} {item.put_call}S, expiring on {item.date_expiration}.</td>
-          <td>{item.sentiment}</td>
+            }).format( item.cost_basis)}</td>
+
+          <td>{item.size} {item.ticker} ${item.strike_price} {item.put_call}S expiring {item.date_expiration}</td>
+          <td>{item.volume}/{item.open_interest}</td>
+          <td>{item.option_activity_type}</td>
         </tr>
       </tbody>
     ))}
   </Table>
 );
 
-export default BasicOptionsFlow;
+export default AdvancedUOFeedFlow;

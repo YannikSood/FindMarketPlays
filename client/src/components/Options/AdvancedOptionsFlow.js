@@ -6,7 +6,7 @@ const AdvancedUnusualOptionsFlow = props => (
     <thead>
       <tr>
         <th>Order Date</th>
-        {/* <th>Ticker</th> */}
+        <th>Ticker</th> 
         <th>Cost Basis</th>
         <th>Contracts</th>
         <th>Vol/OI</th>
@@ -19,6 +19,7 @@ const AdvancedUnusualOptionsFlow = props => (
         
         <tr>
           <td>{item.date}</td>
+          <td>{item.ticker}</td>
           <td>{new Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "USD",

@@ -20,7 +20,7 @@ const NavigationAuth = (location) => {
       variant="dark"
       fixed="top"
     >
-      <Navbar.Brand href={"/"}>FMP</Navbar.Brand>
+      <Navbar.Brand href={"/"}>FMP Beta</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav activeKey={location.pathname}>
@@ -61,7 +61,7 @@ const NavigationAuth = (location) => {
           >
 
             <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
-                Basic Search
+              Basic Search
             </Dropdown.Item>
             <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS_FEED}`}>
               Basic Feed
@@ -69,7 +69,7 @@ const NavigationAuth = (location) => {
             <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS}`}>
               Advanced Search
             </Dropdown.Item>
-            <Dropdown.Item>
+            <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}`}>
               Advanced Feed
             </Dropdown.Item>
           </DropdownButton>
@@ -100,7 +100,7 @@ const NavigationNonAuth = (location) => {
       variant="dark"
       fixed="top"
     >
-      <Navbar.Brand href={"/"}>FMP</Navbar.Brand>
+      <Navbar.Brand href={"/"}>FMP Beta</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         {/* <Nav activeKey={location.pathname}> */}

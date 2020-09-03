@@ -13,12 +13,13 @@ import { debounce } from '../../helpers/SearchHelper';
 import SymbolErrors from '../Errors/SymbolErrors';
 import Axios from "axios";
 import BasicUOFeedFlow from './BasicUOFeedFlow';
+import AdvancedUOFeedFlow from './AdvancedUOFeedFlow';
 // import AdvancedSearch from './AdvancedSearch';
 // import Sort from './Sort';
 // import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
 // import { oldestSort, greatestSort, leastSort } from '../../util/sort';
 
-const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, sort }) => {
+const AdvancedUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, sort }) => {
   // Hooks
   // const [advancedSearch, setAdvancedSearch] = useState(false);
   const [options, setOptions] = useState([]);
@@ -75,14 +76,14 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
       <Container>
         <Row className="widget__wrapper">
           <Col align="center" md={4}>
-            <h1>Basic Unusual Options Feed</h1>
+            <h1>Advanced Unusual Options Feed</h1>
             <Button onClick={() => refresh()}>Refresh</Button>
             
             {/* {displayAdvancedSearch()} */}
           </Col>
         </Row>
         <Row>
-          {<BasicUOFeedFlow value={options} />}
+          {<AdvancedUOFeedFlow value={options} />}
           {loading()}
         </Row>
       </Container>
@@ -104,4 +105,4 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
 //   sendTicker: (ticker) => dispatch(receiveTicker(ticker)),
 //   resetResults: () => dispatch(receiveResults({}))
 // })
-export default (BasicUnusualOptionsFeed);
+export default (AdvancedUnusualOptionsFeed);

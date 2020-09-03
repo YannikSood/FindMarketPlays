@@ -39,6 +39,7 @@ import NewNote from './components/Notes/NewNote';
 import { receiveUser, clearUser } from './reducers/authReducer';
 import Loader from './components/Loader';
 import { PersistGate } from 'redux-persist/integration/react';
+import AdvancedUOFeed from './components/Options/AdvancedUOFeed';
 
 
 
@@ -143,6 +144,9 @@ const App = () => {
                     <BasicUnusualOptionsFeed />
                   </Route>
 
+                  <Route path={ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}>
+                    <AdvancedUOFeed />
+                  </Route>
                   <Route path={ROUTES.ADVANCED_UNUSUAL_OPTIONS}>
                     <AdvancedUnusualOptions />
                   </Route>
