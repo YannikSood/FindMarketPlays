@@ -24,7 +24,7 @@ const Splash = () => {
         </Row>
         <Row>
           <Col className="text-center">
-            <Button onClick={() => history.push("/stock")} variant="light">Get Started</Button>
+            <Button onClick={() => history.push("/login")} variant="light">Get Started</Button>
           </Col>
         </Row>
         <Row>

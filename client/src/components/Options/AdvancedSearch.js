@@ -8,13 +8,30 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from "react-bootstrap/Button";
 import { useHistory } from 'react-router-dom';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
-import DatePicker from 'react-datepicker';
-import fetch from 'node-fetch';
+import Axios from "axios";
+import { receiveResults } from '../../actions/advancedSearch';
 
-const AdvancedSearch = ( {ticker} ) => {
-    const [afterDate, setAfterDate] = useState(new Date(2020, 7, 5));
-    const [beforeDate, setBeforeDate] = useState(new Date(2020, 7, 1));
+// import DatePicker from 'react-datepicker';
+// import fetch from 'node-fetch';
+// import moment from "moment";
+// import 'react-datepicker/dist/react-datepicker.css';
 
+const AdvancedSearch = ( {ticker, receiveResults} ) => {
+    const [afterDate, setAfterDate] = useState();
+    const [beforeDate, setBeforeDate] = useState();
+
+
+    const reformatDate = (date, flag) => {
+      console.log(date)
+      // let newDate = moment(date).format("YYYY-MM-DD");
+      
+      // if (flag === 'before') {
+      //   setBeforeDate(newDate);
+      // } else {
+      //   setAfterDate(newDate);
+      // }
+    }
+    
     const search = () => {
       const url = `/beforeSearch/${beforeDate}/${afterDate}/${ticker}`;
       console.log(url);
@@ -25,38 +42,53 @@ const AdvancedSearch = ( {ticker} ) => {
               console.log(json);
             }))
           .catch(err => console.log(err)); // eslint-disable-line
+        Axios.get(url, {
+        headers: {"Content-Type": "application/json"}
+      })
+      .then(res => receiveResults(res.data.message.option_activity))
     }
 
     return (
       <Container>
-        <Row>
+        <Row className="d-flex justify-content-center">
           <Col>
             {/* <h1>Advanced Search</h1> */}
             <InputGroup>
-              <Col className="align=center">
-                <Row>
-                    <Form.Check name="date" inline label="On" type="radio"/>
-                    <Form.Check name="date" inline label="Before" type="radio"/>
-                    <Form.Check name="date" inline label="After" type="radio"/>
-                    <Form.Check name="date" inline label="Between" type="radio"/>
-
-                </Row>
-                <Row>
-                  <DatePicker
-                    selected={beforeDate}
-                    onChange={(date) => setBeforeDate(date)}
-                  />
-                </Row>
-                <Row>
-                  <DatePicker
+              <Row>
+                <Col>
+                  <InputGroup.Append>From this date</InputGroup.Append>
+                  <Form.Control
+                    placeholder="YYYY-MM-DD"
+                    onChange={(e) => setBeforeDate(e.target.value)}
+                  ></Form.Control>
+                  {/* <DatePicker
+                    dateFormat="yyyy-MM-dd"
+                    placeholderText="From this date"
                     selected={afterDate}
-                    onChange={(date) => setAfterDate(date)}
-                  />
-                </Row>
-              </Col>          
-              <Button onClick={() => search()}>
-                Search
-              </Button>
+                    onChange={(date) => reformatDate(date, "after")}
+                  /> */}
+                </Col>
+                <Col>
+                  <InputGroup.Append>To this date</InputGroup.Append>
+                  <Form.Control
+                    placeholder="YYYY-MM-DD"
+                    onChange={(e) => setAfterDate(e.target.value)}
+                  ></Form.Control>
+                  {/* <DatePicker
+                    dateFormat="yyyy-MM-dd"
+                    placeholderText="To this date"
+                    selected={beforeDate}
+                    onChange={(date) => reformatDate(date, "before")}
+                  /> */}
+                </Col>
+                <Col>
+                  <Row>
+                    <Button onClick={() => search()}>Search</Button>
+                  </Row>
+                </Col>
+                {/* <Col>
+                </Col> */}
+              </Row>
             </InputGroup>
           </Col>
         </Row>
@@ -65,7 +97,11 @@ const AdvancedSearch = ( {ticker} ) => {
 };
 
 const MSTP = (state) => ({
-  ticker: state.advancedSearch
+  ticker: state.advancedSearch.ticker
 })
 
-export default connect(MSTP)(AdvancedSearch)
+const MDTP = dispatch => ({
+  receiveResults: (results) => dispatch(receiveResults(results))
+})
+
+export default connect(MSTP, MDTP)(AdvancedSearch)

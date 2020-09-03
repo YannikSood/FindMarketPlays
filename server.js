@@ -23,13 +23,13 @@ app.use(cors());
 //   res.send('optionFeed')
 // })
 
-app.get('/betweenSearch/:fromDate/:toDate/:ticker', async (req, res) => {
+app.get('/beforeSearch/:fromDate/:toDate/:ticker', async (req, res) => {
   let tempJSON = [];
   const fromDate = `${req.params.fromDate}`;
   const toDate = `${req.params.toDate}`;
   const ticker = `${req.params.ticker}`;
   const url = `https://api.benzinga.com/api/v1/signal/option_activity?parameters%5Bdate_from%5D=${fromDate}&parameters%5Bdate_to%5D=${toDate}&parameters%5Btickers%5D=${ticker}&token=bd2570cf59734eb9934b3cd886ce958b`
-
+  console.log(url)
   await fetch(url, { headers: { Accept: 'application/json' } })
     .then(res => res.json()
     .then((json) => {

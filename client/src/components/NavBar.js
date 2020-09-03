@@ -63,17 +63,17 @@ const NavigationNonAuth = (location) => {
       <Navbar.Brand href={"/"}>FMP</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav activeKey={location.pathname}>
-          <Nav.Link className="nav-link" href={`${ROUTES.DASHBOARD}`}>Market Overview</Nav.Link>
+        {/* <Nav activeKey={location.pathname}> */}
+          {/* <Nav.Link className="nav-link" href={`${ROUTES.DASHBOARD}`}>Market Overview</Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
             Stock Lookup
           </Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.DD}`}>Research </Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.NOTES}`}>Notes </Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.UNUSUAL_OPTIONS}`}>Options Feed</Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.NEWS_FEED}`}>News Feed</Nav.Link>
+          <Nav.Link className="nav-link" href={`${ROUTES.NEWS_FEED}`}>News Feed</Nav.Link> */}
           {/* <Nav.Link className="nav-link" to={ROUTES.ABOUT}>About </Nav.Link> */}
-        </Nav>
+        {/* </Nav> */}
       </Navbar.Collapse>
       <NavLink to={ROUTES.LOGIN}>
         <Button className="ml-2" variant="primary">
