@@ -19,7 +19,7 @@ import SymbolErrors from '../Errors/SymbolErrors';
 const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort }) => {
   // Hooks
   // const [advancedSearch, setAdvancedSearch] = useState(false);
-  const [searchedValue, setSearchedValue] = useState('AMZN');
+  const [searchedValue, setSearchedValue] = useState('AMZN,TSLA');
   const [options, setOptions] = useState([]);
   const history = useHistory();
 
@@ -75,14 +75,14 @@ const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort
         <Row className="widget__wrapper">
           <Col md={7}>
             <Form>
-              <h1>Find Unusual Options By Ticker [Basic]</h1>
-              <h5>ENTER STOCK TICKER</h5>
+              <h1>Basic Unusual Options Search</h1>
+              <h5>ENTER ONE OR MORE STOCK TICKERS [Comma Separated]</h5>
               <InputGroup>
                 <Form.Control
                   type="text"
                   value={searchedValue}
                   onChange={handleInputChange}
-                  placeholder="Enter Stock Ticker"
+                  placeholder="AMZN,TSLA"
                   onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                 />
               </InputGroup>

@@ -25,7 +25,8 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
   
   useEffect(() => {
       const fetchData = () => {
-        const url = `/optionsAPI/BasicFeed`;
+        const url = `/optionsAPI`;
+        console.log(url);
         fetch(url, { headers: { Accept: 'application/json' } })
           .then(res => res.json()
             .then((json) => {
@@ -39,7 +40,8 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
 
 
   const refresh = () => {
-    const url = `/optionsAPI/BasicFeed`;
+    const url = `/optionsAPI`;
+    console.log(url);
     Axios.get(url, {
         headers: { "Content-Type": "application/json" }
     })
@@ -53,7 +55,7 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
       <ScrollingWidget />
       <Container>
         <Row className="widget__wrapper">
-          <Col md={7}>
+          <Col md={4}>
             <Button onClick={() => refresh()}>Refresh</Button>
             
             {/* {displayAdvancedSearch()} */}
