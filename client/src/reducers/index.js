@@ -3,12 +3,14 @@ import authReducer from './authReducer';
 import noteReducer from './noteReducer';
 import errorsReducer from './errorsReducer';
 import advancedSearchReducer from './advancedSearchReducer';
+import sortReducer from './sortReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   note: noteReducer,
   errors: errorsReducer,
-  advancedSearch: advancedSearchReducer
+  advancedSearch: advancedSearchReducer,
+  sort: sortReducer
 });
 
 export default rootReducer;
