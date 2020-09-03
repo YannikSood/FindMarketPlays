@@ -8,17 +8,17 @@ import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/Button";
 import { useHistory } from 'react-router-dom';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
-import UnusualOptionsFlow from './UnusualOptionFlow';
+import BasicOptionsFlow from './BasicOptionsFlow';
 import { debounce } from '../../helpers/SearchHelper';
 import SymbolErrors from '../Errors/SymbolErrors';
-import AdvancedSearch from './AdvancedSearch';
+// import AdvancedSearch from './AdvancedSearch';
 // import Sort from './Sort';
-import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
+// import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
 // import { oldestSort, greatestSort, leastSort } from '../../util/sort';
 
 const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort }) => {
   // Hooks
-  const [advancedSearch, setAdvancedSearch] = useState(false);
+  // const [advancedSearch, setAdvancedSearch] = useState(false);
   const [searchedValue, setSearchedValue] = useState('AMZN');
   const [options, setOptions] = useState([]);
   const history = useHistory();
@@ -30,29 +30,17 @@ const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort
   // })
   
   useEffect(() => {
-    if(advancedSearch && results) {
-      setOptions(results);
-    }
-  })
-  
-  useEffect(() => {
-    if (!isAuthed) {
-      history.push("/login");
-    } else {
-        const fetchData = () => {
-          const url = `/optionsAPI/${searchedValue}`;
-          fetch(url, { headers: { Accept: 'application/json' } })
-            .then(res => res.json()
-              .then((json) => {
-                setOptions(json.message.option_activity || []);
-              }))
-            .catch(err => console.log(err)); // eslint-disable-line
-        };
-        debounce(fetchData());
-        sendTicker(searchedValue);
-        resetResults();
-      }
-  }, [isAuthed, history, searchedValue, advancedSearch]);
+      const fetchData = () => {
+        const url = `/optionsAPI/${searchedValue}`;
+        fetch(url, { headers: { Accept: 'application/json' } })
+          .then(res => res.json()
+            .then((json) => {
+              setOptions(json.message.option_activity || []);
+            }))
+          .catch(err => console.log(err)); // eslint-disable-line
+      };
+      debounce(fetchData());
+  }, [isAuthed, history, searchedValue]);
 
   // const sortBy = () => {
   //   if (sort === "Oldest") {
@@ -66,37 +54,6 @@ const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort
   //     setOptions(results);
   //   }
   // }
-
-  const displayAdvancedSearch = () => {
-    if (advancedSearch) {
-      return (
-        <Container>
-          <Row>
-            <Col>
-              <AdvancedSearch/>          
-            </Col>
-          </Row>
-
-        </Container>
-      );
-    }
-  }
-
-  const SwitchButtons = () => {
-    if (advancedSearch) {
-      return (
-        <Button variant="secondary" onClick={() => setAdvancedSearch(false)}>
-          Close
-        </Button>
-      )
-    } else {
-      return (
-        <Button onClick={() => setAdvancedSearch(true)}>
-          Advanced Search
-        </Button>
-      )
-    }
-  }
 
   const showErr = () => {
     if (!Object.values(options).length) {
@@ -128,38 +85,38 @@ const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort
                   placeholder="Enter Stock Ticker"
                   onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                 />
-                <InputGroup.Append>
+                {/* <InputGroup.Append>
                   <SwitchButtons/>
-                </InputGroup.Append>
+                </InputGroup.Append> */}
                 {/* <InputGroup.Append>
                   <Sort />  
                 </InputGroup.Append> */}
               </InputGroup>
             </Form>
             {showErr()}
-            {displayAdvancedSearch()}
+            {/* {displayAdvancedSearch()} */}
           </Col>
         </Row>
         <Row>
-          {searchedValue && options.length > 0 && <UnusualOptionsFlow value={options} />}
+          {searchedValue && options.length > 0 && <BasicOptionsFlow value={options} />}
         </Row>
       </Container>
     </Fragment>
   );
 };
 
-const mapStateToProps = (state) => {
-  const { auth, advancedSearch, sort } = state;
+// const mapStateToProps = (state) => {
+//   const { auth, advancedSearch, sort } = state;
 
-  return {
-    isAuthed: auth.isAuthed,
-    results: advancedSearch.results,
-    sort: sort
-  };
-};
+//   return {
+//     isAuthed: auth.isAuthed,
+//     results: advancedSearch.results,
+//     sort: sort
+//   };
+// };
 
-const mapDispatchToProps = (dispatch) => ({
-  sendTicker: (ticker) => dispatch(receiveTicker(ticker)),
-  resetResults: () => dispatch(receiveResults({}))
-})
-export default connect(mapStateToProps, mapDispatchToProps)(BasicUnusualOptions);
+// const mapDispatchToProps = (dispatch) => ({
+//   sendTicker: (ticker) => dispatch(receiveTicker(ticker)),
+//   resetResults: () => dispatch(receiveResults({}))
+// })
+export default (BasicUnusualOptions);

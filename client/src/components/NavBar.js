@@ -66,7 +66,7 @@ const NavigationAuth = (location) => {
             <Dropdown.Item>
               Basic Feed
             </Dropdown.Item>
-            <Dropdown.Item>
+            <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS}`}>
               Advanced Search
             </Dropdown.Item>
             <Dropdown.Item>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 
-const UnusualOptionsFlow = props => (
+const BasicOptionsFlow = props => (
   <Table striped bordered hover variant="dark">
     <thead>
       <tr>
@@ -53,4 +53,4 @@ const UnusualOptionsFlow = props => (
 
 //Bullish ? Bearish ? Neutral  This is a {item.sentiment} trade.
 
-export default UnusualOptionsFlow;
+export default BasicOptionsFlow;
