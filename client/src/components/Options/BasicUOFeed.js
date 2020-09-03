@@ -34,7 +34,7 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
           .catch(err => console.log(err));
       };
       debounce(fetchData());
-  }, [isAuthed, history]);
+  }, []);
 
 
 
@@ -43,7 +43,8 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
     Axios.get(url, {
         headers: { "Content-Type": "application/json" }
     })
-        .then(res => setOptions(res.data.message.option_activity))
+        // .then(res => setOptions(res.data.message.option_activity))
+        .then(res => console.log(res))
         .catch(err => console.log(err))
     }   
 
