@@ -109,8 +109,8 @@ const NavigationNonAuth = (location) => {
       fixed="top"
     >
       <Navbar.Brand href={"/"}>FMP Beta</Navbar.Brand>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
+      {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
+      {/* <Navbar.Collapse id="responsive-navbar-nav"> */}
         {/* <Nav activeKey={location.pathname}> */}
           {/* <Nav.Link className="nav-link" href={`${ROUTES.DASHBOARD}`}>Market Overview</Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
@@ -122,7 +122,7 @@ const NavigationNonAuth = (location) => {
           <Nav.Link className="nav-link" href={`${ROUTES.NEWS_FEED}`}>News Feed</Nav.Link>
           {/* <Nav.Link className="nav-link" to={ROUTES.ABOUT}>About </Nav.Link> */}
         {/* </Nav> */}
-      </Navbar.Collapse>
+      {/* </Navbar.Collapse> */}
       {/* <NavLink to={ROUTES.LOGIN}>
         <Button className="ml-2" variant="primary">
           Log In / Sign Up
