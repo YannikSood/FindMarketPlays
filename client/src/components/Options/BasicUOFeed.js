@@ -21,7 +21,9 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
   // Hooks
   // const [advancedSearch, setAdvancedSearch] = useState(false);
   const [options, setOptions] = useState([]);
+  const[loader, setLoader] = useState(true);
   const history = useHistory();
+  
   
   useEffect(() => {
       const fetchData = () => {
@@ -31,13 +33,28 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
           .then(res => res.json()
             .then((json) => {
               setOptions(json.message.option_activity || []);
+              setLoader(false);
             }))
           .catch(err => console.log(err));
       };
       debounce(fetchData());
   }, []);
 
-
+  const loading = () => {
+    if (loader) {
+      return (
+        <Container>
+          <Row>
+            <Col>
+              <h1>
+                Loading data. . . 
+              </h1>
+            </Col>
+          </Row>
+        </Container>
+      )
+    }
+  }
 
   const refresh = () => {
     const url = `/optionsAPI`;
@@ -56,13 +73,14 @@ const BasicUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, 
       <ScrollingWidget />
       <Container>
         <Row className="widget__wrapper">
-          <Col md={4}>
+          <Col align="center" md={4}>
             <Button onClick={() => refresh()}>Refresh</Button>
             
             {/* {displayAdvancedSearch()} */}
           </Col>
         </Row>
         <Row>
+          {loading()}
           {<BasicOptionsFlow value={options} />}
         </Row>
       </Container>
