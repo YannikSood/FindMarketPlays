@@ -17,7 +17,7 @@ const BasicUnusualOptionsFeed = () => {
   
   useEffect(() => {
       const fetchData = () => {
-        const url = `/optionsAPI`;
+        const url = `/optionsFeed`;
         console.log(url);
         fetch(url, { headers: { Accept: 'application/json' } })
           .then(res => res.json()

@@ -51,7 +51,7 @@ app.get("/optionsAPI/:ticker", async (req, res) => {
         res.send({ message: tempJSON });
 });
 
-app.get("/optionsAPI", async (req, res) => {
+app.get("/optionsFeed", async (req, res) => {
   var tempJSON = [];
   const url = `https://api.benzinga.com/api/v1/signal/option_activity?token=bd2570cf59734eb9934b3cd886ce958b`;
   await fetch(url, { headers: { Accept: 'application/json' } })
