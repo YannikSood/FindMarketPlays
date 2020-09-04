@@ -27,7 +27,7 @@ const NavigationAuth = (location) => {
           <DropdownButton
             className="ml-2"
             title="Stocks Hub"
-            size="md"
+            // size="md"
             variant="light"
           >
             <Dropdown.Item href={`${ROUTES.DASHBOARD}`}>
@@ -44,7 +44,7 @@ const NavigationAuth = (location) => {
           <DropdownButton
             className="ml-2"
             title="Research Hub"
-            size="md"
+            // size="md"
             variant="info"
           >
             <Dropdown.Item href={`${ROUTES.DD}`}>
@@ -64,7 +64,7 @@ const NavigationAuth = (location) => {
           <DropdownButton
             className="ml-2"
             title="Unusual Options"
-            size="md"
+            // size="md"
             variant="success"
           >
             <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
@@ -84,9 +84,7 @@ const NavigationAuth = (location) => {
               </Dropdown.Item>
             </DropdownButton>
 
-          {/* <Nav.Link className="nav-link" href={`${ROUTES.PROFILE}`}> */}
             <Button className="ml-2" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
-          {/* </Nav.Link> */}
 
         </Nav>
       </Navbar.Collapse>
