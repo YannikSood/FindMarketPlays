@@ -8,12 +8,12 @@ const path = require('path');
 
 app.use(cors());
 
-if(process.env.NODE_ENV === 'production') {
-  app.use((req, res) => {
-    if (req.header('x-forwarded-proto') !== 'https')
-      res.redirect(`https://${req.header('host')}${req.url}`)
-  })
-}
+// if(process.env.NODE_ENV === 'production') {
+//   app.use((req, res) => {
+//     if (req.header('x-forwarded-proto') !== 'https')
+//       res.redirect(`https://${req.header('host')}${req.url}`)
+//   })
+// }
 
 app.get('/betweenSearch/:fromDate/:toDate/:ticker', async (req, res) => {
   let tempJSON = [];
