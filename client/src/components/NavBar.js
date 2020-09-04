@@ -1,6 +1,5 @@
 import React from 'react';
-import { NavLink, useHistory, withRouter } from 'react-router-dom';
-//Local Imports
+import { useHistory, withRouter } from 'react-router-dom';
 import { Navbar, Nav, Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ROUTES from '../routes/routes';
@@ -20,34 +19,42 @@ const NavigationAuth = (location) => {
       variant="dark"
       fixed="top"
     >
-      <Navbar.Brand href={"/"}>FMP</Navbar.Brand>
+      <Navbar.Brand href={"/"}>FMP Beta</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav activeKey={location.pathname}>
+
           <DropdownButton
+            className="ml-2"
             title="Stocks Hub"
-            size="md"
-            variant="primary"
+            // size="md"
+            variant="light"
           >
-            <Dropdown.Item href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
-              Single Stock Lookup
-            </Dropdown.Item>
             <Dropdown.Item href={`${ROUTES.DASHBOARD}`}>
               Market Overview
             </Dropdown.Item>
-          </DropdownButton>
+            <Dropdown.Divider />
+            <Dropdown.Item href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
+              Single Stock Lookup
+            </Dropdown.Item>
           
+            
+          </DropdownButton>
+
           <DropdownButton
+            className="ml-2"
             title="Research Hub"
-            size="md"
-            variant="secondary"
+            // size="md"
+            variant="info"
           >
             <Dropdown.Item href={`${ROUTES.DD}`}>
               Reddit Research
             </Dropdown.Item>
+          <Dropdown.Divider />
             <Dropdown.Item href={`${ROUTES.NEWS_FEED}`}>
               News Search
             </Dropdown.Item>
+         <Dropdown.Divider />
             <Dropdown.Item href={`${ROUTES.NOTES}`}>
               My Research
             </Dropdown.Item>
@@ -55,25 +62,30 @@ const NavigationAuth = (location) => {
           </DropdownButton>
 
           <DropdownButton
+            className="ml-2"
             title="Unusual Options"
-            size="md"
+            // size="md"
             variant="success"
           >
-
             <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
-                Basic Search
+              Search
             </Dropdown.Item>
-            <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS_FEED}`}>
-              Basic Feed
-            </Dropdown.Item>
-            <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS}`}>
-              Advanced Search
-            </Dropdown.Item>
-            <Dropdown.Item>
-              Advanced Feed
-            </Dropdown.Item>
-          </DropdownButton>
-          <Nav.Link className="nav-link" href={`${ROUTES.PROFILE}`}>Account</Nav.Link>
+            <Dropdown.Divider />
+              <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS_FEED}`}>
+                Feed
+              </Dropdown.Item>
+            <Dropdown.Divider />  
+              <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS}`}>
+                Advanced Search
+              </Dropdown.Item>
+            <Dropdown.Divider />
+              <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}`}>
+                Advanced Feed
+              </Dropdown.Item>
+            </DropdownButton>
+
+            <Button className="ml-2" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
+
         </Nav>
       </Navbar.Collapse>
       <Button
@@ -100,9 +112,9 @@ const NavigationNonAuth = (location) => {
       variant="dark"
       fixed="top"
     >
-      <Navbar.Brand href={"/"}>FMP</Navbar.Brand>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
+      <Navbar.Brand href={"/"}>FMP Beta</Navbar.Brand>
+      {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
+      {/* <Navbar.Collapse id="responsive-navbar-nav"> */}
         {/* <Nav activeKey={location.pathname}> */}
           {/* <Nav.Link className="nav-link" href={`${ROUTES.DASHBOARD}`}>Market Overview</Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
@@ -114,7 +126,7 @@ const NavigationNonAuth = (location) => {
           <Nav.Link className="nav-link" href={`${ROUTES.NEWS_FEED}`}>News Feed</Nav.Link>
           {/* <Nav.Link className="nav-link" to={ROUTES.ABOUT}>About </Nav.Link> */}
         {/* </Nav> */}
-      </Navbar.Collapse>
+      {/* </Navbar.Collapse> */}
       {/* <NavLink to={ROUTES.LOGIN}>
         <Button className="ml-2" variant="primary">
           Log In / Sign Up

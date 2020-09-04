@@ -6,11 +6,10 @@ import Button from "react-bootstrap/Button";
 import ScrollingWidget from '../Widgets/ScrollingWidget';
 import { debounce } from '../../helpers/SearchHelper';
 import Axios from "axios";
-import BasicUOFeedFlow from './BasicUOFeedFlow';
+import AdvancedOptionsFlow from './AdvancedOptionsFlow';
 
-const BasicUnusualOptionsFeed = () => {
+const AdvancedUnusualOptionsFeed = () => {
   // Hooks
-
   const [options, setOptions] = useState([]);
   const[loader, setLoader] = useState(true);
   
@@ -63,13 +62,13 @@ const BasicUnusualOptionsFeed = () => {
       <Container>
         <Row className="widget__wrapper">
           <Col align="center" md={4}>
-            <h1>Unusual Options Feed</h1>
+            <h1>Advanced Unusual Options Feed</h1>
             <Button onClick={() => refresh()}>Refresh</Button>
             
           </Col>
         </Row>
         <Row>
-          {<BasicUOFeedFlow value={options} />}
+          {<AdvancedOptionsFlow value={options} />}
           {loading()}
         </Row>
       </Container>
@@ -77,4 +76,4 @@ const BasicUnusualOptionsFeed = () => {
   );
 };
 
-export default (BasicUnusualOptionsFeed);
+export default (AdvancedUnusualOptionsFeed);

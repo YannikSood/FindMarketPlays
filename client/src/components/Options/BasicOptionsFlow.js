@@ -6,6 +6,7 @@ const BasicOptionsFlow = props => (
     <thead>
       <tr>
         <th>Order Date</th>
+        <th>Ticker</th>
         <th>Description</th>
         <th>Sentiment</th>
       </tr>
@@ -16,6 +17,7 @@ const BasicOptionsFlow = props => (
         
         <tr>
           <td>{item.date}</td>
+          <td>{item.ticker}</td>
           <td>Someone spent {new Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "USD",
