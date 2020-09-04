@@ -8,6 +8,15 @@ const path = require('path');
 
 app.use(cors());
 
+if (process.env.NODE_ENV === "production") {
+    app.get('/', function(req, res) {
+      if (req.protocol === 'http') {
+        res.redirect('https://' + 
+        req.get('host') + req.originalUrl)
+      }
+    })
+}
+
 // if(process.env.NODE_ENV === 'production') {
 //   app.use((req, res) => {
 //     if (req.header('x-forwarded-proto') !== 'https')
