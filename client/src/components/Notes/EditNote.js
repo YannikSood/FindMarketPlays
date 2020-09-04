@@ -22,7 +22,7 @@ const EditNote = ({ currentUser, note }) => {
       if (titleValue === undefined || bodyValue === undefined) {
         history.push("/notes");
       }
-    }, [])
+    })
     
     const update = {
       title: titleValue,

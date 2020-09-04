@@ -12,7 +12,6 @@ import ResetErrors from '../Errors/ResetErrors';
 import EmailSuccess from '../Success/EmailSuccess';
 import PasswordSuccess from '../Success/PasswordSuccess';
 import { useHistory } from "react-router-dom";
-import * as ROUTES from "../../routes/routes";
 
 
 const Profile = ({ currentUser, isAuthed }) => {

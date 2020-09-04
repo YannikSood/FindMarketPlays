@@ -11,12 +11,10 @@ import ScrollingWidget from '../Widgets/ScrollingWidget';
 import AdvancedOptionsFlow from './AdvancedOptionsFlow';
 import { debounce } from '../../helpers/SearchHelper';
 import SymbolErrors from '../Errors/SymbolErrors';
-// import Sort from './Sort';
 import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
 import Axios from "axios";
-// import { oldestSort, greatestSort, leastSort } from '../../util/sort';
 
-const AdvancedUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort }) => {
+const AdvancedUnusualOptions = ({ isAuthed, resetResults }) => {
     // Hooks
     const [afterDate, setAfterDate] = useState();
     const [beforeDate, setBeforeDate] = useState();
@@ -47,7 +45,7 @@ const AdvancedUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, s
         debounce(fetchData());
         // sendTicker(searchedValue);
         resetResults();
-    }, [isAuthed, history, searchedValue, filterFlag]);
+    }, [isAuthed, history, searchedValue, filterFlag, resetResults]);
 
     const displayFilter = () => {
         if (filterFlag) {
@@ -134,13 +132,13 @@ const AdvancedUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, s
                     <Col md={7}>
                         <Form>
                             <h1>Advanced Unusual Options Search</h1>
-                            <h5>ENTER ONE OR MORE STOCK TICKERS [Comma Separated]</h5>
+                             <h5>ENTER STOCK TICKER(S)</h5>
                             <InputGroup>
                                 <Form.Control
                                     type="text"
                                     value={searchedValue}
                                     onChange={handleInputChange}
-                                    placeholder="AMZN,TSLA"
+                                    placeholder="GOOGL,QCOM"
                                     onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                                 />
                                 <InputGroup.Append>

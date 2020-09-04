@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
 import NewsFlow from './NewsFlow';
-import * as ROUTES from '../../routes/routes';
 import { debounce } from '../../helpers/SearchHelper';
 import SymbolErrors from '../Errors/SymbolErrors';
 
