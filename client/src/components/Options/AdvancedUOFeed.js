@@ -1,30 +1,17 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
-import InputGroup from "react-bootstrap/InputGroup";
-import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/Button";
-import { useHistory } from 'react-router-dom';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
-import BasicOptionsFlow from './BasicOptionsFlow';
 import { debounce } from '../../helpers/SearchHelper';
-import SymbolErrors from '../Errors/SymbolErrors';
 import Axios from "axios";
-import BasicUOFeedFlow from './BasicUOFeedFlow';
-import AdvancedUOFeedFlow from './AdvancedUOFeedFlow';
-// import AdvancedSearch from './AdvancedSearch';
-// import Sort from './Sort';
-// import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
-// import { oldestSort, greatestSort, leastSort } from '../../util/sort';
+import AdvancedOptionsFlow from './AdvancedOptionsFlow';
 
-const AdvancedUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, results, sort }) => {
+const AdvancedUnusualOptionsFeed = () => {
   // Hooks
-  // const [advancedSearch, setAdvancedSearch] = useState(false);
   const [options, setOptions] = useState([]);
   const[loader, setLoader] = useState(true);
-  const history = useHistory();
   
   
   useEffect(() => {
@@ -64,7 +51,6 @@ const AdvancedUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, result
     Axios.get(url, {
         headers: { "Content-Type": "application/json" }
     })
-        // .then(res => setOptions(res.data.message.option_activity))
         .then(res => console.log(res))
         .catch(err => console.log(err))
     }   
@@ -79,11 +65,10 @@ const AdvancedUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, result
             <h1>Advanced Unusual Options Feed</h1>
             <Button onClick={() => refresh()}>Refresh</Button>
             
-            {/* {displayAdvancedSearch()} */}
           </Col>
         </Row>
         <Row>
-          {<AdvancedUOFeedFlow value={options} />}
+          {<AdvancedOptionsFlow value={options} />}
           {loading()}
         </Row>
       </Container>
@@ -91,18 +76,4 @@ const AdvancedUnusualOptionsFeed = ({ isAuthed, sendTicker, resetResults, result
   );
 };
 
-// const mapStateToProps = (state) => {
-//   const { auth, advancedSearch, sort } = state;
-
-//   return {
-//     isAuthed: auth.isAuthed,
-//     results: advancedSearch.results,
-//     sort: sort
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch) => ({
-//   sendTicker: (ticker) => dispatch(receiveTicker(ticker)),
-//   resetResults: () => dispatch(receiveResults({}))
-// })
 export default (AdvancedUnusualOptionsFeed);

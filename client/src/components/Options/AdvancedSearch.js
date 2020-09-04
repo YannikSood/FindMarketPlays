@@ -6,9 +6,6 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from "react-bootstrap/Button";
-import { useHistory } from 'react-router-dom';
-import ScrollingWidget from '../Widgets/ScrollingWidget';
-import Axios from "axios";
 import { receiveResults } from '../../actions/advancedSearch';
 
 // import DatePicker from 'react-datepicker';

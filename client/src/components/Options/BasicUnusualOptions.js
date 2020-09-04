@@ -1,33 +1,21 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from 'react-bootstrap/Form';
-import Button from "react-bootstrap/Button";
 import { useHistory } from 'react-router-dom';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
 import BasicOptionsFlow from './BasicOptionsFlow';
 import { debounce } from '../../helpers/SearchHelper';
 import SymbolErrors from '../Errors/SymbolErrors';
-// import AdvancedSearch from './AdvancedSearch';
-// import Sort from './Sort';
-// import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
-// import { oldestSort, greatestSort, leastSort } from '../../util/sort';
 
-const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort }) => {
+const BasicUnusualOptions = ({ isAuthed }) => {
   // Hooks
-  // const [advancedSearch, setAdvancedSearch] = useState(false);
   const [searchedValue, setSearchedValue] = useState('AMZN,TSLA');
   const [options, setOptions] = useState([]);
   const history = useHistory();
 
-  // useEffect(() => {
-  //   if (sort != "Recent") {
-  //     sortBy();
-  //   }
-  // })
   
   useEffect(() => {
       const fetchData = () => {
@@ -41,19 +29,6 @@ const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort
       };
       debounce(fetchData());
   }, [isAuthed, history, searchedValue]);
-
-  // const sortBy = () => {
-  //   if (sort === "Oldest") {
-  //     oldestSort(results);
-  //     setOptions(results);
-  //   } else if (sort === "Greatest") {
-  //     greatestSort(results);
-  //     setOptions(results);
-  //   } else if (sort === "Least") {
-  //     leastSort(results);
-  //     setOptions(results);
-  //   }
-  // }
 
   const showErr = () => {
     if (!Object.values(options).length) {
@@ -75,8 +50,8 @@ const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort
         <Row className="widget__wrapper">
           <Col md={7}>
             <Form>
-              <h1>Basic Unusual Options Search</h1>
-              <h5>ENTER ONE OR MORE STOCK TICKERS [Comma Separated]</h5>
+              <h1>Unusual Options Search</h1>
+              <h5>ENTER STOCK TICKER(S)</h5>
               <InputGroup>
                 <Form.Control
                   type="text"
@@ -99,18 +74,4 @@ const BasicUnusualOptions = ({ isAuthed, sendTicker, resetResults, results, sort
   );
 };
 
-// const mapStateToProps = (state) => {
-//   const { auth, advancedSearch, sort } = state;
-
-//   return {
-//     isAuthed: auth.isAuthed,
-//     results: advancedSearch.results,
-//     sort: sort
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch) => ({
-//   sendTicker: (ticker) => dispatch(receiveTicker(ticker)),
-//   resetResults: () => dispatch(receiveResults({}))
-// })
 export default (BasicUnusualOptions);

@@ -3,25 +3,17 @@ const express = require("express"),
   cors = require("cors");
 
 const fetch = require("node-fetch");
-
 const path = require('path');
 // var enforce = require('express-sslify');
 
 app.use(cors());
 
-// app.use(enforce.HTTPS());
-
-// app.get('/', function (req, res) {
-//   res.send('root')
-// })
-
-// app.get('/stock', function (req, res) {
-//   res.send('stock')
-// })
-
-// app.get('/optionFeed', function (req, res) {
-//   res.send('optionFeed')
-// })
+// if(process.env.NODE_ENV === 'production') {
+//   app.use((req, res) => {
+//     if (req.header('x-forwarded-proto') !== 'https')
+//       res.redirect(`https://${req.header('host')}${req.url}`)
+//   })
+// }
 
 app.get('/betweenSearch/:fromDate/:toDate/:ticker', async (req, res) => {
   let tempJSON = [];

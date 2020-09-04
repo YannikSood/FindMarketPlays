@@ -1,7 +1,6 @@
 import React from 'react';
-import { NavLink, useHistory, withRouter } from 'react-router-dom';
-//Local Imports
-import { Navbar, Nav, Button, Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap';
+import { useHistory, withRouter } from 'react-router-dom';
+import { Navbar, Nav, Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ROUTES from '../routes/routes';
 import firebase from '../firebase/firebase';
@@ -24,11 +23,12 @@ const NavigationAuth = (location) => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav activeKey={location.pathname}>
-          
+
           <DropdownButton
+            className="ml-2"
             title="Stocks Hub"
-            size="md"
-            variant="primary"
+            // size="md"
+            variant="light"
           >
             <Dropdown.Item href={`${ROUTES.DASHBOARD}`}>
               Market Overview
@@ -42,9 +42,10 @@ const NavigationAuth = (location) => {
           </DropdownButton>
 
           <DropdownButton
+            className="ml-2"
             title="Research Hub"
-            size="md"
-            variant="secondary"
+            // size="md"
+            variant="info"
           >
             <Dropdown.Item href={`${ROUTES.DD}`}>
               Reddit Research
@@ -61,28 +62,30 @@ const NavigationAuth = (location) => {
           </DropdownButton>
 
           <DropdownButton
+            className="ml-2"
             title="Unusual Options"
-            size="md"
+            // size="md"
             variant="success"
           >
-
             <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
-              Basic Search
+              Search
             </Dropdown.Item>
-          <Dropdown.Divider />
-            <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS_FEED}`}>
-              Basic Feed
-            </Dropdown.Item>
-          <Dropdown.Divider />  
-            <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS}`}>
-              Advanced Search
-            </Dropdown.Item>
-          <Dropdown.Divider />
-            <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}`}>
-              Advanced Feed
-            </Dropdown.Item>
-          </DropdownButton>
-          <Nav.Link className="nav-link" href={`${ROUTES.PROFILE}`}>Account</Nav.Link>
+            <Dropdown.Divider />
+              <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS_FEED}`}>
+                Feed
+              </Dropdown.Item>
+            <Dropdown.Divider />  
+              <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS}`}>
+                Advanced Search
+              </Dropdown.Item>
+            <Dropdown.Divider />
+              <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}`}>
+                Advanced Feed
+              </Dropdown.Item>
+            </DropdownButton>
+
+            <Button className="ml-2" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
+
         </Nav>
       </Navbar.Collapse>
       <Button
