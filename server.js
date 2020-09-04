@@ -2,8 +2,72 @@ const express = require("express"),
   app = express(),
   cors = require("cors");
 
+const mongodb = require("mongodb");
+var ObjectId = require("mongodb").ObjectID;
+const MongoClient = mongodb.MongoClient;
+let db;
+let MasterList;
+let UserLists;
+
+MongoClient.connect(
+  "mongodb+srv://fmpadmin:fmppassword@fmpcluster.lfrzm.mongodb.net/StockLists?retryWrites=true&w=majority",
+  function (err, client) {
+    if (err) console.log(err);
+    db = client.db("StockLists")
+    
+    // Sets the collections to variables. A collection is like a table
+    MasterList = db.collection("MasterList");
+    UserLists = db.collection("UserLists")
+  }
+);
+
+
+// the backend route. be sure to save the master stock list to the MasterList collection 
+app.get("/stockDiscover/:currentUserID/:listFlag", async (req, res) => {
+  let currentUserID = `${req.params.currentUserID}`;
+  let listFlag = `${req.params.listFlag}`;
+
+  // use 'undefined' because params come as a string
+  if (listFlag === "undefined") {
+    // if user does not have a master list
+    
+    // grabs master list from MasterList table
+    MasterList.find({})
+      .toArray()
+      .then(results => {
+        let userLists = {
+          id: currentUserID,
+          masterList: results[0],
+          leftList: [],
+          rightList: [],
+        }
+
+        // creates user list 
+        UserLists.insertOne(userLists)
+          .then((stuff) => res.send({ message: stuff.ops[0]}))
+          .catch((err) => console.log(err));
+        
+
+      })
+      .catch(err => console.log(err))
+      
+    } else {
+      // use DOES have a master list
+
+      // both key-value pairs must be strings
+      // replace the search query with ({ "id": `${currentUserID}`})
+      UserLists.find({"_id": ObjectId("5f529a1b1fc88992c9fed310")})
+        .toArray()
+        .then(stuff => res.send({message: stuff[0]}))
+        .catch(err => console.log(err))
+
+  }
+
+});
+
 const fetch = require("node-fetch");
 const path = require('path');
+const { nextTick } = require("process");
 // var enforce = require('express-sslify');
 
 app.use(cors());
