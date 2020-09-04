@@ -1,15 +1,18 @@
 const express = require("express"),
   app = express(),
   cors = require("cors");
+
 const fetch = require("node-fetch");
 const path = require('path');
-var enforce = require('express-sslify');
-
+// var enforce = require('express-sslify');
 
 app.use(cors());
 
 if(process.env.NODE_ENV === 'production') {
-    app.use(enforce.HTTPS());
+  app.use((req, res) => {
+    if (req.header('x-forwarded-proto') !== 'https')
+      res.redirect(`https://${req.header('host')}${req.url}`)
+  })
 }
 
 app.get('/betweenSearch/:fromDate/:toDate/:ticker', async (req, res) => {
