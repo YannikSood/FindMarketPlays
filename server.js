@@ -1,4 +1,3 @@
-// import sslRedirect from "heroku-ssl-redirect";
 const express = require("express"),
   app = express(),
   cors = require("cors");
@@ -69,31 +68,16 @@ app.get("/stockDiscover/:currentUserID/:listFlag", async (req, res) => {
 const fetch = require("node-fetch");
 const path = require('path');
 const { nextTick } = require("process");
-// var enforce = require('express-sslify');
 
-// app.use(sslRedirect());
 app.use(cors());
 
 if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {
     if (req.headers["x-forwarded-proto"] != "https")
-      res.redirect("https://fmp-development.herokuapp.com" + req.url);
+      res.redirect("https://www.findmarketplays.com" + req.url);
     else next();
   })
 }
-
-// app.get("*", function (req, res, next) {
-//   if (req.headers["x-forwarded-proto"] != "https")
-//     res.redirect("https://fmp-development.herokuapp.com" + req.url);
-//   else next(); /* Continue to other routes if we're not redirecting */
-// });
-
-// if(process.env.NODE_ENV === 'production') {
-//   app.use((req, res) => {
-//     if (req.header('x-forwarded-proto') !== 'https')
-//       res.redirect(`https://${req.header('host')}${req.url}`)
-//   })
-// }
 
 app.get('/betweenSearch/:fromDate/:toDate/:ticker', async (req, res) => {
   let tempJSON = [];
