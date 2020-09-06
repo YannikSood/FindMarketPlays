@@ -75,7 +75,7 @@ const { nextTick } = require("process");
 app.use(cors());
 
 if (process.env.NODE_ENV === "production") {
-  app.use((req, res) => {
+  app.use((req, res, next) => {
     if (req.headers["x-forwarded-proto"] != "https")
       res.redirect("https://fmp-development.herokuapp.com" + req.url);
     else next();
