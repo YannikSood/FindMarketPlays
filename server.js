@@ -1,6 +1,7 @@
 const express = require("express"),
   app = express(),
   cors = require("cors");
+import sslRedirect from "heroku-ssl-redirect";
 
 const mongodb = require("mongodb");
 var ObjectId = require("mongodb").ObjectID;
@@ -70,6 +71,7 @@ const path = require('path');
 const { nextTick } = require("process");
 // var enforce = require('express-sslify');
 
+app.use(sslRedirect());
 app.use(cors());
 
 
