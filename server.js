@@ -1,7 +1,7 @@
+// import sslRedirect from "heroku-ssl-redirect";
 const express = require("express"),
   app = express(),
   cors = require("cors");
-import sslRedirect from "heroku-ssl-redirect";
 
 const mongodb = require("mongodb");
 var ObjectId = require("mongodb").ObjectID;
@@ -71,22 +71,15 @@ const path = require('path');
 const { nextTick } = require("process");
 // var enforce = require('express-sslify');
 
-app.use(sslRedirect());
+// app.use(sslRedirect());
 app.use(cors());
 
 
-
-// if (process.env.NODE_ENV === "production") {
-//     app.get('/', function(req, res) {
-
-// req.protocol might be a solution. adding lines 13 through 23 redirected too many times and heroku doesn't load
-
-//       if (req.protocol === 'http') {
-//         res.redirect('https://' + 
-//         req.get('host') + req.originalUrl)
-//       }
-//     })
-// }
+app.get("*", function (req, res, next) {
+  if (req.headers["x-forwarded-proto"] != "https")
+    res.redirect("https://fmp-development.herokuapp.com/" + req.url);
+  else next(); /* Continue to other routes if we're not redirecting */
+});
 
 // if(process.env.NODE_ENV === 'production') {
 //   app.use((req, res) => {
