@@ -74,12 +74,19 @@ const { nextTick } = require("process");
 // app.use(sslRedirect());
 app.use(cors());
 
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res) => {
+    if (req.headers["x-forwarded-proto"] != "https")
+      res.redirect("https://fmp-development.herokuapp.com" + req.url);
+    else next();
+  })
+}
 
-app.get("*", function (req, res, next) {
-  if (req.headers["x-forwarded-proto"] != "https")
-    res.redirect("https://fmp-development.herokuapp.com/" + req.url);
-  else next(); /* Continue to other routes if we're not redirecting */
-});
+// app.get("*", function (req, res, next) {
+//   if (req.headers["x-forwarded-proto"] != "https")
+//     res.redirect("https://fmp-development.herokuapp.com" + req.url);
+//   else next(); /* Continue to other routes if we're not redirecting */
+// });
 
 // if(process.env.NODE_ENV === 'production') {
 //   app.use((req, res) => {
