@@ -2,7 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 
 const AdvancedUnusualOptionsFlow = props => (
-  <Table striped bordered hover variant="dark">
+  <Table responsive striped bordered hover variant="dark">
     <thead>
       <tr>
         <th>Order Date</th>
