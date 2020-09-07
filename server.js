@@ -21,7 +21,6 @@ MongoClient.connect(
   }
 );
 
-
 // the backend route. be sure to save the master stock list to the MasterList collection 
 app.get("/stockDiscover/:currentUserID/:listFlag", async (req, res) => {
   let currentUserID = `${req.params.currentUserID}`;
