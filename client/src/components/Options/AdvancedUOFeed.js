@@ -12,6 +12,24 @@ const AdvancedUnusualOptionsFeed = () => {
   // Hooks
   const [options, setOptions] = useState([]);
   const[loader, setLoader] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log("hello")
+    }, 1000)
+    // const timer = setTimeout(() => {
+    //   const url = `/optionsAPI`;
+    //   console.log("refreshing")
+
+    //   Axios.get(url, {
+    //       headers: { "Content-Type": "application/json" }
+    //   })
+    //       .then(res => console.log(res))
+    //       .catch(err => console.log(err))
+    // }, 1000)
+
+    // return () => clearTimeout(timer)
+  }, [])
   
   
   useEffect(() => {
@@ -45,15 +63,17 @@ const AdvancedUnusualOptionsFeed = () => {
     }
   }
 
-  const refresh = () => {
-    const url = `/optionsAPI`;
-    console.log(url);
-    Axios.get(url, {
-        headers: { "Content-Type": "application/json" }
-    })
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
-    }   
+  // const refresh = () => {
+
+  //   const url = `/optionsAPI`;
+  //   console.log(url);
+
+  //   Axios.get(url, {
+  //       headers: { "Content-Type": "application/json" }
+  //   })
+  //       .then(res => console.log(res))
+  //       .catch(err => console.log(err))
+  // }   
 
 
   return (
@@ -63,7 +83,7 @@ const AdvancedUnusualOptionsFeed = () => {
         <Row className="widget__wrapper">
           <Col align="center" md={4}>
             <h1>Advanced Unusual Options Feed</h1>
-            <Button onClick={() => refresh()}>Refresh</Button>
+            {/* <Button onClick={() => refresh()}>Refresh</Button> */}
             
           </Col>
         </Row>

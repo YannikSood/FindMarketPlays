@@ -2,32 +2,63 @@ const express = require("express"),
   app = express(),
   cors = require("cors");
 
+const mongodb = require("mongodb");
+var ObjectId = require("mongodb").ObjectID;
+const MongoClient = mongodb.MongoClient;
+let db;
+let MasterList;
+let UserLists;
+
+MongoClient.connect(
+  "mongodb+srv://fmpadmin:fmppassword@fmpcluster.lfrzm.mongodb.net/StockLists?retryWrites=true&w=majority",
+  function (err, client) {
+    if (err) console.log(err);
+    db = client.db("StockLists")
+    
+    // Sets the collections to variables. A collection is like a table
+    MasterList = db.collection("MasterList");
+    UserLists = db.collection("UserLists")
+  }
+);
+
+app.post("/stockDiscover/:email", async (req, res) => {
+  let email = `${req.params.email}`;
+  MasterList.find({})
+    .toArray()
+    .then(stuff1 => { 
+      let userLists = {
+        email: email,
+        masterList: new Array(stuff1.length),
+        leftList: [],
+        rightList: []
+      }
+
+      UserLists.insertOne(userLists)
+        .then((stuff2) => res.send({ message: stuff2.ops[0] }))
+        .catch((err) => console.log(err))
+      })
+    .catch(err => console.log(err))
+
+  //   UserLists.find({ "id": `${currentUserID}` })
+  //       .toArray()
+  //       .then(stuff => res.send({message: stuff[0]}))
+  //       .catch(err => console.log(err))
+  // }
+});
+
 const fetch = require("node-fetch");
 const path = require('path');
-// var enforce = require('express-sslify');
+const { nextTick } = require("process");
 
 app.use(cors());
 
-
-
-// if (process.env.NODE_ENV === "production") {
-//     app.get('/', function(req, res) {
-
-// req.protocol might be a solution. adding lines 13 through 23 redirected too many times and heroku doesn't load
-
-//       if (req.protocol === 'http') {
-//         res.redirect('https://' + 
-//         req.get('host') + req.originalUrl)
-//       }
-//     })
-// }
-
-// if(process.env.NODE_ENV === 'production') {
-//   app.use((req, res) => {
-//     if (req.header('x-forwarded-proto') !== 'https')
-//       res.redirect(`https://${req.header('host')}${req.url}`)
-//   })
-// }
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res, next) => {
+    if (req.headers["x-forwarded-proto"] != "https")
+      res.redirect("https://www.findmarketplays.com" + req.url);
+    else next();
+  })
+}
 
 app.get('/betweenSearch/:fromDate/:toDate/:ticker', async (req, res) => {
   let tempJSON = [];
@@ -96,6 +127,42 @@ app.get("/newsAPI/:ticker", async (req, res) => {
     
     res.send({ message: tempJSON });
 });
+
+app.get("/getTicker/:ticker", async (req, res) => {
+  var tempJSON = [];
+  const searchString = `${req.params.ticker}`;
+  const url = `https://cloud.iexapis.com/stable/stock/${searchString}/quote?token=pk_390da679d1534216a7b33daf33f4f142 `;
+
+  await fetch(url, { headers: { Accept: 'application/json' } })
+  .then(res => res.json()
+  .then((json) => {
+      
+      tempJSON = json;
+      console.log(tempJSON);
+  }))
+  .catch(err => console.error(err)); // eslint-disable-line
+  
+  
+  res.send({ message: tempJSON });
+});
+
+// app.get("/getTicker/Chart/:ticker", async (req, res) => {
+//   var tempJSON = [];
+//   const searchString = `${req.params.ticker}`;
+//   const url = `https://sandbox.iexapis.com/stable/stock/${searchString}/quote?token=Tpk_7b9e02739e7c41c28c51e091d9881319 `;
+
+//   await fetch(url, { headers: { Accept: 'application/json' } })
+//   .then(res => res.json()
+//   .then((json) => {
+      
+//       tempJSON = json;
+//       console.log(tempJSON);
+//   }))
+//   .catch(err => console.error(err)); // eslint-disable-line
+  
+  
+//   res.send({ message: tempJSON });
+// });
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));

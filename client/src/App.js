@@ -26,7 +26,7 @@ import NoteDetail from './components/Notes/NoteDetail';
 import EditNote from './components/Notes/EditNote';
 import 'react-quill/dist/quill.snow.css';
 import TOS from "./components/TOS/TOS";
-import './App.css';
+import './css/App.css';
 import Dashboard from './components/Dashboard';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
@@ -40,7 +40,8 @@ import { receiveUser, clearUser } from './reducers/authReducer';
 import Loader from './components/Loader';
 import { PersistGate } from 'redux-persist/integration/react';
 import AdvancedUOFeed from './components/Options/AdvancedUOFeed';
-
+import StockDiscover from './components/StockDiscover/StockDiscover'
+import SDScreen from './components/StockDiscover/SDScreen';
 
 
 const App = () => {
@@ -132,6 +133,10 @@ const App = () => {
                     <Notes />
                   </Route>
 
+                  <Route path={ROUTES.SD_SCREEN}>
+                    <SDScreen />
+                  </Route>
+
                   <Route path={ROUTES.NOTE_DETAIL}>
                     <NoteDetail />
                   </Route>
@@ -147,6 +152,7 @@ const App = () => {
                   <Route path={ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}>
                     <AdvancedUOFeed />
                   </Route>
+
                   <Route path={ROUTES.ADVANCED_UNUSUAL_OPTIONS}>
                     <AdvancedUnusualOptions />
                   </Route>
@@ -173,6 +179,10 @@ const App = () => {
 
                   <Route path={ROUTES.ABOUT}>
                     <About />
+                  </Route>
+
+                  <Route path={ROUTES.STOCK_DISCOVER}>
+                    <StockDiscover />
                   </Route>
                 </Switch>
               </div>

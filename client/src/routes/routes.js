@@ -18,4 +18,7 @@ export const PROFILE = '/profile';
 export const EDIT_NOTE = '/note/edit/:id';
 export const SPLASH ='/';
 export const TOS = "/tos";
+export const STOCK_DISCOVER = "/stockDiscover"
+export const SD_SCREEN = "/sdScreen"
+
 
