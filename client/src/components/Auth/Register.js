@@ -28,7 +28,7 @@ const Register = ({ isAuthed }) => {
       .then((user) => {
         console.log('Success signing up', user);
         
-        let url = `/stockDiscover/${email}`
+        let url = `/stockDiscover/${email}/register`
         Axios.post(url, {
           headers: {"Content-Type": "application/json"}
         })
