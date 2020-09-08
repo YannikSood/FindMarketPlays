@@ -147,6 +147,42 @@ app.get("/newsAPI/:ticker", async (req, res) => {
     res.send({ message: tempJSON });
 });
 
+app.get("/getTicker/:ticker", async (req, res) => {
+  var tempJSON = [];
+  const searchString = `${req.params.ticker}`;
+  const url = `https://cloud.iexapis.com/stable/stock/${searchString}/quote?token=pk_390da679d1534216a7b33daf33f4f142 `;
+
+  await fetch(url, { headers: { Accept: 'application/json' } })
+  .then(res => res.json()
+  .then((json) => {
+      
+      tempJSON = json;
+      console.log(tempJSON);
+  }))
+  .catch(err => console.error(err)); // eslint-disable-line
+  
+  
+  res.send({ message: tempJSON });
+});
+
+// app.get("/getTicker/Chart/:ticker", async (req, res) => {
+//   var tempJSON = [];
+//   const searchString = `${req.params.ticker}`;
+//   const url = `https://sandbox.iexapis.com/stable/stock/${searchString}/quote?token=Tpk_7b9e02739e7c41c28c51e091d9881319 `;
+
+//   await fetch(url, { headers: { Accept: 'application/json' } })
+//   .then(res => res.json()
+//   .then((json) => {
+      
+//       tempJSON = json;
+//       console.log(tempJSON);
+//   }))
+//   .catch(err => console.error(err)); // eslint-disable-line
+  
+  
+//   res.send({ message: tempJSON });
+// });
+
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
 }

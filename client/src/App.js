@@ -41,6 +41,7 @@ import Loader from './components/Loader';
 import { PersistGate } from 'redux-persist/integration/react';
 import AdvancedUOFeed from './components/Options/AdvancedUOFeed';
 import StockDiscover from './components/StockDiscover/StockDiscover'
+import SDScreen from './components/StockDiscover/SDScreen';
 
 
 const App = () => {
@@ -132,6 +133,10 @@ const App = () => {
                     <Notes />
                   </Route>
 
+                  <Route path={ROUTES.SD_SCREEN}>
+                    <SDScreen />
+                  </Route>
+
                   <Route path={ROUTES.NOTE_DETAIL}>
                     <NoteDetail />
                   </Route>
@@ -147,6 +152,7 @@ const App = () => {
                   <Route path={ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}>
                     <AdvancedUOFeed />
                   </Route>
+
                   <Route path={ROUTES.ADVANCED_UNUSUAL_OPTIONS}>
                     <AdvancedUnusualOptions />
                   </Route>

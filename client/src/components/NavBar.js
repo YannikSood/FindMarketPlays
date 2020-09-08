@@ -87,6 +87,11 @@ const NavigationAuth = (location) => {
             <Button class="ml-2" onClick={() => history.push("/stockDiscover")} variant="outline-light">
               Stock Discover
             </Button>
+
+            <Button class="ml-2" onClick={() => history.push("/sdScreen")} variant="outline-light">
+              Stock Discover
+            </Button>
+
             <Button className="ml-2" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
 
         </Nav>
