@@ -1,9 +1,11 @@
 import React from 'react';
 import { useHistory, withRouter } from 'react-router-dom';
-import { Navbar, Nav, Button, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ROUTES from '../routes/routes';
 import firebase from '../firebase/firebase';
+import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+import 'react-pro-sidebar/dist/css/styles.css';
 import '../css/Navbar.css';
 
 const Navigation = ({ isAuthed, location }) => (
@@ -12,101 +14,117 @@ const Navigation = ({ isAuthed, location }) => (
 const NavigationAuth = (location) => {
   const history = useHistory();
 
-  return (
-    <Navbar
-      collapseOnSelect
-      expand="sm"
-      className="justify-content-center"
-      bg="dark"
-      variant="dark"
-      fixed="top"
-    >
-      <Navbar.Brand href={"/"}>FMP Beta</Navbar.Brand>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav activeKey={location.pathname}>
+    return (
+      <Container>
+        <Navbar
+          collapseOnSelect
+          expand="sm"
+          className="justify-content-center d-none d-lg-flex"
+          bg="dark"
+          variant="dark"
+          fixed="top"
+        >
+          <Navbar.Brand href={"/"}>FMP Beta</Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav activeKey={location.pathname}>
+              <DropdownButton
+                drop={"down"}
+                className="ml-2"
+                title="Stocks Hub"
+                // size="md"
+                variant="light"
+              >
+                <Dropdown.Item href={`${ROUTES.DASHBOARD}`}>
+                  Market Overview
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
+                  Single Stock Lookup
+                </Dropdown.Item>
+              </DropdownButton>
 
-          <DropdownButton
-            drop={"down"}
+              <DropdownButton
+                className="ml-2"
+                title="Research Hub"
+                // size="md"
+                variant="info"
+              >
+                <Dropdown.Item href={`${ROUTES.DD}`}>
+                  Reddit Research
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href={`${ROUTES.NEWS_FEED}`}>
+                  News Search
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href={`${ROUTES.NOTES}`}>
+                  My Research
+                </Dropdown.Item>
+              </DropdownButton>
 
+              <DropdownButton
+                className="ml-2"
+                title="Unusual Options"
+                // size="md"
+                variant="success"
+              >
+                <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
+                  Search
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS_FEED}`}>
+                  Feed
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS}`}>
+                  Advanced Search
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}`}>
+                  Advanced Feed
+                </Dropdown.Item>
+              </DropdownButton>
+
+              <Button
+                class="ml-2"
+                onClick={() => history.push("/stockDiscover")}
+                variant="outline-light"
+              >
+                Stock Discover
+              </Button>
+              <Button
+                className="ml-2"
+                onClick={() => history.push("/profile")}
+                variant="outline-light"
+              >
+                {" "}
+                Account
+              </Button>
+            </Nav>
+          </Navbar.Collapse>
+          <Button
             className="ml-2"
-            title="Stocks Hub"
-            // size="md"
-            variant="light"
+            variant="primary"
+            onClick={() => {
+              firebase.auth().signOut();
+              history.push("/");
+            }}
           >
-            <Dropdown.Item href={`${ROUTES.DASHBOARD}`}>
-              Market Overview
-            </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
-              Single Stock Lookup
-            </Dropdown.Item>
-          
-            
-          </DropdownButton>
-
-          <DropdownButton
-            className="ml-2"
-            title="Research Hub"
-            // size="md"
-            variant="info"
-          >
-            <Dropdown.Item href={`${ROUTES.DD}`}>
-              Reddit Research
-            </Dropdown.Item>
-          <Dropdown.Divider />
-            <Dropdown.Item href={`${ROUTES.NEWS_FEED}`}>
-              News Search
-            </Dropdown.Item>
-         <Dropdown.Divider />
-            <Dropdown.Item href={`${ROUTES.NOTES}`}>
-              My Research
-            </Dropdown.Item>
-
-          </DropdownButton>
-
-          <DropdownButton
-            className="ml-2"
-            title="Unusual Options"
-            // size="md"
-            variant="success"
-          >
-            <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
-              Search
-            </Dropdown.Item>
-            <Dropdown.Divider />
-              <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS_FEED}`}>
-                Feed
-              </Dropdown.Item>
-            <Dropdown.Divider />  
-              <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS}`}>
-                Advanced Search
-              </Dropdown.Item>
-            <Dropdown.Divider />
-              <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}`}>
-                Advanced Feed
-              </Dropdown.Item>
-            </DropdownButton>
-
-            <Button class="ml-2" onClick={() => history.push("/stockDiscover")} variant="outline-light">
-              Stock Discover
-            </Button>
-            <Button className="ml-2" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
-
-        </Nav>
-      </Navbar.Collapse>
-      <Button
-        className="ml-2"
-        variant="primary"
-        onClick={() => {
-          firebase.auth().signOut();
-          history.push('/')
-        }}
-      >
-        Sign Out
-      </Button>
-    </Navbar>
-  )
+            Sign Out
+          </Button>
+        </Navbar>
+        {/* <ProSidebar className="">
+          <Menu iconShape="square">
+            <MenuItem >Dashboard</MenuItem>
+            <SubMenu title="Components" >
+              <MenuItem>Component 1</MenuItem>
+              <MenuItem>Component 2</MenuItem>
+            </SubMenu>
+          </Menu>
+        </ProSidebar> */}
+      </Container>
+    );
 };
 
 const NavigationNonAuth = (location) => {
