@@ -26,7 +26,7 @@ import NoteDetail from './components/Notes/NoteDetail';
 import EditNote from './components/Notes/EditNote';
 import 'react-quill/dist/quill.snow.css';
 import TOS from "./components/TOS/TOS";
-import './App.css';
+import './css/App.css';
 import Dashboard from './components/Dashboard';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';

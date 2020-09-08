@@ -4,12 +4,14 @@ import { Navbar, Nav, Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ROUTES from '../routes/routes';
 import firebase from '../firebase/firebase';
+import '../css/Navbar.css';
 
 const Navigation = ({ isAuthed, location }) => (
   <div>{isAuthed ? NavigationAuth(location): NavigationNonAuth(location)}</div>
 );
 const NavigationAuth = (location) => {
   const history = useHistory();
+
   return (
     <Navbar
       collapseOnSelect
@@ -25,6 +27,8 @@ const NavigationAuth = (location) => {
         <Nav activeKey={location.pathname}>
 
           <DropdownButton
+            drop={"down"}
+
             className="ml-2"
             title="Stocks Hub"
             // size="md"
@@ -110,7 +114,7 @@ const NavigationNonAuth = (location) => {
     <Navbar
       collapseOnSelect
       expand="sm"
-      className="justify-content-center"
+      className="justify-content-center d-none d-lg-flex"
       bg="dark"
       variant="dark"
       fixed="top"

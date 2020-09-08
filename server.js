@@ -21,41 +21,29 @@ MongoClient.connect(
   }
 );
 
-// the backend route. be sure to save the master stock list to the MasterList collection 
-app.get("/stockDiscover/:currentUserID/:listFlag", async (req, res) => {
-  let currentUserID = `${req.params.currentUserID}`;
-  let listFlag = `${req.params.listFlag}`;
-  let arr = new Array(8967);
+app.post("/stockDiscover/:email", async (req, res) => {
+  let email = `${req.params.email}`;
+  MasterList.find({})
+    .toArray()
+    .then(stuff1 => { 
+      let userLists = {
+        email: email,
+        masterList: new Array(stuff1.length),
+        leftList: [],
+        rightList: []
+      }
 
-  // use 'undefined' because params come as a string
-  if (listFlag === "undefined") {
-    // if user does not have a master list
-    
-    // grabs master list from MasterList table
-  
-    let userLists = {
-      id: currentUserID,
-      masterList: arr,
-      leftList: [],
-      rightList: []
-    }
-        // creates user list 
-    UserLists.insertOne(userLists)
-      .then((stuff) => res.send({ message: stuff.ops[0]}))
-      .catch((err) => console.log(err));
-        
-  // })
-      // .catch(err => console.log(err))
-    } else {
-      // use DOES have a master list
+      UserLists.insertOne(userLists)
+        .then((stuff2) => res.send({ message: stuff2.ops[0] }))
+        .catch((err) => console.log(err))
+      })
+    .catch(err => console.log(err))
 
-      // both key-value pairs must be strings
-      // replace the search query with ({ "id": `${currentUserID}`})
-    UserLists.find({ "id": `${currentUserID}` })
-        .toArray()
-        .then(stuff => res.send({message: stuff[0]}))
-        .catch(err => console.log(err))
-  }
+  //   UserLists.find({ "id": `${currentUserID}` })
+  //       .toArray()
+  //       .then(stuff => res.send({message: stuff[0]}))
+  //       .catch(err => console.log(err))
+  // }
 });
 
 const fetch = require("node-fetch");

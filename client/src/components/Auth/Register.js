@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import * as ROUTES from '../../routes/routes';
 import firebase from '../../firebase/firebase';
 import RegisterErrors from '../Errors/RegisterError';
+import Axios from "axios";
 
 const Register = ({ isAuthed }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -26,6 +27,13 @@ const Register = ({ isAuthed }) => {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((user) => {
         console.log('Success signing up', user);
+        
+        let url = `/stockDiscover/${email}`
+        Axios.post(url, {
+          headers: {"Content-Type": "application/json"}
+        })
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
       })
       .catch((error) => {
         // Handle Errors here.
