@@ -25,43 +25,37 @@ MongoClient.connect(
 app.get("/stockDiscover/:currentUserID/:listFlag", async (req, res) => {
   let currentUserID = `${req.params.currentUserID}`;
   let listFlag = `${req.params.listFlag}`;
+  let arr = new Array(8967);
 
   // use 'undefined' because params come as a string
   if (listFlag === "undefined") {
     // if user does not have a master list
     
     // grabs master list from MasterList table
-    MasterList.find({})
-      .toArray()
-      .then(results => {
-        let userLists = {
-          id: currentUserID,
-          masterList: results[0],
-          leftList: [],
-          rightList: [],
-        }
-
+  
+    let userLists = {
+      id: currentUserID,
+      masterList: arr,
+      leftList: [],
+      rightList: []
+    }
         // creates user list 
-        UserLists.insertOne(userLists)
-          .then((stuff) => res.send({ message: stuff.ops[0]}))
-          .catch((err) => console.log(err));
+    UserLists.insertOne(userLists)
+      .then((stuff) => res.send({ message: stuff.ops[0]}))
+      .catch((err) => console.log(err));
         
-
-      })
-      .catch(err => console.log(err))
-      
+  // })
+      // .catch(err => console.log(err))
     } else {
       // use DOES have a master list
 
       // both key-value pairs must be strings
       // replace the search query with ({ "id": `${currentUserID}`})
-      UserLists.find({"_id": ObjectId("5f529a1b1fc88992c9fed310")})
+    UserLists.find({ "id": `${currentUserID}` })
         .toArray()
         .then(stuff => res.send({message: stuff[0]}))
         .catch(err => console.log(err))
-
   }
-
 });
 
 const fetch = require("node-fetch");
