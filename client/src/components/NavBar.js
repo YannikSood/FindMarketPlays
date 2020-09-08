@@ -15,7 +15,6 @@ const NavigationAuth = (location) => {
   const history = useHistory();
 
     return (
-      <Container>
         <Navbar
           collapseOnSelect
           expand="sm"
@@ -69,51 +68,47 @@ const NavigationAuth = (location) => {
                 // size="md"
                 variant="success"
               >
-                <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
-                  Search
-                </Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS_FEED}`}>
-                  Feed
-                </Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS}`}>
-                  Advanced Search
-                </Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}`}>
-                  Advanced Feed
-                </Dropdown.Item>
-              </DropdownButton>
+                            <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
+              Search
+            </Dropdown.Item>
+            <Dropdown.Divider />
+              <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS_FEED}`}>
+                Feed
+              </Dropdown.Item>
+            <Dropdown.Divider />  
+              <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS}`}>
+                Advanced Search
+              </Dropdown.Item>
+            <Dropdown.Divider />
+              <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}`}>
+                Advanced Feed
+              </Dropdown.Item>
+            </DropdownButton>
 
-              <Button
-                class="ml-2"
-                onClick={() => history.push("/stockDiscover")}
-                variant="outline-light"
-              >
-                Stock Discover
-              </Button>
-              <Button
-                className="ml-2"
-                onClick={() => history.push("/profile")}
-                variant="outline-light"
-              >
-                {" "}
-                Account
-              </Button>
-            </Nav>
-          </Navbar.Collapse>
-          <Button
-            className="ml-2"
-            variant="primary"
-            onClick={() => {
-              firebase.auth().signOut();
-              history.push("/");
-            }}
-          >
-            Sign Out
-          </Button>
-        </Navbar>
+            <Button class="ml-2" onClick={() => history.push("/stockDiscover")} variant="outline-light">
+              Stock Discover
+            </Button>
+
+            <Button class="ml-2" onClick={() => history.push("/sdScreen")} variant="outline-light">
+              Stock Discover
+            </Button>
+
+            <Button className="ml-2" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
+
+        </Nav>
+      </Navbar.Collapse>
+      <Button
+        className="ml-2"
+        variant="primary"
+        onClick={() => {
+          firebase.auth().signOut();
+          history.push('/')
+        }}
+      >
+        Sign Out
+      </Button>
+    </Navbar>
+  )
         {/* <ProSidebar className="">
           <Menu iconShape="square">
             <MenuItem >Dashboard</MenuItem>
@@ -123,8 +118,6 @@ const NavigationAuth = (location) => {
             </SubMenu>
           </Menu>
         </ProSidebar> */}
-      </Container>
-    );
 };
 
 const NavigationNonAuth = (location) => {
