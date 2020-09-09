@@ -12,7 +12,6 @@ import ResetErrors from '../Errors/ResetErrors';
 import EmailSuccess from '../Success/EmailSuccess';
 import PasswordSuccess from '../Success/PasswordSuccess';
 import { useHistory } from "react-router-dom";
-import * as ROUTES from "../../routes/routes";
 
 
 const Profile = ({ currentUser, isAuthed }) => {
@@ -25,13 +24,9 @@ const Profile = ({ currentUser, isAuthed }) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (!isAuthed) {
-      history.push(ROUTES.LOGIN)
-    } else {
-      setEmail(firebase.auth().currentUser.email);
-      setEmailSuccess(false);
-      setPassSuccess(false);
-    }
+    setEmail(firebase.auth().currentUser.email);
+    setEmailSuccess(false);
+    setPassSuccess(false);
   }, [isAuthed, history]);
 
   function resetEmail() {
@@ -101,23 +96,15 @@ const Profile = ({ currentUser, isAuthed }) => {
           {ResetErrors(resetErrors)}
           <Row >
             <Col >
-              <h2 className="border border-white rounded pl-3 pb-2 pt-2" >
-                Email
-              </h2> 
-              <h6 className="pl-3 pb-1">
-                {emailValue}  
-              </h6>
-              <Button className="ml-3" onClick={() => emailSwitch(true)}>
+              <h5 className="border border-white rounded pl-3 pb-2 pt-2" >
+                Email: <h6>{emailValue}</h6>  
+              </h5> 
+              
+              <Button className="mt-2" onClick={() => emailSwitch(true)}>
                 Reset Email
-              </Button>
-            </Col>
-            <Col >
-              <h2 className="border border-white rounded pl-3 pt-2 pb-2" >
-                Password
-              </h2>
-              <h6 className="p-2">
-              </h6>
-              <Button className="ml-3 mt-2" onClick={() => resetPassword()}>
+              </Button>{'  '}
+
+              <Button className="mt-2" onClick={() => resetPassword()}>
                 Reset Password
               </Button>
             </Col>

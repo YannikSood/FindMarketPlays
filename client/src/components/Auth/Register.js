@@ -14,7 +14,7 @@ const Register = ({ isAuthed }) => {
   const [registerErrors, setErrors] = useState({});
 
   useEffect(() => {
-    if (isAuthed) history.push('/');
+    if (isAuthed) history.push('/market');
   }, [isAuthed, history]);
 
   const handleChange = (e) => {
@@ -37,7 +37,7 @@ const Register = ({ isAuthed }) => {
       <Container>
         <Row>
           <Col>
-            <h1>Register to access the full platform.</h1>
+            <h1>Create a free account</h1>
           </Col>
         </Row>
         <Row>

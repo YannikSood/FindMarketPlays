@@ -17,7 +17,9 @@ import Navigation from './components/NavBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import About from './components/About';
 import DD from './components/Research/DD';
-import UnusualOptions from './components/Options/UnusualOptions';
+import BasicUnusualOptions from './components/Options/BasicUnusualOptions';
+import BasicUnusualOptionsFeed from './components/Options/BasicUOFeed';
+import AdvancedUnusualOptions from './components/Options/AdvancedUnusualOptions';
 import NewsFeed from './components/News/NewsFeed';
 import Notes from './components/Notes/Notes';
 import NoteDetail from './components/Notes/NoteDetail';
@@ -37,7 +39,9 @@ import NewNote from './components/Notes/NewNote';
 import { receiveUser, clearUser } from './reducers/authReducer';
 import Loader from './components/Loader';
 import { PersistGate } from 'redux-persist/integration/react';
-
+import AdvancedUOFeed from './components/Options/AdvancedUOFeed';
+import StockDiscover from './components/StockDiscover/StockDiscover'
+import SDScreen from './components/StockDiscover/SDScreen';
 
 
 const App = () => {
@@ -129,12 +133,28 @@ const App = () => {
                     <Notes />
                   </Route>
 
+                  <Route path={ROUTES.SD_SCREEN}>
+                    <SDScreen />
+                  </Route>
+
                   <Route path={ROUTES.NOTE_DETAIL}>
                     <NoteDetail />
                   </Route>
 
-                  <Route path={ROUTES.UNUSUAL_OPTIONS}>
-                    <UnusualOptions />
+                  <Route path={ROUTES.BASIC_UNUSUAL_OPTIONS}>
+                    <BasicUnusualOptions />
+                  </Route>
+
+                  <Route path={ROUTES.BASIC_UNUSUAL_OPTIONS_FEED}>
+                    <BasicUnusualOptionsFeed />
+                  </Route>
+
+                  <Route path={ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}>
+                    <AdvancedUOFeed />
+                  </Route>
+
+                  <Route path={ROUTES.ADVANCED_UNUSUAL_OPTIONS}>
+                    <AdvancedUnusualOptions />
                   </Route>
 
                   <Route path={ROUTES.NEWS_FEED}>
@@ -159,6 +179,10 @@ const App = () => {
 
                   <Route path={ROUTES.ABOUT}>
                     <About />
+                  </Route>
+
+                  <Route path={ROUTES.STOCK_DISCOVER}>
+                    <StockDiscover />
                   </Route>
                 </Switch>
               </div>

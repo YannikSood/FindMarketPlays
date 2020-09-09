@@ -14,22 +14,18 @@ const Notes = ({ currentUser, isAuthed }) => {
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    if (!isAuthed) {
-      history.push("/login");
-    } else {
-      firebase
-        .database()
-        .ref(`/user-notes/${currentUser.id}`)
-        .once("value")
-        .then((snapshot) => {
-          setNotes(Object.values(snapshot?.val()) || []);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          console.log("error fetching notes: ", err);
-          setIsLoading(false);
-        });
-    }
+    firebase
+      .database()
+      .ref(`/user-notes/${currentUser.id}`)
+      .once("value")
+      .then((snapshot) => {
+        setNotes(Object.values(snapshot?.val()) || []);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("error fetching notes: ", err);
+        setIsLoading(false);
+      });
   }, [isAuthed, history, currentUser.id]);
 
   // Handlers
@@ -52,7 +48,7 @@ const Notes = ({ currentUser, isAuthed }) => {
       <Container>
         <Row className="mb-3">
           <Col className="d-flex justify-content-between">
-            <h1 className="d-inline-block">Notes</h1>
+            <h1 className="d-inline-block">My Research</h1>
             <div>
               <Button variant="primary" onClick={() => history.push('/note/new')}>Create</Button>
             </div>
