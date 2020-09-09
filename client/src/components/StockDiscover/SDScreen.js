@@ -12,11 +12,15 @@ import SymbolErrors from '../Errors/SymbolErrors';
 import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
 import Axios from "axios";
 import SDFlow from './SDFlow';
+import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 
-
+// changed to send options as one object instead of an array to SDFlow because the return value of fetch is an object.
+// can change back to array depending on what we want (just wrap the object in a bracket) and uncomment
+// a few lines in SDFlow
 const SDScreen = () => {
     const [searchedValue, setSearchedValue] = useState('AMZN');
-    const [options, setOptions] = useState([]);
+    const [options, setOptions] = useState({});
+
     // const history = useHistory();
 
     // const search = () => {
@@ -34,20 +38,27 @@ const SDScreen = () => {
             fetch(url, { headers: { Accept: 'application/json' } })
                 .then(res => res.json()
                     .then((json) => {
-                        setOptions(json.message || []);
-                        // console.log(json.message);
+                        setOptions(json.message || {});
                     }))
-                .catch(err => console.log(err)); // eslint-disable-line
+                .catch(err => console.log(err));
         };
         debounce(fetchData());
-        // sendTicker(searchedValue);
-        // resetResults();
     }, [searchedValue]);
 
 
     const showErr = () => {
         if (!Object.values(options).length) {
             return SymbolErrors()
+        }
+    }
+
+    const showFlow = () => {
+        if (searchedValue && Object.keys(options).length) {
+            return (
+                <Container>
+                    <SDFlow value={options} />
+                </Container>
+            )
         }
     }
 
@@ -80,7 +91,13 @@ const SDScreen = () => {
                     </Col>
                 </Row>
                 <Row>
-                    {searchedValue && options.length > 0 && <SDFlow value={options} />}
+                    {showFlow()}
+                    <TradingViewWidget
+                        symbol={searchedValue}
+                        theme={Themes.DARK}
+                        locale="en"
+                        autosize
+                    />
                 </Row>
             </Container>
         </Fragment>
