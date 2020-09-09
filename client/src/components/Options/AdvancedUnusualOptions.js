@@ -33,18 +33,22 @@ const AdvancedUnusualOptions = ({ isAuthed, resetResults }) => {
     }
 
     useEffect(() => {
-        const fetchData = () => {
-            const url = `/optionsAPI/${searchedValue}`;
-            fetch(url, { headers: { Accept: 'application/json' } })
-                .then(res => res.json()
-                    .then((json) => {
-                        setOptions(json.message.option_activity || []);
-                    }))
-                .catch(err => console.log(err)); // eslint-disable-line
-        };
-        debounce(fetchData());
-        // sendTicker(searchedValue);
-        resetResults();
+        if (!isAuthed) {
+            history.push("/login")
+        } else {
+            const fetchData = () => {
+                const url = `/optionsAPI/${searchedValue}`;
+                fetch(url, { headers: { Accept: 'application/json' } })
+                    .then(res => res.json()
+                        .then((json) => {
+                            setOptions(json.message.option_activity || []);
+                        }))
+                    .catch(err => console.log(err)); // eslint-disable-line
+            };
+            debounce(fetchData());
+            // sendTicker(searchedValue);
+            resetResults();
+        }
     }, [isAuthed, history, searchedValue, filterFlag, resetResults]);
 
     const displayFilter = () => {

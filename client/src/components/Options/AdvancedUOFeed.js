@@ -7,11 +7,14 @@ import ScrollingWidget from '../Widgets/ScrollingWidget';
 import { debounce } from '../../helpers/SearchHelper';
 import Axios from "axios";
 import AdvancedOptionsFlow from './AdvancedOptionsFlow';
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-const AdvancedUnusualOptionsFeed = () => {
+const AdvancedUnusualOptionsFeed = ({isAuthed}) => {
   // Hooks
   const [options, setOptions] = useState([]);
   const[loader, setLoader] = useState(true);
+  const history = useHistory();
 
   useEffect(() => {
     setTimeout(() => {
@@ -33,6 +36,9 @@ const AdvancedUnusualOptionsFeed = () => {
   
   
   useEffect(() => {
+    if (!isAuthed) {
+       history.push("/login")
+    } else {
       const fetchData = () => {
         const url = `/optionsFeed`;
         console.log(url);
@@ -45,6 +51,7 @@ const AdvancedUnusualOptionsFeed = () => {
           .catch(err => console.log(err));
       };
       debounce(fetchData());
+    }
   }, []);
 
   const loading = () => {
@@ -96,4 +103,8 @@ const AdvancedUnusualOptionsFeed = () => {
   );
 };
 
-export default (AdvancedUnusualOptionsFeed);
+const MSTP = (state) => ({
+  isAuthed: state.auth.isAuthed,
+});
+
+export default connect(MSTP)(AdvancedUnusualOptionsFeed);

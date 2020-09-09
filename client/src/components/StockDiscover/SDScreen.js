@@ -17,11 +17,11 @@ import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 // changed to send options as one object instead of an array to SDFlow because the return value of fetch is an object.
 // can change back to array depending on what we want (just wrap the object in a bracket) and uncomment
 // a few lines in SDFlow
-const SDScreen = () => {
+const SDScreen = ({isAuthed}) => {
     const [searchedValue, setSearchedValue] = useState('AMZN');
     const [options, setOptions] = useState({});
 
-    // const history = useHistory();
+    const history = useHistory();
 
     // const search = () => {
     //     const url = `/getTicker/${searchedValue}`;
@@ -33,16 +33,20 @@ const SDScreen = () => {
     // }
 
     useEffect(() => {
-        const fetchData = () => {
-            const url = `/getTicker/${searchedValue}`;
-            fetch(url, { headers: { Accept: 'application/json' } })
-                .then(res => res.json()
-                    .then((json) => {
-                        setOptions(json.message || {});
-                    }))
-                .catch(err => console.log(err));
-        };
-        debounce(fetchData());
+        if (!isAuthed) {
+            history.push("/login")
+        } else {
+            const fetchData = () => {
+                const url = `/getTicker/${searchedValue}`;
+                fetch(url, { headers: { Accept: 'application/json' } })
+                    .then(res => res.json()
+                        .then((json) => {
+                            setOptions(json.message || {});
+                        }))
+                    .catch(err => console.log(err));
+            };
+            debounce(fetchData());
+        }
     }, [searchedValue]);
 
 

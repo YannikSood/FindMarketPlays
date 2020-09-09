@@ -1,4 +1,4 @@
-import React, { Fragment} from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,10 +8,19 @@ import MarketDataWidget from './Widgets/MarketDataWidget';
 import EconDataWidget from './Widgets/EconDataWidget';
 import MarketOverviewWidget from './Widgets/MarketOverviewWidget';
 // import ReactGa from 'react-ga';
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 
-const Dashboard = () => {
+const Dashboard = ({isAuthed}) => {
   
+  const history = useHistory();
+  
+  useEffect(() => {
+    if (!isAuthed) {
+      history.push("/login");
+    }
+  }, []);
   
   return (
      <Fragment>
@@ -46,4 +55,8 @@ const Dashboard = () => {
 
  }
 
-export default Dashboard;
+const MSTP = (state) => ({
+  isAuthed: state.auth.isAuthed,
+});
+
+export default connect(MSTP)(Dashboard);
