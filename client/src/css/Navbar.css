@@ -1,4 +1,4 @@
-.sidebar {
+/* .sidebar {
     margin-top: 75px;
 }
 
@@ -17,9 +17,9 @@
     top: 0;
     left: 0;
     position: absolute;
-}
+} */
 
-@media only screen and (max-width: 992px) {
+/* @media only screen and (max-width: 992px) {
     .sidebar-c {
         margin-top: 75px;
         z-index: 0;
@@ -30,13 +30,10 @@
     .menu-c {
         padding-bottom: 5px !important;
     }
-}
-
-/* @media only screen and (min-width: 420px) {
-
 } */
 
-@media only screen and (min-width: 992px) {
+
+/* @media only screen and (min-width: 992px) {
     .account {
         position: absolute;
         right: 150px;
@@ -50,4 +47,4 @@
         display: flex;
         justify-content: right;
     }
-}
+} */

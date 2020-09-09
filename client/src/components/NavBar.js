@@ -52,23 +52,6 @@ const NavigationAuth = (location) => {
         <ProSidebar width={100} collapsed={true} className="sidebar-c">
           <Menu iconShape="square" className="menu-c">
             <i onClick={() => setSB(true)} class="menu-icon fa-2x fa fa-bars" aria-hidden="true"></i>
-            {/* <SubMenu title="Stocks Hub" >
-              <MenuItem><Link onClick={() => setSB(false)} to="/market">Market Overview</Link></MenuItem>
-              <MenuItem><Link onClick={() => setSB(false)} to="/stock">Single Stock Lookup</Link></MenuItem>
-            </SubMenu>
-            <SubMenu title="Research Hub" >
-              <MenuItem><Link onClick={() => setSB(false)} to="/DD">Reddit Research</Link></MenuItem>
-              <MenuItem><Link onClick={() => setSB(false)} to="newsFeed">News Search</Link></MenuItem>
-              <MenuItem><Link onClick={() => setSB(false)} to="/notes">My Research</Link></MenuItem>
-            </SubMenu>
-            <SubMenu title="Unusual Options" >
-              <MenuItem><Link onClick={() => setSB(false)} to="/basicOptionSearch">Search</Link></MenuItem>
-              <MenuItem><Link onClick={() => setSB(false)} to="/basicOptionFeed">Feed</Link></MenuItem>
-              <MenuItem><Link onClick={() => setSB(false)} to="/advancedOptionSearch">Advanced Search</Link></MenuItem>
-              <MenuItem><Link onClick={() => setSB(false)} to="/advOptionFeed">Advanced Feed</Link></MenuItem>
-            </SubMenu>
-            <MenuItem><Link onClick={() => setSB(false)} to="/sdScreen">Stock Discover</Link></MenuItem>
-            <MenuItem><Link onClick={() => setSB(false)} to="/profile">Account</Link></MenuItem> */}
           </Menu>
         </ProSidebar>
       )
@@ -78,7 +61,7 @@ const NavigationAuth = (location) => {
       <Container className="navbarContainer m-0 p-0"> 
           <Navbar
             collapseOnSelect
-            // expand="sm"
+            expand="sm"
             className="justify-content-center"
             // className="justify-content-center d-none d-lg-flex"
             bg="dark"
@@ -98,7 +81,8 @@ const NavigationAuth = (location) => {
             <Nav className="d-flex justify-content-right" activeKey={location.pathname}>
                 <DropdownButton
                   drop={"down"}
-                  className="ml-2 d-none d-lg-flex"
+                  // className="ml-2 d-none d-lg-flex"
+                  className="ml-2"
                   title="Stocks Hub"
                   // size="md"
                   variant="light"
@@ -113,7 +97,8 @@ const NavigationAuth = (location) => {
                 </DropdownButton>
 
                 <DropdownButton
-                  className="ml-2 d-none d-lg-flex"
+                  // className="ml-2 d-none d-lg-flex"
+                  className="ml-2"
                   title="Research Hub"
                   // size="md"
                   variant="info"
@@ -132,7 +117,8 @@ const NavigationAuth = (location) => {
                 </DropdownButton>
 
                 <DropdownButton
-                  className="ml-2 d-none d-lg-flex"
+                  // className="ml-2 d-none d-lg-flex"
+                  className="ml-2"
                   title="Unusual Options"
                   // size="md"
                   variant="success"
@@ -154,10 +140,10 @@ const NavigationAuth = (location) => {
                 </Dropdown.Item>
               </DropdownButton>
 
-              <Button className="ml-2 d-none d-md-flex" onClick={() => history.push("/sdScreen")} variant="outline-light">
+              <Button className="ml-2" onClick={() => history.push("/sdScreen")} variant="outline-light">
                 Stock Discover
               </Button>
-              <Button className="ml-2 d-none d-md-flex" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
+              <Button className="ml-2" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
             </Nav>
         </Navbar.Collapse>
         <Button
@@ -171,50 +157,54 @@ const NavigationAuth = (location) => {
           Sign Out
         </Button>
       </Navbar>
-      {showSB()}
+      {/* {showSB()} */}
     </Container>
   )
 };
 
 const NavigationNonAuth = (location) => {
   return (
-    <Navbar
-      collapseOnSelect
-      expand="sm"
-      className="justify-content-center"
-      // className="justify-content-center d-none d-lg-flex"
-      bg="dark"
-      variant="dark"
-      fixed="top"
-    >
-      <Navbar.Brand href={"/"}>
-            <img
-            src={logo}
-            width="220"
-            height="50"
-            className="d-inline-block align-top"
-            alt="React Bootstrap logo"
-          /></Navbar.Brand>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav activeKey={location.pathname}>
-          <Nav.Link className="nav-link" href={`${ROUTES.DASHBOARD}`}>Market Overview</Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
-            Stock Lookup
-          </Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.DD}`}>Research </Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.NOTES}`}>Notes </Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>Options Feed</Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.NEWS_FEED}`}>News Feed</Nav.Link>
-          <Nav.Link className="nav-link" to={ROUTES.ABOUT}>About </Nav.Link>
-        </Nav>
-      </Navbar.Collapse>
-      <Nav.Link to={ROUTES.LOGIN}>
-        <Button className="ml-2" variant="primary">
-          Log In / Sign Up
-        </Button>
-      </Nav.Link>
-    </Navbar>
+    <Container>
+
+      <Navbar
+        collapseOnSelect
+        expand="sm"
+        className="justify-content-center"
+        // className="justify-content-center d-none d-lg-flex"
+        bg="dark"
+        variant="dark"
+        fixed="top"
+      >
+        <Navbar.Brand href={"/"}>
+              <img
+              src={logo}
+              width="220"
+              height="50"
+              className="d-inline-block align-top"
+              alt="React Bootstrap logo"
+            /></Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav activeKey={location.pathname}>
+            <Nav.Link className="nav-link" href={`${ROUTES.DASHBOARD}`}>Market Overview</Nav.Link>
+            <Nav.Link className="nav-link" href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
+              Stock Lookup
+            </Nav.Link>
+            <Nav.Link className="nav-link" href={`${ROUTES.DD}`}>Research </Nav.Link>
+            <Nav.Link className="nav-link" href={`${ROUTES.NOTES}`}>Notes </Nav.Link>
+            <Nav.Link className="nav-link" href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>Options Feed</Nav.Link>
+            <Nav.Link className="nav-link" href={`${ROUTES.NEWS_FEED}`}>News Feed</Nav.Link>
+            <Nav.Link className="nav-link" to={ROUTES.ABOUT}>About </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+        <Nav.Link to={ROUTES.LOGIN}>
+          <Button className="ml-2" variant="primary">
+            Log In / Sign Up
+          </Button>
+        </Nav.Link>
+      </Navbar>
+      {/* {showSB()} */}
+    </Container>
   )
 };
 const mapStateToProps = (state) => {
