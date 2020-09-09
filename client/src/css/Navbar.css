@@ -1,13 +1,51 @@
-@media only screen and (max-width: 575px) {
-    .dropdown {
-        display: flex;
-        flex-direction: row;
-        justify-content: left;
-        /* max-width: 160px; */
+.sidebar {
+    margin-top: 50px;
+}
+
+.menu-icon {
+    display: flex;
+    justify-content: center;
+    z-index: 9999
+}
+
+.menu-icon:hover {
+    cursor: pointer;
+}
+
+.navbarContainer {
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+@media only screen and (max-width: 992px) {
+    .sidebar-c {
+        margin-top: 49px;
+        z-index: 0;
     }
 
-    .navbar {
+    .menu-c {
+        padding-bottom: 5px !important;
+    }
+}
+
+/* @media only screen and (min-width: 420px) {
+
+} */
+
+@media only screen and (min-width: 992px) {
+    .account {
+        position: absolute;
+        right: 150px;
+    }
+
+    .sidebar {
         display: none;
     }
 
+    .navbar {
+        display: flex;
+        justify-content: right;
+    }
 }
