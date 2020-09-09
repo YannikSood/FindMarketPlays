@@ -154,10 +154,10 @@ const NavigationAuth = (location) => {
                 </Dropdown.Item>
               </DropdownButton>
 
-              <Button className="ml-2 d-none d-lg-flex" onClick={() => history.push("/sdScreen")} variant="outline-light">
+              <Button className="ml-2 d-none d-md-flex" onClick={() => history.push("/sdScreen")} variant="outline-light">
                 Stock Discover
               </Button>
-              <Button className="ml-2 d-none d-sm-flex" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
+              <Button className="ml-2 d-none d-md-flex" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
             </Nav>
         </Navbar.Collapse>
         <Button
