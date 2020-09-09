@@ -21,8 +21,9 @@
 
 @media only screen and (max-width: 992px) {
     .sidebar-c {
-        margin-top: 49px;
+        margin-top: 75px;
         z-index: 0;
+        height: 50px;
     }
 
     .menu-c {
