@@ -28,8 +28,8 @@ const NavigationAuth = (location) => {
           <Navbar.Brand href={"/"}>
             <img
             src={logo}
-            width="290"
-            height="170"
+            width="220"
+            height="50"
             className="d-inline-block align-top"
             alt="React Bootstrap logo"
           /></Navbar.Brand>
@@ -92,12 +92,10 @@ const NavigationAuth = (location) => {
               <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}`}>
                 Advanced Feed
               </Dropdown.Item>
-            </DropdownButton>
+            </DropdownButton>{' '} 
 
-            <Button class="ml-2" onClick={() => history.push("/sdScreen")} variant="outline-light">
-              Stock Discover
-            </Button>
-
+           
+            <Button className="ml-2" onClick={() => history.push("/sdScreen")} variant="outline-light"> Stock Discover</Button>
             <Button className="ml-2" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
 
         </Nav>
@@ -126,6 +124,7 @@ const NavigationAuth = (location) => {
 };
 
 const NavigationNonAuth = (location) => {
+  const history = useHistory();
   return (
     <Navbar
       collapseOnSelect
@@ -146,7 +145,7 @@ const NavigationNonAuth = (location) => {
           /></Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav activeKey={location.pathname}>
+        {/* <Nav activeKey={location.pathname}>
           <Nav.Link className="nav-link" href={`${ROUTES.DASHBOARD}`}>Market Overview</Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
             Stock Lookup
@@ -156,14 +155,19 @@ const NavigationNonAuth = (location) => {
           <Nav.Link className="nav-link" href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>Options Feed</Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.NEWS_FEED}`}>News Feed</Nav.Link>
           <Nav.Link className="nav-link" to={ROUTES.ABOUT}>About </Nav.Link>
-        </Nav>
+
+          <Button class="ml-2" onClick={() => history.push("/login")} variant="primary">
+              Login/Signup
+          </Button> */}
+
+        {/* </Nav> */}
       </Navbar.Collapse>
-      <Nav.Link to={ROUTES.LOGIN}>
-        <Button className="ml-2" variant="primary">
-          Log In / Sign Up
+      <Button class="ml-2" onClick={() => history.push("/login")} variant="primary">
+          Login/Signup
         </Button>
-      </Nav.Link>
+
     </Navbar>
+
   )
 };
 const mapStateToProps = (state) => {
