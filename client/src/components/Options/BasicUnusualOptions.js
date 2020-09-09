@@ -63,7 +63,6 @@ const BasicUnusualOptions = ({ isAuthed }) => {
               </InputGroup>
             </Form>
             {showErr()}
-            {/* {displayAdvancedSearch()} */}
           </Col>
         </Row>
         <Row>

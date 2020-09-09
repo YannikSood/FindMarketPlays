@@ -9,6 +9,20 @@ let db;
 let MasterList;
 let UserLists;
 
+const fetch = require("node-fetch");
+const path = require("path");
+const { nextTick } = require("process");
+
+app.use(cors());
+
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res, next) => {
+    if (req.headers["x-forwarded-proto"] != "https")
+      res.redirect("https://www.findmarketplays.com" + req.url);
+    else next();
+  });
+}
+
 MongoClient.connect(
   "mongodb+srv://fmpadmin:fmppassword@fmpcluster.lfrzm.mongodb.net/StockLists?retryWrites=true&w=majority",
   function (err, client) {
@@ -21,7 +35,56 @@ MongoClient.connect(
   }
 );
 
-app.post("/stockDiscover/:email", async (req, res) => {
+app.get(`/stockDiscover/:email/fetch`, (req,res) => {
+  let email = `${req.params.email}`;
+
+  MasterList.find({})
+    .toArray()
+    .then(masterRes => {
+      let length = masterRes.length
+      
+      UserLists.find( { 'email': `${email}` } )
+        .toArray()
+        .then(userRes => {
+            userRes = userRes[0]
+            let num = Math.floor(Math.random() * Math.floor(length));
+            let userMasterL = userRes.masterList;
+            let flag = false;
+
+            while (userMasterL[num] != null && !flag) {
+              num = Math.floor(Math.random() * Math.floor(length));
+              if (userMasterL.every(i => i != null)) {
+                flag = true;
+                console.log("ALL USED")
+              }
+            }
+            
+            userMasterL[num] = 0;
+
+            UserLists.replaceOne(
+              {
+                email: `${email}`,
+              },
+              {
+                email: email,
+                masterList: userMasterL,
+                leftList: [],
+                rightList: [],
+              }
+            )
+              .then((res) => console.log(res))
+              .catch((err) => console.log(err));
+
+            let stock = masterRes[num];
+            let ticker = stock.symbol;
+            res.send( { message: `${ticker}` } )
+        })
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
+})
+
+app.post("/stockDiscover/:email/register", async (req, res) => {
   let email = `${req.params.email}`;
   MasterList.find({})
     .toArray()
@@ -45,20 +108,6 @@ app.post("/stockDiscover/:email", async (req, res) => {
   //       .catch(err => console.log(err))
   // }
 });
-
-const fetch = require("node-fetch");
-const path = require('path');
-const { nextTick } = require("process");
-
-app.use(cors());
-
-if (process.env.NODE_ENV === "production") {
-  app.use((req, res, next) => {
-    if (req.headers["x-forwarded-proto"] != "https")
-      res.redirect("https://www.findmarketplays.com" + req.url);
-    else next();
-  })
-}
 
 app.get('/betweenSearch/:fromDate/:toDate/:ticker', async (req, res) => {
   let tempJSON = [];

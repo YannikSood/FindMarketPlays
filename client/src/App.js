@@ -40,7 +40,6 @@ import { receiveUser, clearUser } from './reducers/authReducer';
 import Loader from './components/Loader';
 import { PersistGate } from 'redux-persist/integration/react';
 import AdvancedUOFeed from './components/Options/AdvancedUOFeed';
-import StockDiscover from './components/StockDiscover/StockDiscover'
 import SDScreen from './components/StockDiscover/SDScreen';
 
 
@@ -181,9 +180,6 @@ const App = () => {
                     <About />
                   </Route>
 
-                  <Route path={ROUTES.STOCK_DISCOVER}>
-                    <StockDiscover />
-                  </Route>
                 </Switch>
               </div>
               <Footer />

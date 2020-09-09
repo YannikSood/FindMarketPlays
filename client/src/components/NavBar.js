@@ -18,7 +18,8 @@ const NavigationAuth = (location) => {
         <Navbar
           collapseOnSelect
           expand="sm"
-          className="justify-content-center d-none d-lg-flex"
+          className="justify-content-center"
+          // className="justify-content-center d-none d-lg-flex"
           bg="dark"
           variant="dark"
           fixed="top"
@@ -85,10 +86,6 @@ const NavigationAuth = (location) => {
               </Dropdown.Item>
             </DropdownButton>
 
-            <Button class="ml-2" onClick={() => history.push("/stockDiscover")} variant="outline-light">
-              Stock Discover
-            </Button>
-
             <Button class="ml-2" onClick={() => history.push("/sdScreen")} variant="outline-light">
               Stock Discover
             </Button>
@@ -125,16 +122,17 @@ const NavigationNonAuth = (location) => {
     <Navbar
       collapseOnSelect
       expand="sm"
-      className="justify-content-center d-none d-lg-flex"
+      className="justify-content-center"
+      // className="justify-content-center d-none d-lg-flex"
       bg="dark"
       variant="dark"
       fixed="top"
     >
       <Navbar.Brand href={"/"}>FMP Beta</Navbar.Brand>
-      {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
-      {/* <Navbar.Collapse id="responsive-navbar-nav"> */}
-        {/* <Nav activeKey={location.pathname}> */}
-          {/* <Nav.Link className="nav-link" href={`${ROUTES.DASHBOARD}`}>Market Overview</Nav.Link>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav activeKey={location.pathname}>
+          <Nav.Link className="nav-link" href={`${ROUTES.DASHBOARD}`}>Market Overview</Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
             Stock Lookup
           </Nav.Link>
@@ -142,14 +140,14 @@ const NavigationNonAuth = (location) => {
           <Nav.Link className="nav-link" href={`${ROUTES.NOTES}`}>Notes </Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>Options Feed</Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.NEWS_FEED}`}>News Feed</Nav.Link>
-          {/* <Nav.Link className="nav-link" to={ROUTES.ABOUT}>About </Nav.Link> */}
-        {/* </Nav> */}
-      {/* </Navbar.Collapse> */}
-      {/* <NavLink to={ROUTES.LOGIN}>
+          <Nav.Link className="nav-link" to={ROUTES.ABOUT}>About </Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
+      <Nav.Link to={ROUTES.LOGIN}>
         <Button className="ml-2" variant="primary">
           Log In / Sign Up
         </Button>
-      </NavLink> */}
+      </Nav.Link>
     </Navbar>
   )
 };
