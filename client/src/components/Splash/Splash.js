@@ -4,14 +4,20 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { useHistory, Link } from "react-router-dom";
-
+import logo from '../Logos/fmp-dark-transparent-bg_2.png'
 const Splash = () => {
     const history = useHistory();
     return (
       <Container>
         <Row>
           <Col className="text-center pt-5 mt-5">
-            <h1>FindMarketPlays</h1>
+          <img
+            src={logo}
+            width="290"
+            height="170"
+            className="d-inline-block align-top"
+            alt="React Bootstrap logo"
+          />
           </Col>
         </Row>
         <Row>

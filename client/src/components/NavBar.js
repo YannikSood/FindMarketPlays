@@ -7,6 +7,7 @@ import firebase from '../firebase/firebase';
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import '../css/Navbar.css';
+import logo from './Logos/fmp-dark-bg.png'
 
 const Navigation = ({ isAuthed, location }) => (
   <div>{isAuthed ? NavigationAuth(location): NavigationNonAuth(location)}</div>
@@ -24,7 +25,14 @@ const NavigationAuth = (location) => {
           variant="dark"
           fixed="top"
         >
-          <Navbar.Brand href={"/"}>FMP Beta</Navbar.Brand>
+          <Navbar.Brand href={"/"}>
+            <img
+            src={logo}
+            width="290"
+            height="170"
+            className="d-inline-block align-top"
+            alt="React Bootstrap logo"
+          /></Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav activeKey={location.pathname}>
@@ -128,7 +136,14 @@ const NavigationNonAuth = (location) => {
       variant="dark"
       fixed="top"
     >
-      <Navbar.Brand href={"/"}>FMP Beta</Navbar.Brand>
+      <Navbar.Brand href={"/"}>
+            <img
+            src={logo}
+            width="220"
+            height="50"
+            className="d-inline-block align-top"
+            alt="React Bootstrap logo"
+          /></Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav activeKey={location.pathname}>
