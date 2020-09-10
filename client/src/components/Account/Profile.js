@@ -12,9 +12,11 @@ import ResetErrors from '../Errors/ResetErrors';
 import EmailSuccess from '../Success/EmailSuccess';
 import PasswordSuccess from '../Success/PasswordSuccess';
 import { useHistory } from "react-router-dom";
-
+import Axios from "axios";
 
 const Profile = ({ currentUser, isAuthed }) => {
+
+  const [profile, setProfile] = useState();
   const [emailFlag, emailSwitch] = useState(false);
   const [emailValue, setEmail] = useState(currentUser.email);
   const [tempEmail, setTempEmail] = useState();
@@ -27,6 +29,15 @@ const Profile = ({ currentUser, isAuthed }) => {
      if (!isAuthed) {
        history.push("/login")
     } else {
+      // let url = '/firebase/profile/fetchEmail'
+      // Axios.get(url, {
+      //   headers: { "Content-Type": "application/json" }
+      // })
+      //   // .then(res => {
+      //     // })
+      //     // .catch(err => console.log(err));
+      //   }
+        // setEmail(res.message);
       setEmail(firebase.auth().currentUser.email);
       setEmailSuccess(false);
       setPassSuccess(false);
@@ -34,6 +45,10 @@ const Profile = ({ currentUser, isAuthed }) => {
   }, [isAuthed, history]);
 
   function resetEmail() {
+    // let url = `/profile/resetEmail/${tempEmail}`;
+    // Axios.put(url, {
+    //   headers: { "Content-Type": "application/json" }
+    // })
     ProfileAPI.emailReset(tempEmail)
     .then((res) => {
       setEmail(tempEmail);
@@ -50,6 +65,10 @@ const Profile = ({ currentUser, isAuthed }) => {
   };
 
   function resetPassword() {
+    // let url = `/profile/resetPassword`;
+    // Axios.put(url, {
+    //   headers: { "Content-Type": "application/json" }
+    // })
     ProfileAPI.passwordReset()
       .then((res) => {
         setPassSuccess(true);

@@ -1,3 +1,5 @@
+const profile = require('./routes/firebase/profile');
+
 const express = require("express"),
   app = express(),
   cors = require("cors");
@@ -14,6 +16,7 @@ const path = require("path");
 const { nextTick } = require("process");
 
 app.use(cors());
+app.use('/firebase', profile)
 
 if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {
