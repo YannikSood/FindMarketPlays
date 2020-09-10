@@ -3,6 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from 'react-bootstrap/Form';
 import { useHistory } from 'react-router-dom';
@@ -13,6 +14,7 @@ import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
 import Axios from "axios";
 import SDFlow from './SDFlow';
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
+import { userInfo } from 'os';
 
 // changed to send options as one object instead of an array to SDFlow because the return value of fetch is an object.
 // can change back to array depending on what we want (just wrap the object in a bracket) and uncomment
@@ -20,6 +22,7 @@ import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 const SDScreen = ({isAuthed}) => {
     const [searchedValue, setSearchedValue] = useState('AMZN');
     const [options, setOptions] = useState({});
+    
 
     const history = useHistory();
 
@@ -49,6 +52,37 @@ const SDScreen = ({isAuthed}) => {
         }
     }, [searchedValue]);
 
+
+     const rightSwipe = () => {
+        
+        // get the random ticker index from DB
+        const email = userInfo.email;
+        const url = `/stockDiscover/${email}/fetch`;
+        console.log(url);
+
+        fetch(url, { headers: { Accept: 'application/json' } })
+            .then(res => res.json()
+                .then((json) => {
+                    console.log(json.message);
+                    setSearchedValue(json.message || {}); 
+
+                }))
+        .catch(err => console.log(err));
+        
+        
+        // get the ticker info from iEX 
+        const url2 = `/getTicker/${searchedValue}`;
+        console.log(url2);
+        fetch(url2, { headers: { Accept: 'application/json' } })
+            .then(res => res.json()
+                .then((json) => {
+                    console.log(json.message);
+                    setOptions(json.message || {}); 
+
+                }))
+        .catch(err => console.log(err));
+        
+    };
 
     const showErr = () => {
         if (!Object.values(options).length) {
@@ -103,23 +137,31 @@ const SDScreen = ({isAuthed}) => {
                         autosize
                     />
                 </Row>
+
+                <Row>
+                    <Button className="ml-2" onClick={(rightSwipe())} variant="outline-light"> Swipe Right Button</Button>
+                </Row>
             </Container>
         </Fragment>
     );
 };
+    
 
-const mapStateToProps = (state) => {
-    const { auth, advancedSearch, sort } = state;
-
-    return {
-        isAuthed: auth.isAuthed,
-        results: advancedSearch.results,
-        sort: sort
+    const mapStateToProps = (state) => {
+        const { auth, advancedSearch, sort } = state;
+    
+        return {
+            isAuthed: auth.isAuthed,
+            results: advancedSearch.results,
+            sort: sort
+        };
     };
-};
+    
+    const mapDispatchToProps = (dispatch) => ({
+        sendTicker: (ticker) => dispatch(receiveTicker(ticker)),
+        resetResults: () => dispatch(receiveResults({}))
+    })
 
-const mapDispatchToProps = (dispatch) => ({
-    sendTicker: (ticker) => dispatch(receiveTicker(ticker)),
-    resetResults: () => dispatch(receiveResults({}))
-})
+
+
 export default connect(mapStateToProps, mapDispatchToProps)(SDScreen);
