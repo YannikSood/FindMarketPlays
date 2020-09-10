@@ -23,6 +23,9 @@ const NewsFeed = ({ isAuthed }) => {
   }
 
   useEffect(() => {
+    if (!isAuthed) {
+       history.push("/login")
+    } else {
       const fetchData = () => {
         const url = `/newsAPI/${searchedValue}`;
         fetch(url, { headers: { Accept: 'application/json' } })
@@ -33,6 +36,7 @@ const NewsFeed = ({ isAuthed }) => {
           .catch(err => console.error(err)); // eslint-disable-line
       };
       debounce(fetchData());
+    }
   }, [isAuthed, history, searchedValue]);
 
   // Handlers

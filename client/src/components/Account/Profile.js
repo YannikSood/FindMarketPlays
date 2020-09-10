@@ -24,9 +24,13 @@ const Profile = ({ currentUser, isAuthed }) => {
   const history = useHistory();
 
   useEffect(() => {
-    setEmail(firebase.auth().currentUser.email);
-    setEmailSuccess(false);
-    setPassSuccess(false);
+     if (!isAuthed) {
+       history.push("/login")
+    } else {
+      setEmail(firebase.auth().currentUser.email);
+      setEmailSuccess(false);
+      setPassSuccess(false);
+    }
   }, [isAuthed, history]);
 
   function resetEmail() {

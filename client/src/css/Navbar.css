@@ -1,5 +1,5 @@
-.sidebar {
-    margin-top: 50px;
+/* .sidebar {
+    margin-top: 75px;
 }
 
 .menu-icon {
@@ -17,24 +17,23 @@
     top: 0;
     left: 0;
     position: absolute;
-}
+} */
 
-@media only screen and (max-width: 992px) {
+/* @media only screen and (max-width: 992px) {
     .sidebar-c {
-        margin-top: 49px;
+        margin-top: 75px;
         z-index: 0;
+        height: 50px;
+        position: fixed;
     }
 
     .menu-c {
         padding-bottom: 5px !important;
     }
-}
-
-/* @media only screen and (min-width: 420px) {
-
 } */
 
-@media only screen and (min-width: 992px) {
+
+/* @media only screen and (min-width: 992px) {
     .account {
         position: absolute;
         right: 150px;
@@ -48,4 +47,4 @@
         display: flex;
         justify-content: right;
     }
-}
+} */

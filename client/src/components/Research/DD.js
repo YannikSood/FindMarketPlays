@@ -13,6 +13,7 @@ class DD extends React.Component {
 
     this.url = 'https://www.reddit.com/r/';
     this.sorts = ['hot', 'new', 'top', 'controversial', 'rising'];
+    this.auth = this.props.auth;
   }
 
     state = {
@@ -25,7 +26,13 @@ class DD extends React.Component {
     };
 
     componentDidMount() {
-      this.setSubreddit(this.state.subreddit);
+      // if (!this.auth) {
+      //   return (
+      //     <Redirect to="/login"/>
+      //   )
+      // } else {
+        this.setSubreddit(this.state.subreddit);
+      // }
     }
 
     setSubreddit(sub) {
@@ -159,4 +166,6 @@ class DD extends React.Component {
     }
 }
 
-export default DD;
+
+
+export default DD

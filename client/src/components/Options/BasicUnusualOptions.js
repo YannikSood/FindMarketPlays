@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Row from 'react-bootstrap/Row';
+import { connect } from "react-redux";
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import InputGroup from "react-bootstrap/InputGroup";
@@ -18,6 +19,9 @@ const BasicUnusualOptions = ({ isAuthed }) => {
 
   
   useEffect(() => {
+    if (!isAuthed) {
+       history.push("/login")
+    } else {
       const fetchData = () => {
         const url = `/optionsAPI/${searchedValue}`;
         fetch(url, { headers: { Accept: 'application/json' } })
@@ -28,6 +32,7 @@ const BasicUnusualOptions = ({ isAuthed }) => {
           .catch(err => console.log(err)); // eslint-disable-line
       };
       debounce(fetchData());
+    }
   }, [isAuthed, history, searchedValue]);
 
   const showErr = () => {
@@ -73,4 +78,8 @@ const BasicUnusualOptions = ({ isAuthed }) => {
   );
 };
 
-export default (BasicUnusualOptions);
+const MSTP = (state) => ({
+  isAuthed: state.auth.isAuthed
+})
+
+export default connect(MSTP)(BasicUnusualOptions);

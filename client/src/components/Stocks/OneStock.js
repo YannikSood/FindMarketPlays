@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { Row, Col, Container, Form } from 'react-bootstrap';
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
@@ -7,15 +7,24 @@ import SSIWidget from '../Widgets/SingleStockInfo';
 import SSFWidget from '../Widgets/SSFinancials';
 import StockProfile from '../Widgets/StockProfile';
 import { debounce } from '../../helpers/SearchHelper';
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-const OneStock = () => {
+const OneStock = ({isAuthed}) => {
   // Hooks
   const [searchedValue, setSearchedValue] = useState('TSLA');
+  const history = useHistory();
 
   // Handlers
   const handleInputChange = (event) => {
     debounce(setSearchedValue(event.target.value.toUpperCase()), 300);
   };
+
+  useEffect(() => {
+    if (!isAuthed) {
+       history.push("/login")
+    }
+  }, [])
 
   return (
     <Fragment>
@@ -69,4 +78,8 @@ const OneStock = () => {
   );
 };
 
-export default OneStock;
+const MSTP = (state) => ({
+  isAuthed: state.auth.isAuthed,
+});
+
+export default connect(MSTP)(OneStock);
