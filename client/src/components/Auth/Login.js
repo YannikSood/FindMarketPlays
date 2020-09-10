@@ -7,6 +7,7 @@ import * as ROUTES from '../../routes/routes';
 import firebase from '../../firebase/firebase';
 import { receiveUser } from '../../reducers/authReducer';
 import LoginErrors from '../Errors/LoginErrors';
+import Axios from "axios";
 
 const Login = ({ isAuthed }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -27,6 +28,13 @@ const Login = ({ isAuthed }) => {
     const { email, password } = credentials;
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((user) => {
+        let url = `/stockDiscover/${email}/login`
+        Axios.post(url, {
+          headers: { "Content-Type": "application/json" }
+        })
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+
         dispatch(receiveUser(user));
       })
       .catch((error) => {

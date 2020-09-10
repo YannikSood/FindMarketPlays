@@ -84,6 +84,33 @@ app.get(`/stockDiscover/:email/fetch`, (req,res) => {
     .catch(err => console.log(err))
 })
 
+app.post("/stockDiscover/:email/login", async (req, res) => {
+  let email = `${req.params.email}`;
+  UserLists.find({'email': email})
+    .toArray()
+    .then(userRes => {
+      if (!userRes.masterList) {
+        MasterList.find({})
+          .toArray()
+          .then(masterRes => {
+            let userLists = {
+              email: email,
+              masterList: new Array(masterRes.length),
+              leftList: [],
+              rightList: []
+            }
+            UserLists.replaceOne({'email': email}, userLists)
+              .then((insertRes) => res.send({ message: insertRes.ops[0] }))
+              .catch((err) => res.send({ err: err }))
+          })
+          .catch(err => res.send({ erro: err }))
+      } else {
+        console.log('Already initialized')
+      }
+    })
+    .catch(err => console.log(err))
+})
+
 app.post("/stockDiscover/:email/register", async (req, res) => {
   let email = `${req.params.email}`;
   MasterList.find({})

@@ -5,8 +5,12 @@
 }
 
 .navbar {
-    background: #262626;
+    background: #444242;
 }
+
+/* .fa-navicon:before, .fa-reorder:before, .fa-bars:before {
+    color: yellow;
+} */
 
 .menu-icon {
     display: flex;
@@ -40,7 +44,7 @@
     }
 
     .pro-sidebar > .pro-sidebar-inner {
-        background:#262626;
+        background:#444242;
     }
 
     .menu-c {
