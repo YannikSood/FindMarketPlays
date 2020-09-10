@@ -108,7 +108,7 @@ const SDScreen = ({isAuthed}) => {
 
     return (
         <Fragment>
-            <ScrollingWidget />
+            <ScrollingWidget className="scrolling"/>
             <Container>
                 <Row className="widget__wrapper">
                     <Col md={7}>
