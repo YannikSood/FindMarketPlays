@@ -137,7 +137,7 @@ const NavigationAuth = (location) => {
             </DropdownButton>{' '} 
 
            
-            <Button className="ml-2" onClick={() => history.push("/sdScreen")} variant="outline-light"> Stock Discover</Button>
+            {/* <Button className="ml-2" onClick={() => history.push("/sdScreen")} variant="outline-light"> Stock Discover</Button> */}
             <Button className="ml-2" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
 
         </Nav>
@@ -196,9 +196,9 @@ const NavigationNonAuth = (location) => {
 
         {/* </Nav> */}
       </Navbar.Collapse>
-      <Button class="ml-2" onClick={() => history.push("/login")} variant="primary">
+      {/* <Button class="ml-2" onClick={() => history.push("/login")} variant="primary">
           Login/Signup
-        </Button>
+        </Button> */}
 
     </Navbar>
 
