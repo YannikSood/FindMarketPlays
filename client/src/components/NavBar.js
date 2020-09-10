@@ -177,8 +177,8 @@ const NavigationNonAuth = (location) => {
             className="d-inline-block align-top"
             alt="React Bootstrap logo"
           /></Navbar.Brand>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
+      {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav"> */}
         {/* <Nav activeKey={location.pathname}>
           <Nav.Link className="nav-link" href={`${ROUTES.DASHBOARD}`}>Market Overview</Nav.Link>
           <Nav.Link className="nav-link" href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
@@ -195,7 +195,7 @@ const NavigationNonAuth = (location) => {
           </Button> */}
 
         {/* </Nav> */}
-      </Navbar.Collapse>
+      {/* </Navbar.Collapse> */}
       {/* <Button class="ml-2" onClick={() => history.push("/login")} variant="primary">
           Login/Signup
         </Button> */}
