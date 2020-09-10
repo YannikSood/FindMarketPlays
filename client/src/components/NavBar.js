@@ -41,6 +41,11 @@ const NavigationAuth = (location) => {
             </SubMenu>
             <MenuItem><Link onClick={() => setSB(false)} to="/sdScreen">Stock Discover</Link></MenuItem>
             <MenuItem><Link onClick={() => setSB(false)} to="/profile">Account</Link></MenuItem>
+            <MenuItem className="signout"><Link onClick={() => {
+              firebase.auth().signOut();
+              history.push('/')
+              setSB(false)
+              }} to="/profile">Sign Out</Link></MenuItem>
           </Menu>
         </ProSidebar>
       )
@@ -57,12 +62,12 @@ const NavigationAuth = (location) => {
   return (
       <Container className="navbarContainer m-0 p-0"> 
           <Navbar
-            collapseOnSelect
-            expand="sm"
-            className="justify-content-center"
+            // collapseOnSelect
+            // expand="sm"
+            className="justify-content-center navbar"
             // className="justify-content-center d-none d-lg-flex"
-            bg="dark"
-            variant="dark"
+            // bg="dark"
+            // variant="dark"
             fixed="top"
           >
             <Navbar.Brand href={"/"}>
@@ -78,8 +83,8 @@ const NavigationAuth = (location) => {
             <Nav className="d-flex justify-content-right" activeKey={location.pathname}>
                 <DropdownButton
                   drop={"down"}
-                  // className="ml-2 d-none d-lg-flex"
-                  className="ml-2"
+                  className="ml-2 d-none d-lg-flex"
+                  // className="ml-2"
                   title="Stocks Hub"
                   // size="md"
                   variant="light"
@@ -94,8 +99,8 @@ const NavigationAuth = (location) => {
                 </DropdownButton>
 
                 <DropdownButton
-                  // className="ml-2 d-none d-lg-flex"
-                  className="ml-2"
+                  className="ml-2 d-none d-lg-flex"
+                  // className="ml-2"
                   title="Research Hub"
                   // size="md"
                   variant="info"
@@ -114,7 +119,8 @@ const NavigationAuth = (location) => {
                 </DropdownButton>
 
               <DropdownButton
-                className="ml-2"
+                // className="ml-2"
+                className="ml-2 d-none d-lg-flex"
                 title="Unusual Options"
                 // size="md"
                 variant="success"
@@ -137,13 +143,13 @@ const NavigationAuth = (location) => {
             </DropdownButton>{' '} 
 
            
-            <Button className="ml-2" onClick={() => history.push("/sdScreen")} variant="outline-light"> Stock Discover</Button>
-            <Button className="ml-2" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
+            <Button className="ml-2 d-none d-lg-flex" onClick={() => history.push("/sdScreen")} variant="outline-light"> Stock Discover</Button>
+            <Button className="ml-2 d-none d-lg-flex" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
 
         </Nav>
       </Navbar.Collapse>
       <Button
-        className="ml-2"
+        className="d-none d-sm-flex"
         variant="primary"
         onClick={() => {
           firebase.auth().signOut();
@@ -153,6 +159,7 @@ const NavigationAuth = (location) => {
         Sign Out
       </Button>
     </Navbar>
+    {showSB()}
   </Container>
   )
 };
@@ -199,7 +206,6 @@ const NavigationNonAuth = (location) => {
       <Button class="ml-2" onClick={() => history.push("/login")} variant="primary">
           Login/Signup
         </Button>
-
     </Navbar>
 
   )
