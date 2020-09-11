@@ -43,7 +43,7 @@ const SDScreen = ({isAuthed, currentUser}) => {
                 //res.data.message
                     .then(res => {
                         // save ticker and index to state
-                        setSearchedValue(res.data.message);
+                        setTicker(res.data.message);
                         setIndex(res.data.index);
 
                         // fetch ticker info from iex
@@ -80,7 +80,7 @@ const SDScreen = ({isAuthed, currentUser}) => {
                 headers: { "Content-Type": "application/json" }
                 })
                     .then(res => {
-                            setSearchedValue(res.data.message);
+                            setTicker(res.data.message);
                             setIndex(res.data.index);
                             const url2 = `/getTicker/${res.data.message}`;
                             Axios.get(url2, {
@@ -112,7 +112,7 @@ const SDScreen = ({isAuthed, currentUser}) => {
                 headers: { "Content-Type": "application/json" },
                 })
                 .then((res) => {
-                    setSearchedValue(res.data.message);
+                    setTicker(res.data.message);
                     setIndex(res.data.index);
                     const url2 = `/getTicker/${res.data.message}`;
                     Axios.get(url2, {
@@ -138,7 +138,7 @@ const SDScreen = ({isAuthed, currentUser}) => {
     // }
 
     const showFlow = () => {
-        if (searchedValue && Object.keys(options).length) {
+        if (ticker && Object.keys(options).length) {
             return (
                 <Container>
                     <SDFlow value={options} />
@@ -150,7 +150,7 @@ const SDScreen = ({isAuthed, currentUser}) => {
 
     // Handlers
     // const handleInputChange = (event) => {
-    //     setSearchedValue(event.target.value.toUpperCase());
+    //     setTicker(event.target.value.toUpperCase());
     // }
 
     return (
@@ -165,7 +165,7 @@ const SDScreen = ({isAuthed, currentUser}) => {
                             <InputGroup>
                                 <Form.Control
                                     type="text"
-                                    value={searchedValue}
+                                    value={ticker}
                                     onChange={handleInputChange}
                                     placeholder="GOOGL"
                                     onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
@@ -178,7 +178,7 @@ const SDScreen = ({isAuthed, currentUser}) => {
                 <Row>
                     {showFlow()}
                     <TradingViewWidget
-                        symbol={searchedValue}
+                        symbol={ticker}
                         theme={Themes.DARK}
                         locale="en"
                         autosize
