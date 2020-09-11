@@ -21,7 +21,7 @@ import { current } from 'immer';
 // can change back to array depending on what we want (just wrap the object in a bracket) and uncomment
 // a few lines in SDFlow
 const SDScreen = ({isAuthed, currentUser}) => {
-    const [searchedValue, setSearchedValue] = useState('AMZN');
+    const [searchedValue, setSearchedValue] = useState();
     const [nextTicker, setNextTicker] = useState(' ');
     const [ticker, setTicker] = useState();
     const [index, setIndex] = useState();
@@ -43,7 +43,7 @@ const SDScreen = ({isAuthed, currentUser}) => {
                 //res.data.message
                     .then(res => {
                         // save ticker and index to state
-                        setTicker(res.data.message);
+                        setSearchedValue(res.data.message);
                         setIndex(res.data.index);
 
                         // fetch ticker info from iex
@@ -65,54 +65,70 @@ const SDScreen = ({isAuthed, currentUser}) => {
     }, []);
 
 
-     const rightSwipe = () => {
-        
-        // get the random ticker index from DB
+     const rightSwipe = () => {   
         const email = currentUser.email;
-        const url = `/stockDiscover/${email}/fetch`;
-        console.log(url);//This gets Logged
+        const swipeUrl = `/stockDiscover/${email}/swipeRight/${index}`;
 
-        Axios.get(url, {
-            // get ticker from mongodb
+        // swipe server call
+        Axios.post(swipeUrl, {
           headers: { "Content-Type": "application/json" }
         })
-            .then(res => {
-                    const url2 = `/getTicker/${res.data.message}`;
-                    Axios.get(url2, {
-                        // get ticker data from iex
-                        headers: { "Content-Type": "application/json" }
+            .then(swipeRes => {
+                const url = `/stockDiscover/${email}/fetch`;
+                // get ticker from mongodb
+                Axios.get(url, {
+                headers: { "Content-Type": "application/json" }
+                })
+                    .then(res => {
+                            setSearchedValue(res.data.message);
+                            setIndex(res.data.index);
+                            const url2 = `/getTicker/${res.data.message}`;
+                            Axios.get(url2, {
+                                // get ticker data from iex
+                                headers: { "Content-Type": "application/json" }
+                            })
+                                .then(res2 => {
+                                    setOptions(res2.data.message || {})
+                                })
+                                .catch(err => console.log(err))
                     })
-                        .then(res2 => {
-                            setOptions(res2.data.message || {})
-                        })
-                        .catch(err => console.log(err))
-            })
-            .catch(err => console.log(err))            
+                    .catch(err => console.log(err))  
+                })
+                .catch(err => console.log(err))          
     };
 
     const leftSwipe = () => {
-        
         const email = currentUser.email;
-        const url = `/stockDiscover/${email}/fetch`;
-        // const swipeUrl = `/stockDiscover/${email}/left/${res.data.index}`;
-        
-        
-        Axios.get(url, {
-            // get the random ticker index from DB
+        const swipeUrl = `/stockDiscover/${email}/swipeLeft/${index}`;
+
+        // swipe server call
+        Axios.post(swipeUrl, {
           headers: { "Content-Type": "application/json" }
         })
-            .then(res => {
-                const url2 = `/getTicker/${res.data.message}`;
-                Axios.get(url2, {
-                    // get ticker info from iex
-                  headers: { "Content-Type": "application/json" }
+            .then(swipeRes => {
+                const url = `/stockDiscover/${email}/fetch`;
+                Axios.get(url, {
+                // get the random ticker index from DB
+                headers: { "Content-Type": "application/json" },
                 })
-                    .then(res2 => {
+                .then((res) => {
+                    setSearchedValue(res.data.message);
+                    setIndex(res.data.index);
+                    const url2 = `/getTicker/${res.data.message}`;
+                    Axios.get(url2, {
+                    // get ticker info from iex
+                    headers: { "Content-Type": "application/json" },
+                    })
+                    .then((res2) => {
                         setOptions(res2.data.message || {});
                     })
-                    .catch(err => console.log(err))
+                    .catch((err) => console.log(err));
+                })
+                .catch((err) => console.log(err));     
             })
-            .catch(err => console.log(err))        
+            .catch(err => console.log(err));
+        
+           
     };
 
     // const showErr = () => {
@@ -122,7 +138,7 @@ const SDScreen = ({isAuthed, currentUser}) => {
     // }
 
     const showFlow = () => {
-        if (ticker && Object.keys(options).length) {
+        if (searchedValue && Object.keys(options).length) {
             return (
                 <Container>
                     <SDFlow value={options} />

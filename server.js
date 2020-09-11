@@ -175,17 +175,19 @@ app.get(`/stockDiscover/:email/fetch`, (req,res) => {
             }
             
             userMasterL[num] = 0;
+            userRes.masterList = userMasterL;
 
             UserLists.replaceOne(
               {
-                email: `${email}`,
+                'email': `${email}`,
               },
-              {
-                email: email,
-                masterList: userMasterL,
-                leftList: [],
-                rightList: [],
-              }
+              userRes
+              // {
+              //   email: email,
+              //   masterList: userMasterL,
+              //   leftList: [],
+              //   rightList: [],
+              // }
             )
               .then((res) => console.log(res)) //[Not Logging]
               .catch((err) => console.log(err));
