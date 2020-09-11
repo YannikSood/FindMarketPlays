@@ -57,6 +57,58 @@ app.post("/stockDiscover/:email/register", async (req, res) => {
     .catch(err => console.log(err))
 });
 
+app.post('/stockDiscover/:email/swipeRight/:index', (req, res) => {
+  let email = req.params.email;
+  let index = req.params.index;
+
+  UserLists.find({ email: email })
+  // find user's lists using email
+    .toArray()
+    .then(userRes => {
+      // update user's masterList using index
+      let lists = userRes[0];
+      lists.masterList[index] = 1;
+
+      // update user's rightList using index
+      lists.rightList.push(index); //index is saved in DB as a STRING  !!IMPORTANT
+
+      // update DB with new user lists
+      UserLists.replaceOne({'email': email}, lists)
+        .then(updateRes => res.send({ message: updateRes.ops[0].rightList }))
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
+})
+
+app.post('/stockDiscover/:email/swipeLeft/:index', (req, res) => {
+  let email = req.params.email;
+  let index = req.params.index;
+
+    UserLists.find({'email': email})
+    // find user's lists using email
+      .toArray()
+      .then(userRes => {
+        // update user's masterList using index
+        let lists = userRes[0];
+        lists.masterList[index] = 2;
+
+        //update user's leftList using index
+        lists.leftList.push(index);
+        //index is saved in DB as a STRING  !!IMPORTANT
+
+        //update DB with new user list
+        UserLists.replaceOne(
+          {'email': email},
+          lists
+        )
+          .then(updateRes => {
+            res.send({ message: updateRes.ops[0].leftList })
+          })
+          .catch(err => console.log(err))
+      })
+      .catch(err => console.log(err))
+}) 
+
 //2) Generate the Lists upon next successful Login.
 //Should only generate on first successful login after publishing.
 app.post("/stockDiscover/:email/login", async (req, res) => {
@@ -123,17 +175,19 @@ app.get(`/stockDiscover/:email/fetch`, (req,res) => {
             }
             
             userMasterL[num] = 0;
+            userRes.masterList = userMasterL;
 
             UserLists.replaceOne(
               {
-                email: `${email}`,
+                'email': `${email}`,
               },
-              {
-                email: email,
-                masterList: userMasterL,
-                leftList: [],
-                rightList: [],
-              }
+              userRes
+              // {
+              //   email: email,
+              //   masterList: userMasterL,
+              //   leftList: [],
+              //   rightList: [],
+              // }
             )
               .then((res) => console.log(res)) //[Not Logging]
               .catch((err) => console.log(err));
@@ -141,7 +195,7 @@ app.get(`/stockDiscover/:email/fetch`, (req,res) => {
             //Get the stock information, return the ticker [Not Returning]
             let stock = masterRes[num];
             let ticker = stock.symbol;
-            res.send( { message: `${ticker}` } )
+            res.send( { message: `${ticker}`, index: num } )
         })
         .catch(err => console.log(err))
     })
@@ -167,9 +221,6 @@ app.get("/getTicker/:ticker", async (req, res) => {
   
   res.send({ message: tempJSON });
 });
-
-
-
 
 app.get('/betweenSearch/:fromDate/:toDate/:ticker', async (req, res) => {
   let tempJSON = [];
