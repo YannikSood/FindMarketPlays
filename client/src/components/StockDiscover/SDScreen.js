@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from 'react-bootstrap/Form';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
 import { debounce } from '../../helpers/SearchHelper';
 import SymbolErrors from '../Errors/SymbolErrors';
@@ -14,13 +14,14 @@ import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
 import Axios from "axios";
 import SDFlow from './SDFlow';
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
+import { receiveUserLists } from '../../actions/stockDiscover';
 import { userInfo } from 'os';
 import { current } from 'immer';
 
 // changed to send options as one object instead of an array to SDFlow because the return value of fetch is an object.
 // can change back to array depending on what we want (just wrap the object in a bracket) and uncomment
 // a few lines in SDFlow
-const SDScreen = ({isAuthed, currentUser}) => {
+const SDScreen = ({isAuthed, currentUser, receiveUserLists}) => {
     const [searchedValue, setSearchedValue] = useState();
     const [nextTicker, setNextTicker] = useState(' ');
     const [ticker, setTicker] = useState();
@@ -75,6 +76,7 @@ const SDScreen = ({isAuthed, currentUser}) => {
         })
             .then(swipeRes => {
                 const url = `/stockDiscover/${email}/fetch`;
+                receiveUserLists(swipeRes.data.message);
                 // get ticker from mongodb
                 Axios.get(url, {
                 headers: { "Content-Type": "application/json" }
@@ -186,12 +188,21 @@ const SDScreen = ({isAuthed, currentUser}) => {
                 </Row>
 
                 <Row>
-                    <Button className="ml-2" onClick={() => rightSwipe()} variant="outline-light"> Swipe Right Button</Button>
+                    <Col>
+                    <Row>
+                        <Button className="ml-2" onClick={() => leftSwipe()} variant="outline-light"> Swipe Left</Button>
+                        <Button className="ml-2" onClick={() => rightSwipe()} variant="outline-light"> Swipe Right</Button>
+                    </Row>
+                    </Col>
+                    <Col>
+                        <Row>
+                            <Button>
+                                <Link to="/prospects">My Prospects</Link>
+                            </Button>
+                        </Row>
+                    </Col>
                 </Row>
 
-                <Row>
-                    <Button className="ml-2" onClick={() => leftSwipe()} variant="outline-light"> Swipe Left Button</Button>
-                </Row>
 
                 {/* <Row>
                     <Button className="ml-2" onClick={()} variant="outline-light"> More Info Button</Button>
@@ -215,7 +226,8 @@ const SDScreen = ({isAuthed, currentUser}) => {
     
     const mapDispatchToProps = (dispatch) => ({
         sendTicker: (ticker) => dispatch(receiveTicker(ticker)),
-        resetResults: () => dispatch(receiveResults({}))
+        resetResults: () => dispatch(receiveResults({})),
+        receiveUserLists: (userLists) => dispatch(receiveUserLists(userLists))
     })
 
 
