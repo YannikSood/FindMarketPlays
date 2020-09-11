@@ -42,7 +42,7 @@ import Loader from './components/Loader';
 import { PersistGate } from 'redux-persist/integration/react';
 import AdvancedUOFeed from './components/Options/AdvancedUOFeed';
 import SDScreen from './components/StockDiscover/SDScreen';
-
+import Prospects from './components/Prospects/Prospects';
 
 const App = () => {
 
@@ -95,6 +95,10 @@ const App = () => {
                 <Switch>
                   <Route exact path={ROUTES.DASHBOARD}>
                     <Dashboard />
+                  </Route>
+
+                  <Route exact path={ROUTES.PROSPECTS}>
+                    <Prospects/>
                   </Route>
 
                   <Route path={ROUTES.LOGIN}>
