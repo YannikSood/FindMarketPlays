@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import { connect } from "react-redux";
 import { receiveProspect } from '../../actions/prospects';
+import Axios from "axios";
 
 const ProspectsFlow = (props) => {
     let prospects = props.value;
     const [prospect, setProspect] = useState(prospects[0]);
 
     useEffect(() => {
-        props.receiveProspect(prospect);
+      
+
+        // props.receiveProspect(prospect);
     }, [prospect]);
 
     return (

@@ -119,23 +119,37 @@ app.post("/stockDiscover/:email/login", async (req, res) => {
       if (!userRes.masterList) {
         MasterList.find({})
           .toArray()
-          .then(masterRes => {
+          .then((masterRes) => {
             let userLists = {
               email: email,
               masterList: new Array(masterRes.length),
               leftList: [],
-              rightList: []
-            }
-            UserLists.replaceOne({'email': email}, userLists)
-              .then((insertRes) => res.send({ message: insertRes.ops[0] }))
-              .catch((err) => res.send({ err: err }))
+              rightList: [],
+            };
+
+            UserLists.find({ email: email })
+              .toArray()
+              .then((findRes) => {
+                if (!findRes.length) {
+                  UserLists.insertOne(userLists);
+                  res.send({ message: userLists });
+                } else {
+                  UserLists.replaceOne({ email: email }, userLists)
+                    .then((insertRes) => {
+                      console.log(insertRes);
+                      res.send({ message: insertRes.ops[0] });
+                    })
+                    .catch((err) => res.status(400).send(err));
+                }
+              })
+              .catch((err) => res.status(400).send(err));
           })
-          .catch(err => res.send({ erro: err }))
+          .catch((err) => res.status(400).send(err));
       } else {
         console.log('Already initialized')
       }
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log('hello' + err))
 })
 
 //Get the user's database reference using email
