@@ -23,36 +23,46 @@ import { current } from 'immer';
 const SDScreen = ({isAuthed, currentUser}) => {
     const [searchedValue, setSearchedValue] = useState('AMZN');
     const [nextTicker, setNextTicker] = useState(' ');
+    const [ticker, setTicker] = useState();
+    const [index, setIndex] = useState();
     const [options, setOptions] = useState({});
     
 
     const history = useHistory();
-
-    // const search = () => {
-    //     const url = `/getTicker/${searchedValue}`;
-    //     Axios.get(url, {
-    //         headers: { "Content-Type": "application/json" }
-    //     })
-    //         .then(res => setOptions(res.data))
-    //         .catch(err => console.log(err))
-    // }
 
     useEffect(() => {
         if (!isAuthed) {
             history.push("/login")
         } else {
             const fetchData = () => {
-                const url = `/getTicker/${searchedValue}`;
-                fetch(url, { headers: { Accept: 'application/json' } })
-                    .then(res => res.json()
-                        .then((json) => {
-                            setOptions(json.message || {});
-                        }))
-                    .catch(err => console.log(err));
+                // fetch ticker from DB
+                const url1 = `/stockDiscover/${currentUser.email}/fetch`;
+                Axios.get(url1, {
+                  headers: { "Content-Type": "application/json" }
+                })
+                //res.data.message
+                    .then(res => {
+                        // save ticker and index to state
+                        setTicker(res.data.message);
+                        setIndex(res.data.index);
+
+                        // fetch ticker info from iex
+                        const url2 = `/getTicker/${res.data.message}`;
+                        fetch(url2, {
+                          headers: { "Content-Type": "application/json" },
+                        })
+                          .then((res) =>
+                            res.json().then((json) => {
+                              setOptions(json.message || {});
+                            })
+                          )
+                          .catch((err) => console.log(err));
+                    })
+                    .catch(err => console.log(err))
             };
             debounce(fetchData());
         }
-    }, [searchedValue]);
+    }, []);
 
 
      const rightSwipe = () => {
@@ -105,14 +115,14 @@ const SDScreen = ({isAuthed, currentUser}) => {
             .catch(err => console.log(err))        
     };
 
-    const showErr = () => {
-        if (!Object.values(options).length) {
-            return SymbolErrors()
-        }
-    }
+    // const showErr = () => {
+    //     if (!Object.values(options).length) {
+    //         return SymbolErrors()
+    //     }
+    // }
 
     const showFlow = () => {
-        if (searchedValue && Object.keys(options).length) {
+        if (ticker && Object.keys(options).length) {
             return (
                 <Container>
                     <SDFlow value={options} />
@@ -123,9 +133,9 @@ const SDScreen = ({isAuthed, currentUser}) => {
 
 
     // Handlers
-    const handleInputChange = (event) => {
-        setSearchedValue(event.target.value.toUpperCase());
-    }
+    // const handleInputChange = (event) => {
+    //     setSearchedValue(event.target.value.toUpperCase());
+    // }
 
     return (
         <Fragment>
@@ -135,7 +145,7 @@ const SDScreen = ({isAuthed, currentUser}) => {
                     <Col md={7}>
                         <Form>
                             <h1>Stock Discover</h1>
-                             <h5>ENTER STOCK TICKER(S)</h5>
+                             {/* <h5>ENTER STOCK TICKER(S)</h5>
                             <InputGroup>
                                 <Form.Control
                                     type="text"
@@ -144,9 +154,9 @@ const SDScreen = ({isAuthed, currentUser}) => {
                                     placeholder="GOOGL"
                                     onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                                 />
-                            </InputGroup>
+                            </InputGroup> */}
                         </Form>
-                        {showErr()}
+                        {/* {showErr()} */}
                     </Col>
                 </Row>
                 <Row>
