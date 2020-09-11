@@ -63,86 +63,46 @@ const SDScreen = ({isAuthed, currentUser}) => {
         console.log(url);//This gets Logged
 
         Axios.get(url, {
+            // get ticker from mongodb
           headers: { "Content-Type": "application/json" }
         })
             .then(res => {
-                console.log(res.data.message)
                     const url2 = `/getTicker/${res.data.message}`;
                     Axios.get(url2, {
+                        // get ticker data from iex
                         headers: { "Content-Type": "application/json" }
                     })
                         .then(res2 => {
-                            console.log(res2)
                             setOptions(res2.data.message || {})
                         })
-
-                        //   fetch(url2, { headers: { Accept: 'application/json' } })
-                        //       .then(res => res.json()
-                        //           .then((json) => {
-                        //               console.log(json.message);
-                        //               setOptions(json.message || {});
-
-                        //           }))
                         .catch(err => console.log(err))
             })
-            .catch(err => console.log(err))
-
-        // fetch(url, { headers: { Accept: 'application/json' } })
-        //     .then(res => res.json()
-        //         .then((json) => {
-        //             console.log(json); //This doesnt?
-
-        //             // Get next url after getting the ticker here?
-                    
-        //             // const url2 = `/getTicker/${json.message}`;
-        //             // console.log(url2);
-        //             // fetch(url2, { headers: { Accept: 'application/json' } })
-        //             //     .then(res => res.json()
-        //             //         .then((json) => {
-        //             //             console.log(json.message);
-        //             //             setOptions(json.message || {}); 
-            
-        //             //         }))
-        //             // .catch(err => console.log(err));
-
-        //         }))
-        // .catch(err => console.log(err));
-        
-        
-        // get the ticker info from iEX 
-       
-        
+            .catch(err => console.log(err))            
     };
 
     const leftSwipe = () => {
         
-        // get the random ticker index from DB
         const email = currentUser.email;
         const url = `/stockDiscover/${email}/fetch`;
-        console.log(url);
-
-        fetch(url, { headers: { Accept: 'application/json' } })
-            .then(res => res.json()
-                .then((json) => {
-                    console.log(json);
-                    // const url2 = `/getTicker/${json.message}`;
-                    // console.log(url2);
-                    // fetch(url2, { headers: { Accept: 'application/json' } })
-                    //     .then(res => res.json()
-                    //         .then((json) => {
-                    //             console.log(json.message);
-                    //             setOptions(json.message || {}); 
-            
-                    //         }))
-                    // .catch(err => console.log(err));
-
-                }))
-        .catch(err => console.log(err));
+        // const swipeUrl = `/stockDiscover/${email}/left/${res.data.index}`;
         
         
-        // get the ticker info from iEX 
-       
-        
+        Axios.get(url, {
+            // get the random ticker index from DB
+          headers: { "Content-Type": "application/json" }
+        })
+            .then(res => {
+                const url2 = `/getTicker/${res.data.message}`;
+                Axios.get(url2, {
+                    // get ticker info from iex
+                  headers: { "Content-Type": "application/json" }
+                })
+                    .then(res2 => {
+                        setOptions(res2.data.message || {});
+                    })
+                    .catch(err => console.log(err))
+            })
+            .catch(err => console.log(err))        
     };
 
     const showErr = () => {
