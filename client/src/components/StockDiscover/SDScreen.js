@@ -62,26 +62,51 @@ const SDScreen = ({isAuthed, currentUser}) => {
         const url = `/stockDiscover/${email}/fetch`;
         console.log(url);//This gets Logged
 
-        fetch(url, { headers: { Accept: 'application/json' } })
-            .then(res => res.json()
-                .then((json) => {
-                    console.log(json); //This doesnt?
+        Axios.get(url, {
+          headers: { "Content-Type": "application/json" }
+        })
+            .then(res => {
+                console.log(res.data.message)
+                    const url2 = `/getTicker/${res.data.message}`;
+                    Axios.get(url2, {
+                        headers: { "Content-Type": "application/json" }
+                    })
+                        .then(res2 => {
+                            console.log(res2)
+                            setOptions(res2.data.message || {})
+                        })
 
-                    // Get next url after getting the ticker here?
+                        //   fetch(url2, { headers: { Accept: 'application/json' } })
+                        //       .then(res => res.json()
+                        //           .then((json) => {
+                        //               console.log(json.message);
+                        //               setOptions(json.message || {});
+
+                        //           }))
+                        .catch(err => console.log(err))
+            })
+            .catch(err => console.log(err))
+
+        // fetch(url, { headers: { Accept: 'application/json' } })
+        //     .then(res => res.json()
+        //         .then((json) => {
+        //             console.log(json); //This doesnt?
+
+        //             // Get next url after getting the ticker here?
                     
-                    // const url2 = `/getTicker/${json.message}`;
-                    // console.log(url2);
-                    // fetch(url2, { headers: { Accept: 'application/json' } })
-                    //     .then(res => res.json()
-                    //         .then((json) => {
-                    //             console.log(json.message);
-                    //             setOptions(json.message || {}); 
+        //             // const url2 = `/getTicker/${json.message}`;
+        //             // console.log(url2);
+        //             // fetch(url2, { headers: { Accept: 'application/json' } })
+        //             //     .then(res => res.json()
+        //             //         .then((json) => {
+        //             //             console.log(json.message);
+        //             //             setOptions(json.message || {}); 
             
-                    //         }))
-                    // .catch(err => console.log(err));
+        //             //         }))
+        //             // .catch(err => console.log(err));
 
-                }))
-        .catch(err => console.log(err));
+        //         }))
+        // .catch(err => console.log(err));
         
         
         // get the ticker info from iEX 
