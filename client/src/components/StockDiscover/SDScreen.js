@@ -22,8 +22,7 @@ import { current } from 'immer';
 // can change back to array depending on what we want (just wrap the object in a bracket) and uncomment
 // a few lines in SDFlow
 const SDScreen = ({isAuthed, currentUser, receiveUserLists}) => {
-    const [searchedValue, setSearchedValue] = useState();
-    const [nextTicker, setNextTicker] = useState(' ');
+    const [loader, setLoader] = useState(true);
     const [ticker, setTicker] = useState();
     const [index, setIndex] = useState();
     const [options, setOptions] = useState({});
@@ -55,6 +54,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists}) => {
                           .then((res) =>
                             res.json().then((json) => {
                               setOptions(json.message || {});
+                              setLoader(false);
                             })
                           )
                           .catch((err) => console.log(err));
@@ -65,6 +65,19 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists}) => {
         }
     }, []);
 
+      const loading = () => {
+        if (loader) {
+          return (
+            <Container>
+              <Row>
+                <Col>
+                  <h1>Loading data. . .</h1>
+                </Col>
+              </Row>
+            </Container>
+          );
+        }
+      };
 
      const rightSwipe = () => {   
         const email = currentUser.email;
@@ -163,6 +176,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists}) => {
                     <Col md={7}>
                         <Form>
                             <h1>Stock Discover</h1>
+                            {loading()}
                              {/* <h5>ENTER STOCK TICKER(S)</h5>
                             <InputGroup>
                                 <Form.Control
