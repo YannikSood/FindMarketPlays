@@ -1,4 +1,4 @@
-import { RECEIVE_PROSPECT } from "../actions/prospects";
+import { RECEIVE_PROSPECT } from "../actions/prospect";
 
 const prospectReducer = (state = {}, action) => {
   Object.freeze(state);

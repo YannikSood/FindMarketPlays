@@ -37,6 +37,27 @@ MongoClient.connect(
   }
 );
 
+app.get('/prospects/:email/', (req, res) => {
+  let email = req.params.email;
+  MasterList.find({})
+    .toArray()
+    .then(masterRes => {
+      UserLists.find({ 'email': email })
+        .toArray()
+        .then(userRes => {
+          let infoArr = [];
+          let rightList = userRes[0].rightList;
+
+          rightList.forEach(idx => {
+            infoArr.push(masterRes[parseInt(idx)])
+          })
+          res.send({ info: infoArr })
+        })
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
+})
+
 //1) Generate the Lists upon Registration: 
 app.post("/stockDiscover/:email/register", async (req, res) => {
   let email = `${req.params.email}`;
@@ -113,41 +134,56 @@ app.post('/stockDiscover/:email/swipeLeft/:index', (req, res) => {
 //Should only generate on first successful login after publishing.
 app.post("/stockDiscover/:email/login", async (req, res) => {
   let email = `${req.params.email}`;
+
+  // // find user's lists
+
   UserLists.find({'email': email})
     .toArray()
     .then(userRes => {
+      console.log('here0')
+      
+// if the email exists in mongoDB, but there is no list, replace this object with lists
+// if the email does not exist, insert a new object into DB
+
+  // this code seems fine, but there WAS a bug that suddenly disappeared. Need time to see
+  // what this code is doing. This part is messy. Fix another time
+  // bug: replaced user lists with a brand new one, which clears leftList and rightList
       if (!userRes.masterList) {
         MasterList.find({})
           .toArray()
           .then((masterRes) => {
+            console.log("here1")
             let userLists = {
               email: email,
               masterList: new Array(masterRes.length),
               leftList: [],
               rightList: [],
             };
+          })
 
             UserLists.find({ email: email })
               .toArray()
               .then((findRes) => {
+                console.log('here2')
                 if (!findRes.length) {
+                  console.log('here4')
                   UserLists.insertOne(userLists);
-                  res.send({ message: userLists });
+                  res.send({ message: userLists, test:'test' });
                 } else {
                   UserLists.replaceOne({ email: email }, userLists)
                     .then((insertRes) => {
-                      console.log(insertRes);
-                      res.send({ message: insertRes.ops[0] });
+                      console.log('here5');
+                      res.send({ message: insertRes.ops[0], test1: 'test1' });
                     })
-                    .catch((err) => res.status(400).send(err));
+                    .catch((err) => res.status(400).send(err))
                 }
               })
-              .catch((err) => res.status(400).send(err));
-          })
-          .catch((err) => res.status(400).send(err));
-      } else {
-        console.log('Already initialized')
-      }
+              .catch((err) => res.status(400).send(err))
+          .catch((err) => res.status(400).send(err))
+        } else {
+          res.send( { message: userRes } )
+          console.log('Already initialized')
+        }
     })
     .catch(err => console.log('hello' + err))
 })
@@ -158,8 +194,6 @@ app.post("/stockDiscover/:email/login", async (req, res) => {
 //Plug the random number into Master List, and get the index # and stock ticker
 
 //Add the index # to the user ML // Add a flag at the same index
-
-
 
 app.get(`/stockDiscover/:email/fetch`, (req,res) => {
   //Get the user's database reference using email
@@ -190,6 +224,8 @@ app.get(`/stockDiscover/:email/fetch`, (req,res) => {
             
             userMasterL[num] = 0;
             userRes.masterList = userMasterL;
+
+            console.log(userRes)
 
             UserLists.replaceOne(
               {

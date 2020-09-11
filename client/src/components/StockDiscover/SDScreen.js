@@ -89,7 +89,10 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists}) => {
         })
             .then(swipeRes => {
                 const url = `/stockDiscover/${email}/fetch`;
+
+                // set to state, in case we ever need this data again
                 receiveUserLists(swipeRes.data.message);
+                
                 // get ticker from mongodb
                 Axios.get(url, {
                 headers: { "Content-Type": "application/json" }
@@ -241,7 +244,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists}) => {
     const mapDispatchToProps = (dispatch) => ({
         sendTicker: (ticker) => dispatch(receiveTicker(ticker)),
         resetResults: () => dispatch(receiveResults({})),
-        receiveUserLists: (userLists) => dispatch(receiveUserLists(userLists))
+        receiveUserLists: (userLists) => dispatch(receiveUserLists(userLists)),
     })
 
 

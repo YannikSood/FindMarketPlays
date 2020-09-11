@@ -5,15 +5,30 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { connect } from 'react-redux';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import ProspectsFlow from './ProspectsFlow';
+import Axios from "axios";
+import { debounce } from "../../helpers/SearchHelper";
 
-const Prospects = ({isAuthed, prospect}) => {
+const Prospects = ({isAuthed, prospect, currentUser}) => {
     const history = useHistory();
+    const [fetchedProspects, setFetchedProspects] = useState();
 
     useEffect(() => {
         if (!isAuthed) {
             history.push('/login')
+        } else {
+            const fetchData = () => { 
+              let url = `/prospects/${currentUser.email}/`
+              Axios.get(url, {
+                headers: { "Content-Type": "application/json" }
+              })
+                .then((res) => {
+                  setFetchedProspects(res.data.info);
+                })
+                .catch(err => console.log(err))
+            }
+            debounce(fetchData())
         }
     }, [])
 
@@ -27,25 +42,15 @@ const Prospects = ({isAuthed, prospect}) => {
             <Row>
               <h2>Data</h2>
             </Row>
+            {console.log("no" + prospect)}
             <Row>Company: {prospect.name}</Row>
             <Row>Symbol: {prospect.symbol}</Row>
+            <Row>
+              <Link to="/advancedOptionSearch">Unusual Options</Link>
+            </Row>
           </Col>
           <Col>
-            {/* <Row>My Matches</Row> */}
-            {/* {ProspectsFlow([
-                {name: "Apple",
-                symbol: "AAPL"
-                },
-                {name: "Tesla",
-                symbol: "TSLA"
-                }
-            ])} */}
-            <ProspectsFlow
-              value={[
-                { name: "Apple", symbol: "AAPL" },
-                { name: "Tesla", symbol: "TSLA" },
-              ]}
-            />
+            <ProspectsFlow value={fetchedProspects} />
           </Col>
         </Row>
       </Container>
@@ -54,7 +59,12 @@ const Prospects = ({isAuthed, prospect}) => {
 
 const MSTP = state => ({
     isAuthed: state.auth.isAuthed,
+    currentUser: state.auth.currentUser,
     prospect: state.prospect
 })
 
-export default connect(MSTP)(Prospects);
+const MDTP = (dispatch) => ({
+  // receiveProspect: (prospect) => dispatch(receiveProspect(prospect)),
+});
+
+export default connect(MSTP, MDTP)(Prospects);

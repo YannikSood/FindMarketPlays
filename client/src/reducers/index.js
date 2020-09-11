@@ -3,7 +3,6 @@ import authReducer from './authReducer';
 import noteReducer from './noteReducer';
 import errorsReducer from './errorsReducer';
 import advancedSearchReducer from './advancedSearchReducer';
-import sortReducer from './sortReducer';
 import stockDiscoverReducer from "./stockDiscoverReducer";
 import prospectReducer from './prospectReducer';
 
@@ -13,7 +12,6 @@ const rootReducer = combineReducers({
   note: noteReducer,
   errors: errorsReducer,
   advancedSearch: advancedSearchReducer,
-  sort: sortReducer,
   stockDiscover: stockDiscoverReducer,
   prospect: prospectReducer
 });
