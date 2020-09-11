@@ -15,12 +15,14 @@ import Axios from "axios";
 import SDFlow from './SDFlow';
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 import { userInfo } from 'os';
+import { current } from 'immer';
 
 // changed to send options as one object instead of an array to SDFlow because the return value of fetch is an object.
 // can change back to array depending on what we want (just wrap the object in a bracket) and uncomment
 // a few lines in SDFlow
-const SDScreen = ({isAuthed}) => {
+const SDScreen = ({isAuthed, currentUser}) => {
     const [searchedValue, setSearchedValue] = useState('AMZN');
+    const [nextTicker, setNextTicker] = useState(' ');
     const [options, setOptions] = useState({});
     
 
@@ -56,31 +58,65 @@ const SDScreen = ({isAuthed}) => {
      const rightSwipe = () => {
         
         // get the random ticker index from DB
-        const email = userInfo.email;
+        const email = currentUser.email;
         const url = `/stockDiscover/${email}/fetch`;
-        console.log(url);
+        console.log(url);//This gets Logged
 
         fetch(url, { headers: { Accept: 'application/json' } })
             .then(res => res.json()
                 .then((json) => {
-                    console.log(json.message);
-                    setSearchedValue(json.message || {}); 
+                    console.log(json); //This doesnt?
+
+                    // Get next url after getting the ticker here?
+                    
+                    // const url2 = `/getTicker/${json.message}`;
+                    // console.log(url2);
+                    // fetch(url2, { headers: { Accept: 'application/json' } })
+                    //     .then(res => res.json()
+                    //         .then((json) => {
+                    //             console.log(json.message);
+                    //             setOptions(json.message || {}); 
+            
+                    //         }))
+                    // .catch(err => console.log(err));
 
                 }))
         .catch(err => console.log(err));
         
         
         // get the ticker info from iEX 
-        const url2 = `/getTicker/${searchedValue}`;
-        console.log(url2);
-        fetch(url2, { headers: { Accept: 'application/json' } })
+       
+        
+    };
+
+    const leftSwipe = () => {
+        
+        // get the random ticker index from DB
+        const email = currentUser.email;
+        const url = `/stockDiscover/${email}/fetch`;
+        console.log(url);
+
+        fetch(url, { headers: { Accept: 'application/json' } })
             .then(res => res.json()
                 .then((json) => {
-                    console.log(json.message);
-                    setOptions(json.message || {}); 
+                    console.log(json);
+                    // const url2 = `/getTicker/${json.message}`;
+                    // console.log(url2);
+                    // fetch(url2, { headers: { Accept: 'application/json' } })
+                    //     .then(res => res.json()
+                    //         .then((json) => {
+                    //             console.log(json.message);
+                    //             setOptions(json.message || {}); 
+            
+                    //         }))
+                    // .catch(err => console.log(err));
 
                 }))
         .catch(err => console.log(err));
+        
+        
+        // get the ticker info from iEX 
+       
         
     };
 
@@ -139,8 +175,16 @@ const SDScreen = ({isAuthed}) => {
                 </Row>
 
                 <Row>
-                    <Button className="ml-2" onClick={(rightSwipe())} variant="outline-light"> Swipe Right Button</Button>
+                    <Button className="ml-2" onClick={() => rightSwipe()} variant="outline-light"> Swipe Right Button</Button>
                 </Row>
+
+                <Row>
+                    <Button className="ml-2" onClick={() => leftSwipe()} variant="outline-light"> Swipe Left Button</Button>
+                </Row>
+
+                {/* <Row>
+                    <Button className="ml-2" onClick={()} variant="outline-light"> More Info Button</Button>
+                </Row> */}
             </Container>
         </Fragment>
     );
@@ -148,13 +192,14 @@ const SDScreen = ({isAuthed}) => {
     
 
     const mapStateToProps = (state) => {
-        const { auth, advancedSearch, sort } = state;
+        const { auth, advancedSearch, sort, currentUser } = state;
     
         return {
             isAuthed: auth.isAuthed,
             results: advancedSearch.results,
-            sort: sort
-        };
+            sort: sort,
+            currentUser: auth.currentUser
+        }
     };
     
     const mapDispatchToProps = (dispatch) => ({
