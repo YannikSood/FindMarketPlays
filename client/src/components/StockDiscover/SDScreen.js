@@ -26,7 +26,6 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists}) => {
     const [ticker, setTicker] = useState();
     const [index, setIndex] = useState();
     const [options, setOptions] = useState({});
-    
 
     const history = useHistory();
 

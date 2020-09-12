@@ -37,17 +37,23 @@ MongoClient.connect(
   }
 );
 
+// receive prospect informations
 app.get('/prospects/:email/', (req, res) => {
   let email = req.params.email;
+
+  // get Master List
   MasterList.find({})
     .toArray()
     .then(masterRes => {
+
+      // get User lists
       UserLists.find({ 'email': email })
         .toArray()
         .then(userRes => {
           let infoArr = [];
           let rightList = userRes[0].rightList;
-
+          
+          // push information into array
           rightList.forEach(idx => {
             masterRes[parseInt(idx)].idx = idx;
             infoArr.push(masterRes[parseInt(idx)])
@@ -59,33 +65,35 @@ app.get('/prospects/:email/', (req, res) => {
     .catch(err => console.log(err))
 })
 
+// delete prospect
 app.delete("/prospects/:email/:idx", (req, res) => {
   let email = req.params.email;
   let idx = parseInt(req.params.idx, 10);
-  // console.log(typeof idx)
 
+  // get Master List
   MasterList.find({})
     .toArray()
     .then(masterRes => {
-      // console.log(masterRes[idx])
-      // masterRes[idx] = 2
 
+      // get User List
       UserLists.find({'email': email})
         .toArray()
         .then(userRes => {
+          // set index value of user's masterList to 2
           userRes[0].masterList[idx] = 2
-          // console.log(idx)
-          // console.log(userRes[0].rightList)
-          // console.log(userRes[0].rightList[idx])
 
-          // indexing into idx which is 1403, but rightList does not have index 1403
-          // find indexOf '1403'
+          // get index of rightList's idx value
           let rightIdx = userRes[0].rightList.indexOf(`${idx}`);
-          userRes[0].leftList.push(userRes[0].rightList[rightIdx]);
-          console.log(userRes[0].leftList)
-          userRes[0].rightList.splice(rightIdx, 1)
-          console.log(userRes[0].rightList)
 
+          // push rightList's stock index into leftList
+          userRes[0].leftList.push(userRes[0].rightList[rightIdx]);
+          // console.log(userRes[0].leftList)
+          
+          // cut out rightList's stock index
+          userRes[0].rightList.splice(rightIdx, 1)
+          // console.log(userRes[0].rightList)
+
+          // repalce the old object in DB with this updated one
           UserLists.replaceOne({'email': email}, userRes[0])
             .then(replaceRes => res.send( { message: replaceRes.ops[0].rightList } ))
             .catch(err => console.log(err))

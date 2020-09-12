@@ -6,23 +6,30 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Axios from "axios";
 
+
+// the table does not update after deleting clicking "Discard"
+// POSSIBLE SOLUTION: update the props given to it, or give it again after deleting a stock
+
+
 const ProspectsFlow = props => {
+    const [prospects, setProspects] = useState();
     const [prospect, setProspect] = useState();
-    let [deletedIdx, deletingIdx] = useState('deleted');
+    let [deletedIdx, deletingIdx] = useState('deleting');
 
-    useEffect(() => {
+    // useEffect(() => {
+    //   setProspects(props.value)
+    // })
 
-    }, [deletedIdx]) 
-
+    // handle Axios call to server on click of "Discard"
     const handleClick = (idx) => {
       let url = `prospects/${props.currentUser.email}/${idx}`;
-      // console.log(deletedIdx);
       Axios.delete(url, {
         headers: { "Content-Type": "application/json" }
       })
       .then(res => {
-        deletingIdx('deleted');
-        // console.log(deletedIdx);
+        console.log(res);
+        setProspects(res.data.message);
+        // take the array of data and pass it BACK to the table??
       })
       .catch(err => console.log(err))
     }
@@ -39,7 +46,12 @@ const ProspectsFlow = props => {
             {props.value.map(company => (
               <tr key={`${company.idx}`}>
                   <td onClick={() => props.receiveProspect(company)}>{company.name}</td>
-                  <td onClick={() => handleClick(company.idx)} >Discard</td>
+                  <td onClick={() => 
+                    {
+                      handleClick(company.idx)
+                      // deletingIdx(company.idx)
+                    }} 
+                    >Discard</td>
               </tr>
           ))}
           </tbody>
