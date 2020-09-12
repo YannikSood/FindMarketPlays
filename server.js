@@ -49,9 +49,47 @@ app.get('/prospects/:email/', (req, res) => {
           let rightList = userRes[0].rightList;
 
           rightList.forEach(idx => {
+            masterRes[parseInt(idx)].idx = idx;
             infoArr.push(masterRes[parseInt(idx)])
           })
           res.send({ info: infoArr })
+        })
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
+})
+
+app.delete("/prospects/:email/:idx", (req, res) => {
+  let email = req.params.email;
+  let idx = parseInt(req.params.idx, 10);
+  // console.log(typeof idx)
+
+  MasterList.find({})
+    .toArray()
+    .then(masterRes => {
+      // console.log(masterRes[idx])
+      // masterRes[idx] = 2
+
+      UserLists.find({'email': email})
+        .toArray()
+        .then(userRes => {
+          userRes[0].masterList[idx] = 2
+          // console.log(idx)
+          // console.log(userRes[0].rightList)
+          // console.log(userRes[0].rightList[idx])
+
+          // indexing into idx which is 1403, but rightList does not have index 1403
+          // find indexOf '1403'
+          let rightIdx = userRes[0].rightList.indexOf(`${idx}`);
+          userRes[0].leftList.push(userRes[0].rightList[rightIdx]);
+          console.log(userRes[0].leftList)
+          userRes[0].rightList.splice(rightIdx, 1)
+          console.log(userRes[0].rightList)
+
+          UserLists.replaceOne({'email': email}, userRes[0])
+            .then(replaceRes => res.send( { message: replaceRes.ops[0].rightList } ))
+            .catch(err => console.log(err))
+
         })
         .catch(err => console.log(err))
     })
@@ -135,20 +173,9 @@ app.post('/stockDiscover/:email/swipeLeft/:index', (req, res) => {
 app.post("/stockDiscover/:email/login", async (req, res) => {
   let email = `${req.params.email}`;
 
-  // // find user's lists
+  // // find master list
 
-  UserLists.find({'email': email})
-    .toArray()
-    .then(userRes => {
-      console.log('here0')
-      
-// if the email exists in mongoDB, but there is no list, replace this object with lists
-// if the email does not exist, insert a new object into DB
-
-  // this code seems fine, but there WAS a bug that suddenly disappeared. Need time to see
-  // what this code is doing. This part is messy. Fix another time
-  // bug: replaced user lists with a brand new one, which clears leftList and rightList
-      if (!userRes.masterList) {
+  // if (!userRes.masterList) {
         MasterList.find({})
           .toArray()
           .then((masterRes) => {
@@ -159,33 +186,34 @@ app.post("/stockDiscover/:email/login", async (req, res) => {
               leftList: [],
               rightList: [],
             };
-          })
 
+            // find user lists
             UserLists.find({ email: email })
               .toArray()
               .then((findRes) => {
                 console.log('here2')
+
+                // if no email found in MongoDB, create an object in DB
                 if (!findRes.length) {
                   console.log('here4')
                   UserLists.insertOne(userLists);
                   res.send({ message: userLists, test:'test' });
-                } else {
+                } else if (findRes.length && !findRes[0].masterList) {
+                  console.log(findRes)
+                  // if email is found in MongoDB, but you dont have any lists
                   UserLists.replaceOne({ email: email }, userLists)
                     .then((insertRes) => {
                       console.log('here5');
-                      res.send({ message: insertRes.ops[0], test1: 'test1' });
+                      res.send({ message: insertRes.ops[0]});
                     })
                     .catch((err) => res.status(400).send(err))
                 }
               })
               .catch((err) => res.status(400).send(err))
+
+          })
+
           .catch((err) => res.status(400).send(err))
-        } else {
-          res.send( { message: userRes } )
-          console.log('Already initialized')
-        }
-    })
-    .catch(err => console.log('hello' + err))
 })
 
 //Get the user's database reference using email

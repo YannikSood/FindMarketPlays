@@ -42,7 +42,7 @@ const Prospects = ({isAuthed, prospect, currentUser}) => {
             <Row>
               <h2>Data</h2>
             </Row>
-            {console.log("no" + prospect)}
+            {console.log(prospect)}
             <Row>Company: {prospect.name}</Row>
             <Row>Symbol: {prospect.symbol}</Row>
             <Row>
