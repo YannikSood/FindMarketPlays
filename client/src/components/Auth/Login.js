@@ -23,6 +23,26 @@ const Login = ({ isAuthed }) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
+  const handleCounter = (user) => {
+    const ref = firebase.database().ref(`users/${user.id}`)
+    const data;
+    ref.on('value', function(snapshot) {
+      data = snapshot.val();
+    })
+
+    if (!data) {
+      // create an object in DB that holds counter and time
+      database.ref(`users/${user.id}`).set({
+        id: user.id,
+        counter: 0,
+        time: null
+      })
+    }
+
+    // set data to state
+
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const { email, password } = credentials;
