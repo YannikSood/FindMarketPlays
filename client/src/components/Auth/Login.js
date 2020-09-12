@@ -40,6 +40,7 @@ const Login = ({ isAuthed }) => {
     }
 
     // set data to state
+    // needs reducer and actions
 
   }
 
