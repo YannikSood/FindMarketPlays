@@ -2,7 +2,7 @@
 body,
 #root {
   min-height: 100vh;
-  background-color: #000000;
+  background-color: #1E1E1E;
   color: white;
 }
 
@@ -134,7 +134,7 @@ a:hover {
 }
 
 .research-card {
-  background-color: #23272A;
+  background-color: #004545;
   border-bottom: 1px solid #FFFFFF;
   border-radius: 1px
 }
