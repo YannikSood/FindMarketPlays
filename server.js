@@ -178,6 +178,35 @@ app.post('/stockDiscover/:email/swipeLeft/:index', (req, res) => {
 
 //2) Generate the Lists upon next successful Login.
 //Should only generate on first successful login after publishing.
+
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// I noticed that sometimes, rightList receives an undefined value instead of an index
+// this causes an error that says it cannot do something of "idx of undefined"
+// To temporarily ignore this, delete the user in MongoDB's UserLists DB
+// Log in again to regenerate a new list
 app.post("/stockDiscover/:email/login", async (req, res) => {
   let email = `${req.params.email}`;
 
