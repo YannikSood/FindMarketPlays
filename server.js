@@ -37,6 +37,73 @@ MongoClient.connect(
   }
 );
 
+// receive prospect informations
+app.get('/prospects/:email/', (req, res) => {
+  let email = req.params.email;
+
+  // get Master List
+  MasterList.find({})
+    .toArray()
+    .then(masterRes => {
+
+      // get User lists
+      UserLists.find({ 'email': email })
+        .toArray()
+        .then(userRes => {
+          let infoArr = [];
+          let rightList = userRes[0].rightList;
+          
+          // push information into array
+          rightList.forEach(idx => {
+            masterRes[parseInt(idx)].idx = idx;
+            infoArr.push(masterRes[parseInt(idx)])
+          })
+          res.send({ info: infoArr })
+        })
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
+})
+
+// delete prospect
+app.delete("/prospects/:email/:idx", (req, res) => {
+  let email = req.params.email;
+  let idx = parseInt(req.params.idx, 10);
+
+  // get Master List
+  MasterList.find({})
+    .toArray()
+    .then(masterRes => {
+
+      // get User List
+      UserLists.find({'email': email})
+        .toArray()
+        .then(userRes => {
+          // set index value of user's masterList to 2
+          userRes[0].masterList[idx] = 2
+
+          // get index of rightList's idx value
+          let rightIdx = userRes[0].rightList.indexOf(`${idx}`);
+
+          // push rightList's stock index into leftList
+          userRes[0].leftList.push(userRes[0].rightList[rightIdx]);
+          // console.log(userRes[0].leftList)
+          
+          // cut out rightList's stock index
+          userRes[0].rightList.splice(rightIdx, 1)
+          // console.log(userRes[0].rightList)
+
+          // repalce the old object in DB with this updated one
+          UserLists.replaceOne({'email': email}, userRes[0])
+            .then(replaceRes => res.send( { message: replaceRes.ops[0].rightList } ))
+            .catch(err => console.log(err))
+
+        })
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
+})
+
 //1) Generate the Lists upon Registration: 
 app.post("/stockDiscover/:email/register", async (req, res) => {
   let email = `${req.params.email}`;
@@ -111,31 +178,79 @@ app.post('/stockDiscover/:email/swipeLeft/:index', (req, res) => {
 
 //2) Generate the Lists upon next successful Login.
 //Should only generate on first successful login after publishing.
+
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
+// I noticed that sometimes, rightList receives an undefined value instead of an index
+// this causes an error that says it cannot do something of "idx of undefined"
+// To temporarily ignore this, delete the user in MongoDB's UserLists DB
+// Log in again to regenerate a new list
 app.post("/stockDiscover/:email/login", async (req, res) => {
   let email = `${req.params.email}`;
-  UserLists.find({'email': email})
-    .toArray()
-    .then(userRes => {
-      if (!userRes.masterList) {
+
+  // // find master list
+
+  // if (!userRes.masterList) {
         MasterList.find({})
           .toArray()
-          .then(masterRes => {
+          .then((masterRes) => {
+            console.log("here1")
             let userLists = {
               email: email,
               masterList: new Array(masterRes.length),
               leftList: [],
-              rightList: []
-            }
-            UserLists.replaceOne({'email': email}, userLists)
-              .then((insertRes) => res.send({ message: insertRes.ops[0] }))
-              .catch((err) => res.send({ err: err }))
+              rightList: [],
+            };
+
+            // find user lists
+            UserLists.find({ email: email })
+              .toArray()
+              .then((findRes) => {
+                console.log('here2')
+
+                // if no email found in MongoDB, create an object in DB
+                if (!findRes.length) {
+                  console.log('here4')
+                  UserLists.insertOne(userLists);
+                  res.send({ message: userLists, test:'test' });
+                } else if (findRes.length && !findRes[0].masterList) {
+                  console.log(findRes)
+                  // if email is found in MongoDB, but you dont have any lists
+                  UserLists.replaceOne({ email: email }, userLists)
+                    .then((insertRes) => {
+                      console.log('here5');
+                      res.send({ message: insertRes.ops[0]});
+                    })
+                    .catch((err) => res.status(400).send(err))
+                }
+              })
+              .catch((err) => res.status(400).send(err))
+
           })
-          .catch(err => res.send({ erro: err }))
-      } else {
-        console.log('Already initialized')
-      }
-    })
-    .catch(err => console.log(err))
+
+          .catch((err) => res.status(400).send(err))
 })
 
 //Get the user's database reference using email
@@ -144,8 +259,6 @@ app.post("/stockDiscover/:email/login", async (req, res) => {
 //Plug the random number into Master List, and get the index # and stock ticker
 
 //Add the index # to the user ML // Add a flag at the same index
-
-
 
 app.get(`/stockDiscover/:email/fetch`, (req,res) => {
   //Get the user's database reference using email
@@ -176,6 +289,8 @@ app.get(`/stockDiscover/:email/fetch`, (req,res) => {
             
             userMasterL[num] = 0;
             userRes.masterList = userMasterL;
+
+            console.log(userRes)
 
             UserLists.replaceOne(
               {
