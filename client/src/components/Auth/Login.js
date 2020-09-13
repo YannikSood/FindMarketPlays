@@ -8,34 +8,62 @@ import firebase from '../../firebase/firebase';
 import { receiveUser } from '../../reducers/authReducer';
 import LoginErrors from '../Errors/LoginErrors';
 import Axios from "axios";
+import { receiveUserInfo } from '../../actions/userInfo';
 
-const Login = ({ isAuthed }) => {
+const Login = ({ isAuthed, receiveUserInfo, currentUser }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const [loginErrors, setErrors] = useState({});
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    if (isAuthed) history.push('/market');
+    if (isAuthed) history.push('/market')
   }, [isAuthed, history]);
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
+  const fetchCounter = (uid) => {
+    const ref = firebase.database().ref(`users/${uid}`);
+    // const database = firebase.database()
+    // .ref(`users/${user.id}`);
+    let data = null;
+    
+    ref.once('value')
+      .then(snapshot => {
+        console.log(snapshot.val())
+        data = snapshot.val()
+      })
+    if (!data) {
+      // create an object in DB that holds counter and time
+      data = {
+        id: uid,
+        counter: 0,
+        time: 0,
+      };
+      ref.set(data);
+    }
+
+    // set data to state
+    // needs reducer and actions
+
+    receiveUserInfo(data);
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const { email, password } = credentials;
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((user) => {
+      .then((res) => {
         let url = `/stockDiscover/${email}/login`
         Axios.post(url, {
           headers: { "Content-Type": "application/json" }
         })
         .then(res => console.log(res))
         .catch(err => console.log(err))
-
-        dispatch(receiveUser(user));
+        fetchCounter(res.user.uid)
+        dispatch(receiveUser(res));
       })
       .catch((error) => {
         // Handle Errors here.
@@ -105,6 +133,11 @@ const mapStateToProps = (state) => {
 
   return {
     isAuthed: auth.isAuthed,
+    currentUser: auth.currentUser
   };
 };
-export default connect(mapStateToProps)(withRouter(Login));
+
+const mapDispatchToProps = dispatch => ({
+  receiveUserInfo: (userInfo) => dispatch(receiveUserInfo(userInfo))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

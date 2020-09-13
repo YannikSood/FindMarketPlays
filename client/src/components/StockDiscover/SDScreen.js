@@ -15,13 +15,15 @@ import Axios from "axios";
 import SDFlow from './SDFlow';
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 import { receiveUserLists } from '../../actions/stockDiscover';
-import { userInfo } from 'os';
+import { receiveUserInfo } from '../../actions/userInfo';
+// import { userInfo } from 'os';
 import { current } from 'immer';
+import firebase from "../../firebase/firebase";
 
 // changed to send options as one object instead of an array to SDFlow because the return value of fetch is an object.
 // can change back to array depending on what we want (just wrap the object in a bracket) and uncomment
 // a few lines in SDFlow
-const SDScreen = ({isAuthed, currentUser, receiveUserLists}) => {
+const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUserInfo}) => {
     const [loader, setLoader] = useState(true);
     const [ticker, setTicker] = useState();
     const [index, setIndex] = useState();
@@ -78,74 +80,111 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists}) => {
         }
       };
 
+      const serverCall = (swipeUrl, email) => {
+        Axios.post(swipeUrl, {
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((swipeRes) => {
+            const url = `/stockDiscover/${email}/fetch`;
+
+            // set to state, in case we ever need this data again
+            receiveUserLists(swipeRes.data.message);
+
+            // get ticker from mongodb
+            Axios.get(url, {
+              headers: { "Content-Type": "application/json" },
+            })
+              .then((res) => {
+                setTicker(res.data.message);
+                setIndex(res.data.index);
+                const url2 = `/getTicker/${res.data.message}`;
+                Axios.get(url2, {
+                  // get ticker data from iex
+                  headers: { "Content-Type": "application/json" },
+                })
+                  .then((res2) => {
+                    setOptions(res2.data.message || {});
+                  })
+                  .catch((err) => console.log(err));
+              })
+              .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err));
+      };
+
      const rightSwipe = () => {   
         const email = currentUser.email;
         const swipeUrl = `/stockDiscover/${email}/swipeRight/${index}`;
+        let counter = userInfo.counter;
+        let time = userInfo.time;
 
-        // swipe server call
-        Axios.post(swipeUrl, {
-          headers: { "Content-Type": "application/json" }
-        })
-            .then(swipeRes => {
-                const url = `/stockDiscover/${email}/fetch`;
+        // remember to update the counter in state and database
+        
+        // check if timer is up
+        
+        if (counter < 40 && time === 0) {
+            counter += 1;
+            time = 0;
+            // swipe server call
+            serverCall(swipeUrl, email);
+                  
+        } else if (counter >= 40 && time === 0) {
+          let currentTime = Date.now();
+          let nextTime = currentTime + 4 * 60 * 60 * 1000;
 
-                // set to state, in case we ever need this data again
-                receiveUserLists(swipeRes.data.message);
-                
-                // get ticker from mongodb
-                Axios.get(url, {
-                headers: { "Content-Type": "application/json" }
-                })
-                    .then(res => {
-                            setTicker(res.data.message);
-                            setIndex(res.data.index);
-                            const url2 = `/getTicker/${res.data.message}`;
-                            Axios.get(url2, {
-                                // get ticker data from iex
-                                headers: { "Content-Type": "application/json" }
-                            })
-                                .then(res2 => {
-                                    setOptions(res2.data.message || {})
-                                })
-                                .catch(err => console.log(err))
-                    })
-                    .catch(err => console.log(err))  
-                })
-                .catch(err => console.log(err))          
+          time = nextTime;
+        } else if (Date.now() >= time) {
+          serverCall(swipeUrl, email);
+          time = 0;
+          counter = 1;
+        } else if (time != 0) {
+          return;
+        } 
+
+        // update state here
+        let newUserInfo = {
+            counter: counter, 
+            id: userInfo.id,
+            time: time
+        }
+        receiveUserInfo(newUserInfo);
+        firebase.database().ref(`users/${currentUser.id}`).set(newUserInfo);
     };
 
     const leftSwipe = () => {
         const email = currentUser.email;
         const swipeUrl = `/stockDiscover/${email}/swipeLeft/${index}`;
+        let counter = userInfo.counter;
+        let time = userInfo.time;
 
-        // swipe server call
-        Axios.post(swipeUrl, {
-          headers: { "Content-Type": "application/json" }
-        })
-            .then(swipeRes => {
-                const url = `/stockDiscover/${email}/fetch`;
-                Axios.get(url, {
-                // get the random ticker index from DB
-                headers: { "Content-Type": "application/json" },
-                })
-                .then((res) => {
-                    setTicker(res.data.message);
-                    setIndex(res.data.index);
-                    const url2 = `/getTicker/${res.data.message}`;
-                    Axios.get(url2, {
-                    // get ticker info from iex
-                    headers: { "Content-Type": "application/json" },
-                    })
-                    .then((res2) => {
-                        setOptions(res2.data.message || {});
-                    })
-                    .catch((err) => console.log(err));
-                })
-                .catch((err) => console.log(err));     
-            })
-            .catch(err => console.log(err));
         
+        if (counter < 40 && time === 0) {
+            counter += 1;
+            time = 0;
+            // swipe server call
+            serverCall(swipeUrl, email);
+                  
+        } else if (counter >= 40 && time === 0) {
+          let currentTime = Date.now();
+          let nextTime = currentTime + 4 * 60 * 60 * 1000;
+
+          time = nextTime;
+        } else if (Date.now() >= time) {
+          serverCall(swipeUrl, email);
+          time = 0;
+          counter = 1;
+        } else if (time != 0) {
+          return;
+        } 
+
+        let newUserInfo = {
+            counter: counter,
+            id: userInfo.id,
+            time: time,
+        };
            
+        receiveUserInfo(newUserInfo);
+        firebase.database().ref(`users/${currentUser.id}`).set(newUserInfo);
     };
 
     // const showErr = () => {
@@ -230,13 +269,14 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists}) => {
     
 
     const mapStateToProps = (state) => {
-        const { auth, advancedSearch, sort, currentUser } = state;
+        const { auth, advancedSearch, sort, userInfo } = state;
     
         return {
             isAuthed: auth.isAuthed,
             results: advancedSearch.results,
             sort: sort,
-            currentUser: auth.currentUser
+            currentUser: auth.currentUser,
+            userInfo: userInfo
         }
     };
     
@@ -244,6 +284,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists}) => {
         sendTicker: (ticker) => dispatch(receiveTicker(ticker)),
         resetResults: () => dispatch(receiveResults({})),
         receiveUserLists: (userLists) => dispatch(receiveUserLists(userLists)),
+        receiveUserInfo: userInfo => dispatch(receiveUserInfo(userInfo))
     })
 
 

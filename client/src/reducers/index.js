@@ -5,6 +5,7 @@ import errorsReducer from './errorsReducer';
 import advancedSearchReducer from './advancedSearchReducer';
 import stockDiscoverReducer from "./stockDiscoverReducer";
 import prospectReducer from './prospectReducer';
+import userInfoReducer from './userInfoReducer';
 
 
 const rootReducer = combineReducers({
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   errors: errorsReducer,
   advancedSearch: advancedSearchReducer,
   stockDiscover: stockDiscoverReducer,
-  prospect: prospectReducer
+  prospect: prospectReducer,
+  userInfo: userInfoReducer
 });
 
 export default rootReducer;
