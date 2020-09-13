@@ -45,7 +45,7 @@ const NavigationAuth = (location) => {
               firebase.auth().signOut();
               history.push('/')
               setSB(false)
-              }} to="/profile">Sign Out</Link></MenuItem>
+              }} to="/">Sign Out</Link></MenuItem>
           </Menu>
         </ProSidebar>
       )
