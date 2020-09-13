@@ -19,6 +19,7 @@ import { receiveUserInfo } from '../../actions/userInfo';
 // import { userInfo } from 'os';
 import { current } from 'immer';
 import firebase from "../../firebase/firebase";
+import SwipeErrors from '../Errors/SwipeErrors';
 
 // changed to send options as one object instead of an array to SDFlow because the return value of fetch is an object.
 // can change back to array depending on what we want (just wrap the object in a bracket) and uncomment
@@ -28,6 +29,9 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
     const [ticker, setTicker] = useState();
     const [index, setIndex] = useState();
     const [options, setOptions] = useState({});
+    const [errors, setErrors] = useState(false);
+    const waitTime = 4 * 60 * 60 * 1000;
+    let limit = 40;
 
     const history = useHistory();
 
@@ -113,6 +117,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
       };
 
      const rightSwipe = () => {   
+       console.log(errors)
         const email = currentUser.email;
         const swipeUrl = `/stockDiscover/${email}/swipeRight/${index}`;
         let counter = userInfo.counter;
@@ -122,23 +127,30 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         
         // check if timer is up
         
-        if (counter < 40 && time === 0) {
+        if (counter < limit && time === 0) {
             counter += 1;
             time = 0;
             // swipe server call
             serverCall(swipeUrl, email);
-                  
-        } else if (counter >= 40 && time === 0) {
-          let currentTime = Date.now();
-          let nextTime = currentTime + 4 * 60 * 60 * 1000;
-
-          time = nextTime;
+            
+        } else if (counter >= limit && time === 0) {
+            let currentTime = Date.now();
+            let nextTime = currentTime + waitTime;
+            // set error in state
+            setErrors(true)
+            time = nextTime;
+            
         } else if (Date.now() >= time) {
-          serverCall(swipeUrl, email);
-          time = 0;
-          counter = 1;
+            serverCall(swipeUrl, email);
+            time = 0;
+            counter = 1;
+            setErrors(false);
+            
         } else if (time != 0) {
-          return;
+            // set error in state
+            setErrors(true);
+            
+            return;
         } 
 
         // update state here
@@ -147,6 +159,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
             id: userInfo.id,
             time: time
         }
+        
         receiveUserInfo(newUserInfo);
         firebase.database().ref(`users/${currentUser.id}`).set(newUserInfo);
     };
@@ -158,23 +171,29 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         let time = userInfo.time;
 
         
-        if (counter < 40 && time === 0) {
+        if (counter < limit && time === 0) {
             counter += 1;
             time = 0;
             // swipe server call
             serverCall(swipeUrl, email);
-                  
-        } else if (counter >= 40 && time === 0) {
-          let currentTime = Date.now();
-          let nextTime = currentTime + 4 * 60 * 60 * 1000;
+            
+        } else if (counter >= limit && time === 0) {
+            let currentTime = Date.now();
+            let nextTime = currentTime + waitTime;
 
-          time = nextTime;
+            time = nextTime;
+            setErrors(true);
+            
         } else if (Date.now() >= time) {
-          serverCall(swipeUrl, email);
-          time = 0;
-          counter = 1;
+            serverCall(swipeUrl, email);
+            time = 0;
+            counter = 1;
+            setErrors(false);
+            
         } else if (time != 0) {
-          return;
+            setErrors(true);
+            
+            return;
         } 
 
         let newUserInfo = {
@@ -187,11 +206,11 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         firebase.database().ref(`users/${currentUser.id}`).set(newUserInfo);
     };
 
-    // const showErr = () => {
-    //     if (!Object.values(options).length) {
-    //         return SymbolErrors()
-    //     }
-    // }
+    const showErr = () => {
+        if (errors) {
+            return SwipeErrors()
+        }
+    }
 
     const showFlow = () => {
         if (ticker && Object.keys(options).length) {
@@ -203,12 +222,6 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         }
     }
 
-
-    // Handlers
-    // const handleInputChange = (event) => {
-    //     setTicker(event.target.value.toUpperCase());
-    // }
-
     return (
         <Fragment>
             <ScrollingWidget className="scrolling"/>
@@ -218,18 +231,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                         <Form>
                             <h1>Stock Discover</h1>
                             {loading()}
-                             {/* <h5>ENTER STOCK TICKER(S)</h5>
-                            <InputGroup>
-                                <Form.Control
-                                    type="text"
-                                    value={ticker}
-                                    onChange={handleInputChange}
-                                    placeholder="GOOGL"
-                                    onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
-                                />
-                            </InputGroup> */}
                         </Form>
-                        {/* {showErr()} */}
                     </Col>
                 </Row>
                 <Row>
@@ -257,7 +259,9 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                         </Row>
                     </Col>
                 </Row>
-
+                <Row>
+                  {showErr()}
+                </Row>
 
                 {/* <Row>
                     <Button className="ml-2" onClick={()} variant="outline-light"> More Info Button</Button>
