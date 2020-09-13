@@ -18,6 +18,9 @@ import { receiveUserLists } from '../../actions/stockDiscover';
 import { receiveUserInfo } from '../../actions/userInfo';
 // import { userInfo } from 'os';
 import { current } from 'immer';
+import Card from 'react-bootstrap/Card'
+import ListGroup from 'react-bootstrap/ListGroup'
+import ListGroupItem from 'react-bootstrap/ListGroupItem'
 import firebase from "../../firebase/firebase";
 
 // changed to send options as one object instead of an array to SDFlow because the return value of fetch is an object.
@@ -28,6 +31,8 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
     const [ticker, setTicker] = useState();
     const [index, setIndex] = useState();
     const [options, setOptions] = useState({});
+    const [company, setCompany] = useState({});
+    const [companyLogo, setCompanyLogo] = useState({});
 
     const history = useHistory();
 
@@ -55,10 +60,35 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                           .then((res) =>
                             res.json().then((json) => {
                               setOptions(json.message || {});
-                              setLoader(false);
                             })
                           )
                           .catch((err) => console.log(err));
+
+                        //Get company info
+                        const url3 = `/getCompany/${res.data.message}`;
+                        fetch(url3, {
+                        headers: { "Content-Type": "application/json" },
+                        })
+                        .then((res2) =>
+                            res2.json().then((json) => {
+                            setCompany(json.message || {});
+                            setLoader(false);
+                            })
+                        )
+                        .catch((err) => console.log(err));
+
+                        const url4 = `/getLogo/${res.data.message}`;
+                        fetch(url4, {
+                        headers: { "Content-Type": "application/json" },
+                        })
+                        .then((res2) =>
+                            res2.json().then((json) => {
+                            console.log("logo:" + json);
+                            setCompanyLogo(json.message || {});
+                            setLoader(false);
+                            })
+                        )
+                        .catch((err) => console.log(err));
                     })
                     .catch(err => console.log(err))
             };
@@ -106,6 +136,18 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                     setOptions(res2.data.message || {});
                   })
                   .catch((err) => console.log(err));
+
+                // const url3 = `/getCompany/${res.data.message}`;
+                // Axios.get(url3, {
+                //     headers: { "Content-Type": "application/json" },
+                // })
+                // .then((res3) => {
+                //     console.log("company: " + res3.data.message)
+                //     setCompany(res3.data.message || {});
+                    
+                //     setLoader(false);
+                // })
+                // .catch((err) => console.log(err));
               })
               .catch((err) => console.log(err));
           })
@@ -197,7 +239,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         if (ticker && Object.keys(options).length) {
             return (
                 <Container>
-                    <SDFlow value={options} />
+                    <SDFlow value={options} companyInfo={company} logo={companyLogo}/>
                 </Container>
             )
         }
@@ -211,35 +253,30 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
 
     return (
         <Fragment>
-            <ScrollingWidget className="scrolling"/>
+            {/* <ScrollingWidget className="scrolling"/> */}
             <Container>
-                <Row className="widget__wrapper">
-                    <Col md={7}>
-                        <Form>
+                {/* <Row className="widget__wrapper"> */}
+                    <Col md={6}>
                             <h1>Stock Discover</h1>
-                            {loading()}
-                             {/* <h5>ENTER STOCK TICKER(S)</h5>
-                            <InputGroup>
-                                <Form.Control
-                                    type="text"
-                                    value={ticker}
-                                    onChange={handleInputChange}
-                                    placeholder="GOOGL"
-                                    onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
-                                />
-                            </InputGroup> */}
-                        </Form>
-                        {/* {showErr()} */}
                     </Col>
-                </Row>
+
+                    {loading()}
+                {/* </Row> */}
                 <Row>
-                    {showFlow()}
-                    <TradingViewWidget
-                        symbol={ticker}
-                        theme={Themes.DARK}
-                        locale="en"
-                        autosize
-                    />
+                    <Col className="widget__col">
+           
+                        {showFlow()}
+
+                    </Col>
+
+                    <Col className="widget__col">
+                        <TradingViewWidget
+                            symbol={ticker}
+                            theme={Themes.DARK}
+                            locale="en"
+                            autosize
+                        />
+                    </Col>
                 </Row>
 
                 <Row>

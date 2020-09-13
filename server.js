@@ -337,6 +337,44 @@ app.get("/getTicker/:ticker", async (req, res) => {
   res.send({ message: tempJSON });
 });
 
+//Get company info from iEX
+app.get("/getCompany/:ticker", async (req, res) => {
+  var tempJSON = [];
+  const searchString = `${req.params.ticker}`;
+  const url = `https://cloud.iexapis.com/stable/stock/${searchString}/company?token=pk_390da679d1534216a7b33daf33f4f142 `;
+
+  await fetch(url, { headers: { Accept: 'application/json' } })
+  .then(res => res.json()
+  .then((json) => {
+      
+      tempJSON = json;
+      // console.log(tempJSON); 
+  }))
+  .catch(err => console.error(err)); // eslint-disable-line
+  
+  
+  res.send({ message: tempJSON });
+});
+
+//Get company logo info from iEX
+app.get("/getLogo/:ticker", async (req, res) => {
+  var tempJSON = [];
+  const searchString = `${req.params.ticker}`;
+  const url = `https://cloud.iexapis.com/stable/stock/${searchString}/logo?token=pk_390da679d1534216a7b33daf33f4f142 `;
+
+  await fetch(url, { headers: { Accept: 'application/json' } })
+  .then(res => res.json()
+  .then((json) => {
+      
+      tempJSON = json;
+      console.log(tempJSON); 
+  }))
+  .catch(err => console.error(err)); // eslint-disable-line
+  
+  
+  res.send({ message: tempJSON });
+});
+
 app.get('/betweenSearch/:fromDate/:toDate/:ticker', async (req, res) => {
   let tempJSON = [];
   const fromDate = `${req.params.fromDate}`;
