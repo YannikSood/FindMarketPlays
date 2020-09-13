@@ -18,6 +18,14 @@ const Register = ({ isAuthed }) => {
     if (isAuthed) history.push('/market');
   }, [isAuthed, history]);
 
+  const checkURL = () => {
+    let arr = window.location.href.split('/');
+
+    
+
+    console.log(arr[arr.length - 1])
+  }
+
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
@@ -50,6 +58,7 @@ const Register = ({ isAuthed }) => {
         </Row>
         <Row>
           <Col>
+          {checkURL()}
             {RegisterErrors(registerErrors)}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formBasicEmail">

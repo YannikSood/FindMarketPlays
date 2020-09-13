@@ -101,6 +101,10 @@ const App = () => {
                     <Prospects/>
                   </Route>
 
+                  <Route exact path={ROUTES.SHARE_LINK}>
+                    <Register/>
+                  </Route>
+
                   <Route path={ROUTES.LOGIN}>
                     <Login />
                   </Route>

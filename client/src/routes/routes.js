@@ -21,5 +21,6 @@ export const TOS = "/tos";
 export const STOCK_DISCOVER = "/stockDiscover"
 export const SD_SCREEN = "/sdScreen";
 export const PROSPECTS = '/prospects';
+export const SHARE_LINK = '/register/:email'
 
 
