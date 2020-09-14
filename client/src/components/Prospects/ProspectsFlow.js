@@ -21,9 +21,11 @@ const ProspectsFlow = props => {
         headers: { "Content-Type": "application/json" }
       })
       .then(res => {
+        // sets state to re-render prospects table
+        props.receiveDeletingProspect(true)
+
         // set deleted prospect to state so that the prospects component 
         // knows to re-fetch data for table
-        props.receiveDeletingProspect(true)
         props.receiveDeletedProspect(res.data.message);
       })
       .catch(err => console.log(err))
@@ -40,8 +42,8 @@ const ProspectsFlow = props => {
           <tbody >
             {props.value.map(company => (
               <tr key={`${company.idx}`}>
-                  <td onClick={() => props.receiveProspect(company)}>{company.name}</td>
-                  <td onClick={() => 
+                  <td id="row" onClick={() => props.receiveProspect(company)}>{company.name}</td>
+                  <td id="row" onClick={() => 
                     {
                       handleClick(company.idx)
                     }} 

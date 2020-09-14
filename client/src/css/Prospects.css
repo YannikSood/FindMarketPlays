@@ -12,6 +12,11 @@
     border: 1px white solid;
 }
 
+#row:hover {
+    cursor: pointer;
+    background: #1a1a1a
+}
+
 .prospectUO {
     color: #4d94ff;
     text-decoration: underline;
