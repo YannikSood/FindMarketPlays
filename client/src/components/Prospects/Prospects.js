@@ -48,27 +48,52 @@ const Prospects = ({isAuthed, prospect, currentUser, deletedProspect, receivePro
       receiveProspectUO(prospect.symbol);
     }
 
-    return (
-      <Container>
-        <Row className="d-flex justify-content-center mb-5">
-          <h1>Prospects</h1>
-        </Row>
-        <Row>
-          <Col>
-            <Row>
-              <h2>Data</h2>
-            </Row>
-            <Row>Company: {prospect.name}</Row>
-            <Row>Symbol: {prospect.symbol}</Row>
-            <Row>
+    const displayData = () => {
+      console.log(prospect)
+      if (Object.keys(prospect).length) {
+        return (
+          <Col id="data-col">
+            <Row className="p-2">{prospect.name}</Row>
+            <Row className="p-2">{prospect.symbol}</Row>
+            <Row className="p-2">
               <Link
+                className="prospectUO"
                 onClick={() => handleClick(prospect)}
                 to="/basicOptionSearch"
               >
                 Unusual Options
               </Link>
             </Row>
+            {/* <Row className="p-2">
+              <Link
+                className="prospectUO"
+                onClick={() => handleClick(prospect)}
+                to="/stock"
+              >
+                Stock Lookup
+              </Link>
+            </Row> */}
           </Col>
+        );
+      } else {
+        return (
+          <Col className="d-flex justify-content-center" id="data-col">
+            <Row className="p-2">
+              <h2>Select a match!</h2>
+            </Row>
+
+          </Col>
+        );
+      }
+    }
+
+    return (
+      <Container>
+        <Row className="d-flex justify-content-center mb-5">
+          <h1>Prospects</h1>
+        </Row>
+        <Row>
+          {displayData()}
           <Col id="table-col">
             <ProspectsFlow value={fetchedProspects} />
           </Col>

@@ -80,6 +80,7 @@ const OneStock = ({isAuthed}) => {
 
 const MSTP = (state) => ({
   isAuthed: state.auth.isAuthed,
+  prospectUO: state.prospectUO
 });
 
 export default connect(MSTP)(OneStock);

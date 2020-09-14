@@ -7,3 +7,16 @@
     height: 300px;
     overflow-y: scroll;
 }
+
+#data-col {
+    border: 1px white solid;
+}
+
+.prospectUO {
+    color: #4d94ff;
+    text-decoration: underline;
+}
+
+.data-hidden {
+    display: none;
+}
