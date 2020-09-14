@@ -94,7 +94,7 @@ const Prospects = ({deletingProspect, isAuthed, prospect, currentUser, deletedPr
     return (
       <Container>
         <Row className="d-flex justify-content-center mb-5">
-          <h1>Prospects</h1>
+          <h1>My Watchlist</h1>
         </Row>
         <Row>
           {displayData()}
