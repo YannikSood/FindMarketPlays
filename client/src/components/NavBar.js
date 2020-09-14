@@ -20,7 +20,7 @@ const NavigationAuth = (location) => {
     if (SBstatus) {
       return (
         <ProSidebar className="sidebar">
-          <Menu iconShape="square">
+          <Menu>
             <i onClick={() => setSB(false)} class="menu-icon fa-2x fa fa-bars" aria-hidden="true"></i>
             {/* <MenuItem onClick={() => setSB(false)}>FMP Beta</MenuItem> */}
             {/* <MenuItem >Dashboard</MenuItem> */}
@@ -39,7 +39,7 @@ const NavigationAuth = (location) => {
               <MenuItem><Link onClick={() => setSB(false)} to="/advancedOptionSearch">Advanced Search</Link></MenuItem>
               <MenuItem><Link onClick={() => setSB(false)} to="/advOptionFeed">Advanced Feed</Link></MenuItem>
             </SubMenu>
-            <MenuItem><Link onClick={() => setSB(false)} to="/sdScreen">Stock Discover</Link></MenuItem>
+            {/* <MenuItem><Link onClick={() => setSB(false)} to="/sdScreen">Stock Discover</Link></MenuItem> */}
             <MenuItem><Link onClick={() => setSB(false)} to="/profile">Account</Link></MenuItem>
             <MenuItem className="signout"><Link onClick={() => {
               firebase.auth().signOut();
