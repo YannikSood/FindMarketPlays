@@ -5,20 +5,13 @@ import { connect } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Axios from "axios";
-
+import { receiveDeletedProspect } from '../../actions/deletedProspect';
 
 // the table does not update after deleting clicking "Discard"
 // POSSIBLE SOLUTION: update the props given to it, or give it again after deleting a stock
 
 
 const ProspectsFlow = props => {
-    const [prospects, setProspects] = useState();
-    const [prospect, setProspect] = useState();
-    let [deletedIdx, deletingIdx] = useState('deleting');
-
-    // useEffect(() => {
-    //   setProspects(props.value)
-    // })
 
     // handle Axios call to server on click of "Discard"
     const handleClick = (idx) => {
@@ -27,9 +20,9 @@ const ProspectsFlow = props => {
         headers: { "Content-Type": "application/json" }
       })
       .then(res => {
-        console.log(res);
-        setProspects(res.data.message);
-        // take the array of data and pass it BACK to the table??
+        // set deleted prospect to state so that the prospects component 
+        // knows to re-fetch data for table
+        props.receiveDeletedProspect(res.data.message);
       })
       .catch(err => console.log(err))
     }
@@ -42,14 +35,13 @@ const ProspectsFlow = props => {
               <th>Matches</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody >
             {props.value.map(company => (
               <tr key={`${company.idx}`}>
                   <td onClick={() => props.receiveProspect(company)}>{company.name}</td>
                   <td onClick={() => 
                     {
                       handleClick(company.idx)
-                      // deletingIdx(company.idx)
                     }} 
                     >Discard</td>
               </tr>
@@ -72,6 +64,7 @@ const MSTP = state => ({
 
 const MDTP = (dispatch) => ({
   receiveProspect: (prospect) => dispatch(receiveProspect(prospect)),
+  receiveDeletedProspect: deletedProspect => dispatch(receiveDeletedProspect(deletedProspect))
 });
 
 

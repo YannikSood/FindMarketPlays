@@ -23,6 +23,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import ListGroupItem from 'react-bootstrap/ListGroupItem'
 import firebase from "../../firebase/firebase";
 import SwipeErrors from '../Errors/SwipeErrors';
+import '../../css/SDScreen.css';
 
 // changed to send options as one object instead of an array to SDFlow because the return value of fetch is an object.
 // can change back to array depending on what we want (just wrap the object in a bracket) and uncomment
@@ -286,11 +287,9 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
     }
 
     const showFlow = () => {
-        debugger
         if (ticker && Object.keys(options).length) {
-            debugger
             return (
-                <Container>
+                <Container >
                     <SDFlow value={options} companyInfo={company} logo={companyLogo}/>
                 </Container>
             )
@@ -298,57 +297,72 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
     }
 
     return (
-        <Fragment>
-            {/* <ScrollingWidget className="scrolling"/> */}
-            <Container>
-                {/* <Row className="widget__wrapper"> */}
-                    <Col md={6}>
-                            <h1>Stock Discover</h1>
-                    </Col>
+      <Fragment>
+        {/* <ScrollingWidget className="scrolling"/> */}
+        <Container className="parent">
+          {/* <Row className="widget__wrapper"> */}
+          <Col md={6}>
+            {/* <Col md={6}> */}
+            <h1>Stock Discover</h1>
+          </Col>
 
-                    {loading()}
-                {/* </Row> */}
-                <Row>
-                    <Col className="widget__col">
-           
-                        {showFlow()}
+          {loading()}
+          {/* </Row> */}
+          <Row>
+            <Col className="mt-0 mb-0">{showFlow()}</Col>
 
-                    </Col>
+            <Col id="widgetLess" className="sd_widget">
+              <TradingViewWidget
+                symbol={ticker}
+                theme={Themes.DARK}
+                locale="en"
+                autosize
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col id="widgetGreater" className="sd_widget">
+              <TradingViewWidget
+                symbol={ticker}
+                theme={Themes.DARK}
+                locale="en"
+                autosize
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Row className="mt-2 d-flex justify-content-center">
+                <Button
+                  className="ml-2"
+                  onClick={() => leftSwipe()}
+                  variant="outline-light"
+                >
+                  {" "}
+                  Swipe Left
+                </Button>
+                <Button className="ml-2">
+                  {/* <Button className='mt-3'> */}
+                  <Link to="/prospects">My Prospects</Link>
+                </Button>
+                <Button
+                  className="ml-2"
+                  onClick={() => rightSwipe()}
+                  variant="outline-light"
+                >
+                  {" "}
+                  Swipe Right
+                </Button>
+              </Row>
+            </Col>
+          </Row>
+          <Row>{showErr()}</Row>
 
-                    <Col className="widget__col">
-                        <TradingViewWidget
-                            symbol={ticker}
-                            theme={Themes.DARK}
-                            locale="en"
-                            autosize
-                        />
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col>
-                    <Row>
-                        <Button className="ml-2" onClick={() => leftSwipe()} variant="outline-light"> Swipe Left</Button>
-                        <Button className="ml-2" onClick={() => rightSwipe()} variant="outline-light"> Swipe Right</Button>
-                    </Row>
-                    </Col>
-                    <Col>
-                        <Row>
-                            <Button>
-                                <Link to="/prospects">My Prospects</Link>
-                            </Button>
-                        </Row>
-                    </Col>
-                </Row>
-                <Row>
-                  {showErr()}
-                </Row>
-
-                {/* <Row>
+          {/* <Row>
                     <Button className="ml-2" onClick={()} variant="outline-light"> More Info Button</Button>
                 </Row> */}
-            </Container>
-        </Fragment>
+        </Container>
+      </Fragment>
     );
 };
     

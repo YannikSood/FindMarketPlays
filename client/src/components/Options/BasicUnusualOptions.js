@@ -11,25 +11,42 @@ import BasicOptionsFlow from './BasicOptionsFlow';
 import { debounce } from '../../helpers/SearchHelper';
 import SymbolErrors from '../Errors/SymbolErrors';
 
-const BasicUnusualOptions = ({ isAuthed }) => {
+const BasicUnusualOptions = ({ isAuthed, prospectUO }) => {
   // Hooks
-  const [searchedValue, setSearchedValue] = useState('AMZN,TSLA');
+  const [searchedValue, setSearchedValue] = useState("AMZN,TSLA");
   const [options, setOptions] = useState([]);
   const history = useHistory();
 
-  
+  useEffect(() => {
+    if (Object.keys(prospectUO).length) {
+      setSearchedValue(prospectUO)
+      const fetchData = () => {
+        const url = `/optionsAPI/${prospectUO}`;
+        fetch(url, { headers: { Accept: "application/json" } })
+          .then((res) =>
+            res.json().then((json) => {
+              setOptions(json.message.option_activity || []);
+            })
+          )
+          .catch((err) => console.log(err)); // eslint-disable-line
+      };
+      fetchData()
+    }
+  }, []);
+
   useEffect(() => {
     if (!isAuthed) {
-       history.push("/login")
+      history.push("/login");
     } else {
       const fetchData = () => {
         const url = `/optionsAPI/${searchedValue}`;
-        fetch(url, { headers: { Accept: 'application/json' } })
-          .then(res => res.json()
-            .then((json) => {
+        fetch(url, { headers: { Accept: "application/json" } })
+          .then((res) =>
+            res.json().then((json) => {
               setOptions(json.message.option_activity || []);
-            }))
-          .catch(err => console.log(err)); // eslint-disable-line
+            })
+          )
+          .catch((err) => console.log(err)); // eslint-disable-line
       };
       debounce(fetchData());
     }
@@ -37,16 +54,14 @@ const BasicUnusualOptions = ({ isAuthed }) => {
 
   const showErr = () => {
     if (!Object.values(options).length) {
-      return SymbolErrors()
+      return SymbolErrors();
     }
-  }
-
+  };
 
   // Handlers
   const handleInputChange = (event) => {
     setSearchedValue(event.target.value.toUpperCase());
   };
-
 
   return (
     <Fragment>
@@ -63,7 +78,9 @@ const BasicUnusualOptions = ({ isAuthed }) => {
                   value={searchedValue}
                   onChange={handleInputChange}
                   placeholder="AMZN,TSLA"
-                  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
+                  onKeyPress={(e) => {
+                    e.key === "Enter" && e.preventDefault();
+                  }}
                 />
               </InputGroup>
             </Form>
@@ -71,7 +88,9 @@ const BasicUnusualOptions = ({ isAuthed }) => {
           </Col>
         </Row>
         <Row>
-          {searchedValue && options.length > 0 && <BasicOptionsFlow value={options} />}
+          {searchedValue && options.length > 0 && (
+            <BasicOptionsFlow value={options} />
+          )}
         </Row>
       </Container>
     </Fragment>
@@ -79,7 +98,8 @@ const BasicUnusualOptions = ({ isAuthed }) => {
 };
 
 const MSTP = (state) => ({
-  isAuthed: state.auth.isAuthed
+  isAuthed: state.auth.isAuthed,
+  prospectUO: state.prospectUO
 })
 
 export default connect(MSTP)(BasicUnusualOptions);

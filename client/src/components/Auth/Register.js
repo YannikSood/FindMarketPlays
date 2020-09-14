@@ -23,7 +23,6 @@ const Register = ({ isAuthed, receiveUserInfo }) => {
     const arr = window.location.href.split("/");
     const id = arr[arr.length - 1];
     console.log(id)
-    debugger
     let ref = firebase.database().ref(`users/${id}`);
     ref.once('value')
       .then(snapshot => {
@@ -57,7 +56,6 @@ const Register = ({ isAuthed, receiveUserInfo }) => {
           share: false,
           shareTime: 0,
         };
-        debugger
         let ref = firebase.database().ref(`users/${user.user.uid}`);
         ref.set(data)
         receiveUserInfo(data);
