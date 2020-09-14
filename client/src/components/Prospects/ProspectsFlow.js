@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Axios from "axios";
 import { receiveDeletedProspect } from '../../actions/deletedProspect';
+import { receiveDeletingProspect } from '../../actions/deletingProspect';
 
 // the table does not update after deleting clicking "Discard"
 // POSSIBLE SOLUTION: update the props given to it, or give it again after deleting a stock
@@ -22,6 +23,7 @@ const ProspectsFlow = props => {
       .then(res => {
         // set deleted prospect to state so that the prospects component 
         // knows to re-fetch data for table
+        props.receiveDeletingProspect(true)
         props.receiveDeletedProspect(res.data.message);
       })
       .catch(err => console.log(err))
@@ -64,7 +66,9 @@ const MSTP = state => ({
 
 const MDTP = (dispatch) => ({
   receiveProspect: (prospect) => dispatch(receiveProspect(prospect)),
-  receiveDeletedProspect: deletedProspect => dispatch(receiveDeletedProspect(deletedProspect))
+  receiveDeletedProspect: deletedProspect => dispatch(receiveDeletedProspect(deletedProspect)),
+  receiveDeletingProspect: deletingProspect => dispatch(receiveDeletingProspect(deletingProspect))
+
 });
 
 

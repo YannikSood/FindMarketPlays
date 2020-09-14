@@ -8,12 +8,13 @@ import ProspectsFlow from './ProspectsFlow';
 import Axios from "axios";
 import { debounce } from "../../helpers/SearchHelper";
 import { receiveProspectUO } from '../../actions/prospectUO';
+import { receiveDeletingProspect } from '../../actions/deletingProspect';
 import "../../css/Prospects.css";
 
-const Prospects = ({isAuthed, prospect, currentUser, deletedProspect, receiveProspectUO}) => {
+const Prospects = ({deletingProspect, isAuthed, prospect, currentUser, deletedProspect, receiveProspectUO, receiveDeletingProspect}) => {
     const history = useHistory();
     const [fetchedProspects, setFetchedProspects] = useState();
-    // const [deleted, setDelete] = useState(deletedProspect);
+    const [deleting, setDeleting] = useState(false);
 
     const fetching = () => {
       if (!isAuthed) {
@@ -49,6 +50,9 @@ const Prospects = ({isAuthed, prospect, currentUser, deletedProspect, receivePro
     }
 
     const displayData = () => {
+
+      // WHILE DELETINGPROSPECT IS TRUE, RETURN A LOADER
+
       console.log(prospect)
       if (Object.keys(prospect).length) {
         return (
@@ -106,11 +110,13 @@ const MSTP = state => ({
     isAuthed: state.auth.isAuthed,
     currentUser: state.auth.currentUser,
     prospect: state.prospect,
-    deletedProspect: state.deletedProspect
+    deletedProspect: state.deletedProspect,
+    deletingProspect: state.deletingProspect
 })
 
 const MDTP = (dispatch) => ({
-  receiveProspectUO: prospectUO => dispatch(receiveProspectUO(prospectUO))
+  receiveProspectUO: prospectUO => dispatch(receiveProspectUO(prospectUO)),
+  receiveDeletingProspect: deletingProspect => dispatch(receiveDeletingProspect(deletingProspect))
   // receiveProspect: (prospect) => dispatch(receiveProspect(prospect)),
 });
 
