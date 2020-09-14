@@ -13,8 +13,10 @@ const SDFlow = props => {
   console.log(logo);
   return (
     <Card  className="bg-dark text-white" style={{ width: '24rem', height: '24rem'}}>
-        <Card.Body>
-            <Card.Title>{stock.companyName} </Card.Title>
+        
+            <Card.Header as="h5">{company.companyName}</Card.Header>
+            
+            <Card.Body>
 
             <Image src={logo.url} roundedCircle />
 

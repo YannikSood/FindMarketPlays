@@ -81,9 +81,9 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                         fetch(url4, {
                         headers: { "Content-Type": "application/json" },
                         })
-                        .then((res2) =>
-                            res2.json().then((json) => {
-                            console.log("logo:" + json);
+                        .then((res3) =>
+                            res3.json().then((json) => {
+                            // console.log("logo:" + json);
                             setCompanyLogo(json.message || {});
                             setLoader(false);
                             })
@@ -137,17 +137,17 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                   })
                   .catch((err) => console.log(err));
 
-                // const url3 = `/getCompany/${res.data.message}`;
-                // Axios.get(url3, {
-                //     headers: { "Content-Type": "application/json" },
-                // })
-                // .then((res3) => {
-                //     console.log("company: " + res3.data.message)
-                //     setCompany(res3.data.message || {});
+                const url3 = `/getCompany/${res.data.message}`;
+                Axios.get(url3, {
+                    headers: { "Content-Type": "application/json" },
+                })
+                .then((res3) => {
+                    console.log("company: " + res3.data.message)
+                    setCompany(res3.data.message || {});
                     
-                //     setLoader(false);
-                // })
-                // .catch((err) => console.log(err));
+                    setLoader(false);
+                })
+                .catch((err) => console.log(err));
               })
               .catch((err) => console.log(err));
           })
