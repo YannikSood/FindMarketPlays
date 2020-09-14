@@ -69,7 +69,7 @@ const Prospects = ({isAuthed, prospect, currentUser, deletedProspect, receivePro
               </Link>
             </Row>
           </Col>
-          <Col>
+          <Col id="table-col">
             <ProspectsFlow value={fetchedProspects} />
           </Col>
         </Row>

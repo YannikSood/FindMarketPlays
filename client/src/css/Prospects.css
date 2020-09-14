@@ -2,3 +2,8 @@
     position: fixed;
     top: 50px
 }
+
+#table-col {
+    height: 300px;
+    overflow-y: scroll;
+}
