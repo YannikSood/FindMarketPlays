@@ -64,7 +64,7 @@ const Prospects = ({isAuthed, prospect, currentUser, deletedProspect, receivePro
                 Unusual Options
               </Link>
             </Row>
-            {/* <Row className="p-2">
+            <Row className="p-2">
               <Link
                 className="prospectUO"
                 onClick={() => handleClick(prospect)}
@@ -72,7 +72,7 @@ const Prospects = ({isAuthed, prospect, currentUser, deletedProspect, receivePro
               >
                 Stock Lookup
               </Link>
-            </Row> */}
+            </Row>
           </Col>
         );
       } else {

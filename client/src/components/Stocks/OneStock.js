@@ -10,9 +10,9 @@ import { debounce } from '../../helpers/SearchHelper';
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-const OneStock = ({isAuthed}) => {
+const OneStock = ({isAuthed, prospectUO}) => {
   // Hooks
-  const [searchedValue, setSearchedValue] = useState('TSLA');
+  const [searchedValue, setSearchedValue] = useState(Object.keys(prospectUO).length ? prospectUO : "TSLA");
   const history = useHistory();
 
   // Handlers
