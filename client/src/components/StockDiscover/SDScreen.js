@@ -38,6 +38,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
     const [errors, setErrors] = useState(false);
     const [company, setCompany] = useState({});
     const [companyLogo, setCompanyLogo] = useState({});
+    const [inProgress, setProgress] = useState(false);
     const waitTime = 4 * 60 * 60 * 1000;
     let limit = 40;
     
@@ -47,6 +48,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         if (!isAuthed) {
             history.push("/login")
         } else {
+          setProgress(true);
             const fetchData = () => {
                 // fetch ticker from DB
                 const url1 = `/stockDiscover/${currentUser.email}/fetch`;
@@ -84,6 +86,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                                             res3.json().then(json => {
                                                 setCompanyLogo(json.message || {});
                                                 setLoader(false);
+                                                setProgress(false);
                                             })
                                         })
                                         .catch(err => console.log(err))
@@ -101,6 +104,35 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
             debounce(fetchData());
         }
     }, []);
+
+    const allowSwipes = () => {
+      if (!inProgress) {
+        return (
+          <Row className="mt-2 d-flex justify-content-center">
+            <Button
+              className="ml-2"
+              onClick={() => leftSwipe()}
+              variant="outline-light"
+            >
+              {" "}
+              Pass on Stock
+            </Button>
+            <Button className="ml-2">
+              {/* <Button className='mt-3'> */}
+              <Link to="/prospects">Watchlist</Link>
+            </Button>
+            <Button
+              className="ml-2"
+              onClick={() => rightSwipe()}
+              variant="outline-light"
+            >
+              {" "}
+              Add to Watchlist
+            </Button>
+          </Row>
+        );
+      }
+    }
 
       const loading = () => {
         if (loader) {
@@ -158,6 +190,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                             res3.json().then((json) => {
                               setCompanyLogo(json.message || {});
                               setLoader(false);
+                              setProgress(false);
                             });
                           })
                           .catch((err) => console.log(err));
@@ -180,7 +213,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         let share = userInfo.share;
         let shareTime = userInfo.shareTime;
 
-        
+        setProgress(true);  
         // check if shareable link has been shared
 
         if (share && shareTime >= Date.now()) {
@@ -240,6 +273,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         let share = userInfo.share;
         let shareTime = userInfo.shareTime;
 
+        setProgress(true);
         // checks if shareable link has been shared
         if (share && shareTime >= Date.now()) {
             serverCall(swipeUrl, email)
@@ -335,28 +369,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
           </Row>
           <Row>
             <Col>
-              <Row className="mt-2 d-flex justify-content-center">
-                <Button
-                  className="ml-2"
-                  onClick={() => leftSwipe()}
-                  variant="outline-light"
-                >
-                  {" "}
-                  Pass on Stock
-                </Button>
-                <Button className="ml-2">
-                  {/* <Button className='mt-3'> */}
-                  <Link to="/prospects">Watchlist</Link>
-                </Button>
-                <Button
-                  className="ml-2"
-                  onClick={() => rightSwipe()}
-                  variant="outline-light"
-                >
-                  {" "}
-                  Add to Watchlist
-                </Button>
-              </Row>
+              {allowSwipes()}
             </Col>
           </Row>
           <Row>{showErr()}</Row>
