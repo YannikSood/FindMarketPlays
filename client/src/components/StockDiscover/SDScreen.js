@@ -22,6 +22,7 @@ import Card from 'react-bootstrap/Card'
 import ListGroup from 'react-bootstrap/ListGroup'
 import ListGroupItem from 'react-bootstrap/ListGroupItem'
 import firebase from "../../firebase/firebase";
+import SwipeErrors from '../Errors/SwipeErrors';
 
 // changed to send options as one object instead of an array to SDFlow because the return value of fetch is an object.
 // can change back to array depending on what we want (just wrap the object in a bracket) and uncomment
@@ -31,9 +32,12 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
     const [ticker, setTicker] = useState();
     const [index, setIndex] = useState();
     const [options, setOptions] = useState({});
+    const [errors, setErrors] = useState(false);
     const [company, setCompany] = useState({});
     const [companyLogo, setCompanyLogo] = useState({});
-
+    const waitTime = 4 * 60 * 60 * 1000;
+    let limit = 40;
+    
     const history = useHistory();
 
     useEffect(() => {
@@ -47,50 +51,49 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                   headers: { "Content-Type": "application/json" }
                 })
                 //res.data.message
-                    .then(res => {
-                        // save ticker and index to state
-                        setTicker(res.data.message);
-                        setIndex(res.data.index);
+                .then(res => {
+                    // save ticker and index to state
+                    setTicker(res.data.message);
+                    setIndex(res.data.index);
 
-                        // fetch ticker info from iex
-                        const url2 = `/getTicker/${res.data.message}`;
-                        fetch(url2, {
-                          headers: { "Content-Type": "application/json" },
-                        })
-                          .then((res) =>
-                            res.json().then((json) => {
-                              setOptions(json.message || {});
-                            })
-                          )
-                          .catch((err) => console.log(err));
-
-                        //Get company info
-                        const url3 = `/getCompany/${res.data.message}`;
-                        fetch(url3, {
-                        headers: { "Content-Type": "application/json" },
-                        })
-                        .then((res2) =>
-                            res2.json().then((json) => {
-                            setCompany(json.message || {});
-                            setLoader(false);
-                            })
-                        )
-                        .catch((err) => console.log(err));
-
-                        const url4 = `/getLogo/${res.data.message}`;
-                        fetch(url4, {
-                        headers: { "Content-Type": "application/json" },
-                        })
-                        .then((res3) =>
-                            res3.json().then((json) => {
-                            // console.log("logo:" + json);
-                            setCompanyLogo(json.message || {});
-                            setLoader(false);
-                            })
-                        )
-                        .catch((err) => console.log(err));
+                    // fetch ticker info from iex
+                    const url2 = `/getTicker/${res.data.message}`;
+                    Axios.get(url2, {
+                      headers: { "Content-Type": "application/json" },
                     })
-                    .catch(err => console.log(err))
+                      .then((res) => {
+                            setOptions(res.data.message || {});
+                            const url3 = `/getCompany/${res.data.message.symbol}`;
+                            fetch(url3, {
+                            headers: { "Content-Type": "application/json" },
+                            })
+                            .then(res2 => {
+                                    res2.json().then(json => {
+                                        setCompany(json.message)
+                                        const url4 = `/getLogo/${res.data.message.symbol}`
+
+                                        fetch(url4, {
+                                            headers: {
+                                                "Content-Type": "application/json",
+                                            }
+                                        })
+                                        .then(res3 => {
+                                            res3.json().then(json => {
+                                                setCompanyLogo(json.message || {});
+                                                setLoader(false);
+                                            })
+                                        })
+                                        .catch(err => console.log(err))
+                                    })
+
+                            })
+                            .catch(err => console.log(err))
+                    
+                      })
+                      .catch((err) => console.log(err));
+
+                })
+                .catch(err => console.log(err))
             };
             debounce(fetchData());
         }
@@ -122,34 +125,46 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
 
             // get ticker from mongodb
             Axios.get(url, {
-              headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json" },
             })
-              .then((res) => {
+            .then((res) => {
                 setTicker(res.data.message);
                 setIndex(res.data.index);
                 const url2 = `/getTicker/${res.data.message}`;
                 Axios.get(url2, {
-                  // get ticker data from iex
-                  headers: { "Content-Type": "application/json" },
+                // get ticker data from iex
+                headers: { "Content-Type": "application/json" },
                 })
-                  .then((res2) => {
+                .then((res2) => {
                     setOptions(res2.data.message || {});
-                  })
-                  .catch((err) => console.log(err));
+                    const url3 = `/getCompany/${res.data.message}`;
+                    Axios.get(url3, {
+                        headers: { "Content-Type": "application/json" },
+                    })
+                    .then((res3) => {
+                        setCompany(res3.data.message || {});
+                        
+                        const url4 = `/getLogo/${res.data.message.symbol}`;
 
-                const url3 = `/getCompany/${res.data.message}`;
-                Axios.get(url3, {
-                    headers: { "Content-Type": "application/json" },
-                })
-                .then((res3) => {
-                    console.log("company: " + res3.data.message)
-                    setCompany(res3.data.message || {});
-                    
-                    setLoader(false);
+                        fetch(url4, {
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                        })
+                          .then((res3) => {
+                            res3.json().then((json) => {
+                              setCompanyLogo(json.message || {});
+                              setLoader(false);
+                            });
+                          })
+                          .catch((err) => console.log(err));
+                    })
+                    .catch((err) => console.log(err));
+                 
                 })
                 .catch((err) => console.log(err));
-              })
-              .catch((err) => console.log(err));
+            })
+            .catch((err) => console.log(err));
           })
           .catch((err) => console.log(err));
       };
@@ -159,36 +174,57 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         const swipeUrl = `/stockDiscover/${email}/swipeRight/${index}`;
         let counter = userInfo.counter;
         let time = userInfo.time;
+        let share = userInfo.share;
+        let shareTime = userInfo.shareTime;
 
-        // remember to update the counter in state and database
         
-        // check if timer is up
-        
-        if (counter < 40 && time === 0) {
-            counter += 1;
-            time = 0;
-            // swipe server call
+        // check if shareable link has been shared
+
+        if (share && shareTime >= Date.now()) {
             serverCall(swipeUrl, email);
-                  
-        } else if (counter >= 40 && time === 0) {
-          let currentTime = Date.now();
-          let nextTime = currentTime + 4 * 60 * 60 * 1000;
-
-          time = nextTime;
-        } else if (Date.now() >= time) {
-          serverCall(swipeUrl, email);
-          time = 0;
-          counter = 1;
-        } else if (time != 0) {
-          return;
-        } 
-
+            counter = 0
+            
+        } else {
+            // if not or if expired
+            share = false;
+            shareTime = 0;
+            
+            if (counter < limit && time === 0) {
+                counter += 1;
+                time = 0;
+                // swipe server call
+                serverCall(swipeUrl, email);
+                
+            } else if (counter >= limit && time === 0) {
+                let currentTime = Date.now();
+                let nextTime = currentTime + waitTime;
+                // set error in state
+                setErrors(true)
+                time = nextTime;
+                
+            } else if (Date.now() >= time) {
+                serverCall(swipeUrl, email);
+                time = 0;
+                counter = 1;
+                setErrors(false);
+                
+            } else if (time != 0) {
+                // set error in state
+                setErrors(true);
+                
+                return;
+            } 
+        }
+        
+        
         // update state here
         let newUserInfo = {
             counter: counter, 
-            id: userInfo.id,
-            time: time
+            time: time,
+            share: share,
+            shareTime: shareTime
         }
+        
         receiveUserInfo(newUserInfo);
         firebase.database().ref(`users/${currentUser.id}`).set(newUserInfo);
     };
@@ -198,45 +234,61 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         const swipeUrl = `/stockDiscover/${email}/swipeLeft/${index}`;
         let counter = userInfo.counter;
         let time = userInfo.time;
+        let share = userInfo.share;
+        let shareTime = userInfo.shareTime;
 
-        
-        if (counter < 40 && time === 0) {
-            counter += 1;
-            time = 0;
-            // swipe server call
-            serverCall(swipeUrl, email);
-                  
-        } else if (counter >= 40 && time === 0) {
-          let currentTime = Date.now();
-          let nextTime = currentTime + 4 * 60 * 60 * 1000;
+        // checks if shareable link has been shared
+        if (share && shareTime >= Date.now()) {
+            serverCall(swipeUrl, email)
+            counter = 0;
+        } else {
+            // if not or if expired
+            share = false;
+            shareTime = 0;
+            if (counter < limit && time === 0) {
+              counter += 1;
+              time = 0;
+              // swipe server call
+              serverCall(swipeUrl, email);
+            } else if (counter >= limit && time === 0) {
+              let currentTime = Date.now();
+              let nextTime = currentTime + waitTime;
 
-          time = nextTime;
-        } else if (Date.now() >= time) {
-          serverCall(swipeUrl, email);
-          time = 0;
-          counter = 1;
-        } else if (time != 0) {
-          return;
+              time = nextTime;
+              setErrors(true);
+            } else if (Date.now() >= time) {
+              serverCall(swipeUrl, email);
+              time = 0;
+              counter = 1;
+              setErrors(false);
+            } else if (time != 0) {
+              setErrors(true);
+
+              return;
+            }
         } 
 
         let newUserInfo = {
             counter: counter,
-            id: userInfo.id,
             time: time,
+            share: share,
+            shareTime: shareTime
         };
            
         receiveUserInfo(newUserInfo);
         firebase.database().ref(`users/${currentUser.id}`).set(newUserInfo);
     };
 
-    // const showErr = () => {
-    //     if (!Object.values(options).length) {
-    //         return SymbolErrors()
-    //     }
-    // }
+    const showErr = () => {
+        if (errors) {
+            return SwipeErrors()
+        }
+    }
 
     const showFlow = () => {
+        debugger
         if (ticker && Object.keys(options).length) {
+            debugger
             return (
                 <Container>
                     <SDFlow value={options} companyInfo={company} logo={companyLogo}/>
@@ -244,12 +296,6 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
             )
         }
     }
-
-
-    // Handlers
-    // const handleInputChange = (event) => {
-    //     setTicker(event.target.value.toUpperCase());
-    // }
 
     return (
         <Fragment>
@@ -294,7 +340,9 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                         </Row>
                     </Col>
                 </Row>
-
+                <Row>
+                  {showErr()}
+                </Row>
 
                 {/* <Row>
                     <Button className="ml-2" onClick={()} variant="outline-light"> More Info Button</Button>
