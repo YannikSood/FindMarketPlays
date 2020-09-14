@@ -39,9 +39,10 @@ const Login = ({ isAuthed, receiveUserInfo, currentUser }) => {
         if (!data) {
 
           data = {
-            id: uid,
             counter: 0,
             time: 0,
+            share: false,
+            shareTime: 0
           };
           ref.set(data);
         }

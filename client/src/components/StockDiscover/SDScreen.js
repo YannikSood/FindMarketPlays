@@ -96,68 +96,80 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
 
             // get ticker from mongodb
             Axios.get(url, {
-              headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json" },
             })
-              .then((res) => {
+            .then((res) => {
                 setTicker(res.data.message);
                 setIndex(res.data.index);
                 const url2 = `/getTicker/${res.data.message}`;
                 Axios.get(url2, {
-                  // get ticker data from iex
-                  headers: { "Content-Type": "application/json" },
+                // get ticker data from iex
+                headers: { "Content-Type": "application/json" },
                 })
-                  .then((res2) => {
+                .then((res2) => {
                     setOptions(res2.data.message || {});
-                  })
-                  .catch((err) => console.log(err));
-              })
-              .catch((err) => console.log(err));
+                })
+                .catch((err) => console.log(err));
+            })
+            .catch((err) => console.log(err));
           })
           .catch((err) => console.log(err));
       };
 
      const rightSwipe = () => {   
-       console.log(errors)
         const email = currentUser.email;
         const swipeUrl = `/stockDiscover/${email}/swipeRight/${index}`;
         let counter = userInfo.counter;
         let time = userInfo.time;
+        let share = userInfo.share;
+        let shareTime = userInfo.shareTime;
 
-        // remember to update the counter in state and database
         
-        // check if timer is up
-        
-        if (counter < limit && time === 0) {
-            counter += 1;
-            time = 0;
-            // swipe server call
+        // check if shareable link has been shared
+
+        if (share && shareTime >= Date.now()) {
             serverCall(swipeUrl, email);
             
-        } else if (counter >= limit && time === 0) {
-            let currentTime = Date.now();
-            let nextTime = currentTime + waitTime;
-            // set error in state
-            setErrors(true)
-            time = nextTime;
+        } else {
+            // if not or if expired
+            share = false;
+            shareTime = 0;
+            counter = 0;
             
-        } else if (Date.now() >= time) {
-            serverCall(swipeUrl, email);
-            time = 0;
-            counter = 1;
-            setErrors(false);
-            
-        } else if (time != 0) {
-            // set error in state
-            setErrors(true);
-            
-            return;
-        } 
-
+            if (counter < limit && time === 0) {
+                counter += 1;
+                time = 0;
+                // swipe server call
+                serverCall(swipeUrl, email);
+                
+            } else if (counter >= limit && time === 0) {
+                let currentTime = Date.now();
+                let nextTime = currentTime + waitTime;
+                // set error in state
+                setErrors(true)
+                time = nextTime;
+                
+            } else if (Date.now() >= time) {
+                serverCall(swipeUrl, email);
+                time = 0;
+                counter = 1;
+                setErrors(false);
+                
+            } else if (time != 0) {
+                // set error in state
+                setErrors(true);
+                
+                return;
+            } 
+        }
+        
+        
         // update state here
         let newUserInfo = {
             counter: counter, 
-            id: userInfo.id,
-            time: time
+            time: time,
+            share: share,
+            shareTime: shareTime
         }
         
         receiveUserInfo(newUserInfo);
@@ -169,37 +181,45 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         const swipeUrl = `/stockDiscover/${email}/swipeLeft/${index}`;
         let counter = userInfo.counter;
         let time = userInfo.time;
+        let share = userInfo.share;
+        let shareTime = userInfo.shareTime;
 
-        
-        if (counter < limit && time === 0) {
-            counter += 1;
-            time = 0;
-            // swipe server call
-            serverCall(swipeUrl, email);
-            
-        } else if (counter >= limit && time === 0) {
-            let currentTime = Date.now();
-            let nextTime = currentTime + waitTime;
+        // checks if shareable link has been shared
+        if (share && shareTime >= Date.now()) {
+            serverCall(swipeUrl, email)
+        } else {
+            // if not or if expired
+            share = false;
+            shareTime = 0;
+            counter = 0;
+            if (counter < limit && time === 0) {
+              counter += 1;
+              time = 0;
+              // swipe server call
+              serverCall(swipeUrl, email);
+            } else if (counter >= limit && time === 0) {
+              let currentTime = Date.now();
+              let nextTime = currentTime + waitTime;
 
-            time = nextTime;
-            setErrors(true);
-            
-        } else if (Date.now() >= time) {
-            serverCall(swipeUrl, email);
-            time = 0;
-            counter = 1;
-            setErrors(false);
-            
-        } else if (time != 0) {
-            setErrors(true);
-            
-            return;
+              time = nextTime;
+              setErrors(true);
+            } else if (Date.now() >= time) {
+              serverCall(swipeUrl, email);
+              time = 0;
+              counter = 1;
+              setErrors(false);
+            } else if (time != 0) {
+              setErrors(true);
+
+              return;
+            }
         } 
 
         let newUserInfo = {
             counter: counter,
-            id: userInfo.id,
             time: time,
+            share: share,
+            shareTime: shareTime
         };
            
         receiveUserInfo(newUserInfo);
