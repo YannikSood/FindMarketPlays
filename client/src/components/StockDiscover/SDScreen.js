@@ -18,6 +18,9 @@ import { receiveUserLists } from '../../actions/stockDiscover';
 import { receiveUserInfo } from '../../actions/userInfo';
 // import { userInfo } from 'os';
 import { current } from 'immer';
+import Card from 'react-bootstrap/Card'
+import ListGroup from 'react-bootstrap/ListGroup'
+import ListGroupItem from 'react-bootstrap/ListGroupItem'
 import firebase from "../../firebase/firebase";
 import SwipeErrors from '../Errors/SwipeErrors';
 
@@ -30,9 +33,11 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
     const [index, setIndex] = useState();
     const [options, setOptions] = useState({});
     const [errors, setErrors] = useState(false);
+    const [company, setCompany] = useState({});
+    const [companyLogo, setCompanyLogo] = useState({});
     const waitTime = 4 * 60 * 60 * 1000;
     let limit = 40;
-
+    
     const history = useHistory();
 
     useEffect(() => {
@@ -46,25 +51,71 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                   headers: { "Content-Type": "application/json" }
                 })
                 //res.data.message
-                    .then(res => {
-                        // save ticker and index to state
-                        setTicker(res.data.message);
-                        setIndex(res.data.index);
+                .then(res => {
+                    // save ticker and index to state
+                    setTicker(res.data.message);
+                    setIndex(res.data.index);
 
-                        // fetch ticker info from iex
-                        const url2 = `/getTicker/${res.data.message}`;
-                        fetch(url2, {
-                          headers: { "Content-Type": "application/json" },
-                        })
-                          .then((res) =>
-                            res.json().then((json) => {
-                              setOptions(json.message || {});
-                              setLoader(false);
-                            })
-                          )
-                          .catch((err) => console.log(err));
+                    // fetch ticker info from iex
+                    const url2 = `/getTicker/${res.data.message}`;
+                    Axios.get(url2, {
+                      headers: { "Content-Type": "application/json" },
                     })
-                    .catch(err => console.log(err))
+                      // fetch(url2, {
+                      //     headers: { "Content-Type": "application/json" },
+                      // })
+                      .then((res) => {
+                        // // res.json().then((json) => {
+                        //   console.log(res)
+                        // // //   setOptions(json.message || {});
+                        //   // console.log(`company: ` + json.message)
+                        //   //Get company info
+                            const url3 = `/getCompany/${res.data.message.symbol}`;
+                        //   Axios.get(url3, {
+                        //     headers: { "Content-Type": "application/json" }
+                        //   })
+                            fetch(url3, {
+                            headers: { "Content-Type": "application/json" },
+                            })
+                            .then(res2 => {
+                                    res2.json().then(json => {
+                                        console.log(json.message)
+                                    })
+
+                            //   setCompany(res2.data.message || {});
+                            })
+                            .catch(err => console.log(err))
+                        //   fetch(url3, {
+                        //     headers: { "Content-Type": "application/json" },
+                        //   })
+                        //     .then((res2) =>
+                        //       res2.json().then((json) => {
+                        //         setCompany(json.message || {});
+                        //         // setLoader(false);
+
+                        //         const url4 = `/getLogo/${res.data.message}`;
+                        //         fetch(url4, {
+                        //           headers: {
+                        //             "Content-Type": "application/json",
+                        //           },
+                        //         })
+                        //           .then((res2) =>
+                        //             res2.json().then((json) => {
+                        //               // console.log("logo:" + json);
+                        //               setCompanyLogo(json.message || {});
+                        //               setLoader(false);
+                        //             })
+                        //           )
+                        //           .catch((err) => console.log(err));
+                        //       })
+                        //     )
+                        //     .catch((err) => console.log(err));
+                        // })
+                      })
+                      .catch((err) => console.log(err));
+
+                })
+                .catch(err => console.log(err))
             };
             debounce(fetchData());
         }
@@ -108,6 +159,18 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                 })
                 .then((res2) => {
                     setOptions(res2.data.message || {});
+                    const url3 = `/getCompany/${res.data.message}`;
+                    Axios.get(url3, {
+                        headers: { "Content-Type": "application/json" },
+                    })
+                    .then((res3) => {
+                        // console.log("company: " + res3.data.message)
+                        setCompany(res3.data.message || {});
+                        
+                        setLoader(false);
+                    })
+                    .catch((err) => console.log(err));
+                 
                 })
                 .catch((err) => console.log(err));
             })
@@ -236,7 +299,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         if (ticker && Object.keys(options).length) {
             return (
                 <Container>
-                    <SDFlow value={options} />
+                    <SDFlow value={options} companyInfo={company} logo={companyLogo}/>
                 </Container>
             )
         }
@@ -244,24 +307,30 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
 
     return (
         <Fragment>
-            <ScrollingWidget className="scrolling"/>
+            {/* <ScrollingWidget className="scrolling"/> */}
             <Container>
-                <Row className="widget__wrapper">
-                    <Col md={7}>
-                        <Form>
+                {/* <Row className="widget__wrapper"> */}
+                    <Col md={6}>
                             <h1>Stock Discover</h1>
-                            {loading()}
-                        </Form>
                     </Col>
-                </Row>
+
+                    {loading()}
+                {/* </Row> */}
                 <Row>
-                    {showFlow()}
-                    <TradingViewWidget
-                        symbol={ticker}
-                        theme={Themes.DARK}
-                        locale="en"
-                        autosize
-                    />
+                    <Col className="widget__col">
+           
+                        {showFlow()}
+
+                    </Col>
+
+                    <Col className="widget__col">
+                        <TradingViewWidget
+                            symbol={ticker}
+                            theme={Themes.DARK}
+                            locale="en"
+                            autosize
+                        />
+                    </Col>
                 </Row>
 
                 <Row>
