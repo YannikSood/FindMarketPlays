@@ -20,7 +20,7 @@ const NavigationAuth = (location) => {
     if (SBstatus) {
       return (
         <ProSidebar className="sidebar">
-          <Menu iconShape="square">
+          <Menu>
             <i onClick={() => setSB(false)} class="menu-icon fa-2x fa fa-bars" aria-hidden="true"></i>
             {/* <MenuItem onClick={() => setSB(false)}>FMP Beta</MenuItem> */}
             {/* <MenuItem >Dashboard</MenuItem> */}
@@ -144,7 +144,7 @@ const NavigationAuth = (location) => {
             </DropdownButton>{' '} 
 
            
-            <Button className="ml-2 d-none d-lg-flex" onClick={() => history.push("/sdScreen")} variant="outline-light"> Stock Discover</Button>
+            {/* <Button className="ml-2 d-none d-lg-flex" onClick={() => history.push("/sdScreen")} variant="outline-light"> Stock Discover</Button> */}
             <Button className="ml-2 d-none d-lg-flex" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
 
         </Nav>

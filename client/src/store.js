@@ -15,7 +15,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware({ serializableCheck: false, immutableCheck: false })
-    .concat(logger)
+    // .concat(logger)
 });
 
 export const persistor = persistStore(store);
