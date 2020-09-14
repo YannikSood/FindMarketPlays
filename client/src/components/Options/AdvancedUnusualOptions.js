@@ -163,12 +163,11 @@ const AdvancedUnusualOptions = ({ isAuthed, resetResults }) => {
 };
 
 const mapStateToProps = (state) => {
-    const { auth, advancedSearch, sort } = state;
+    const { auth, advancedSearch } = state;
 
     return {
         isAuthed: auth.isAuthed,
-        results: advancedSearch.results,
-        sort: sort
+        results: advancedSearch.results
     };
 };
 

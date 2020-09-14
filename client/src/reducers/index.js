@@ -7,7 +7,7 @@ import stockDiscoverReducer from "./stockDiscoverReducer";
 import prospectReducer from './prospectReducer';
 import userInfoReducer from './userInfoReducer';
 import deletedProspectReducer from './deletedProspectReducer';
-
+import prospectUOReducer from './prospectUOReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -17,6 +17,7 @@ const rootReducer = combineReducers({
   stockDiscover: stockDiscoverReducer,
   prospect: prospectReducer,
   deletedProspect: deletedProspectReducer,
+  prospectUO: prospectUOReducer,
   userInfo: userInfoReducer
 });
 

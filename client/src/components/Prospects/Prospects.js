@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import { connect } from 'react-redux';
 import { useHistory, Link } from "react-router-dom";
 import ProspectsFlow from './ProspectsFlow';
 import Axios from "axios";
 import { debounce } from "../../helpers/SearchHelper";
+import { receiveProspectUO } from '../../actions/prospectUO';
+import "../../css/Prospects.css";
 
-const Prospects = ({isAuthed, prospect, currentUser, deletedProspect}) => {
+const Prospects = ({isAuthed, prospect, currentUser, deletedProspect, receiveProspectUO}) => {
     const history = useHistory();
     const [fetchedProspects, setFetchedProspects] = useState();
     // const [deleted, setDelete] = useState(deletedProspect);
@@ -43,6 +43,11 @@ const Prospects = ({isAuthed, prospect, currentUser, deletedProspect}) => {
         fetching();
     }, [])
 
+    const handleClick = (prospect) => {
+      console.log(prospect)
+      receiveProspectUO(prospect.symbol);
+    }
+
     return (
       <Container>
         <Row className="d-flex justify-content-center mb-5">
@@ -56,7 +61,12 @@ const Prospects = ({isAuthed, prospect, currentUser, deletedProspect}) => {
             <Row>Company: {prospect.name}</Row>
             <Row>Symbol: {prospect.symbol}</Row>
             <Row>
-              <Link to="/advancedOptionSearch">Unusual Options</Link>
+              <Link
+                onClick={() => handleClick(prospect)}
+                to="/basicOptionSearch"
+              >
+                Unusual Options
+              </Link>
             </Row>
           </Col>
           <Col>
@@ -75,6 +85,7 @@ const MSTP = state => ({
 })
 
 const MDTP = (dispatch) => ({
+  receiveProspectUO: prospectUO => dispatch(receiveProspectUO(prospectUO))
   // receiveProspect: (prospect) => dispatch(receiveProspect(prospect)),
 });
 

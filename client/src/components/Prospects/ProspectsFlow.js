@@ -35,7 +35,7 @@ const ProspectsFlow = props => {
               <th>Matches</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody >
             {props.value.map(company => (
               <tr key={`${company.idx}`}>
                   <td onClick={() => props.receiveProspect(company)}>{company.name}</td>

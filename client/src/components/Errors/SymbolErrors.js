@@ -5,7 +5,7 @@ function SymbolErrors() {
     return (
         <Alert variant="danger" >
             <p>
-                Invalid symbol.
+                Invalid symbol or no unusual options.
             </p>
         </Alert>
     )
