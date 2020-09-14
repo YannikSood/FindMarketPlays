@@ -5,15 +5,34 @@
 .image {
     padding-top: 10px;
     padding-bottom: 15px;
+    max-width: 200px;
+}
+
+.parent {
+    /* position: absolute;
+    top: 70px; */
 }
 
 #background {
-    background: black;
+    background: #1a1a1a;
     height: 320px;
-    width: 320px;
+    width: 100%;
+    min-width: 80%;
     border-radius: 5px;
-    margin: 10px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media only screen and (max-width: 767px) {
+    #widgetLess {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 767px) {
+    #widgetGreater {
+        display: none;
+    }
 }

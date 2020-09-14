@@ -297,58 +297,76 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
     }
 
     return (
-        <Fragment>
-            {/* <ScrollingWidget className="scrolling"/> */}
-            <Container>
-                {/* <Row className="widget__wrapper"> */}
-                    <Col md={6}>
-                    {/* <Col md={6}> */}
-                            <h1>Stock Discover</h1>
-                    </Col>
+      <Fragment>
+        {/* <ScrollingWidget className="scrolling"/> */}
+        <Container className="parent">
+          {/* <Row className="widget__wrapper"> */}
+          <Col md={6}>
+            {/* <Col md={6}> */}
+            <h1>Stock Discover</h1>
+          </Col>
 
-                    {loading()}
-                {/* </Row> */}
-                <Row>
-                    <Col className="widget__col">
-           
-                        {showFlow()}
+          {loading()}
+          {/* </Row> */}
+          <Row>
+            <Col className="widget__col">{showFlow()}</Col>
 
-                    </Col>
-
-                    <Col className="widget__col">
-                        <TradingViewWidget
-                            symbol={ticker}
-                            theme={Themes.DARK}
-                            locale="en"
-                            autosize
-                        />
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col>
-                    <Row>
-                        <Button className="ml-2" onClick={() => leftSwipe()} variant="outline-light"> Swipe Left</Button>
-                        <Button className="ml-2" onClick={() => rightSwipe()} variant="outline-light"> Swipe Right</Button>
-                    </Row>
-                    </Col>
-                    <Col>
+            <Col id="widgetLess" className="widget__col">
+              <TradingViewWidget
+                symbol={ticker}
+                theme={Themes.DARK}
+                locale="en"
+                autosize
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col id="widgetGreater" className="widget__col">
+              <TradingViewWidget
+                symbol={ticker}
+                theme={Themes.DARK}
+                locale="en"
+                autosize
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Row className="d-flex justify-content-center">
+                <Button
+                  className="ml-2"
+                  onClick={() => leftSwipe()}
+                  variant="outline-light"
+                >
+                  {" "}
+                  Swipe Left
+                </Button>
+                <Button className="ml-2">
+                  {/* <Button className='mt-3'> */}
+                  <Link to="/prospects">My Prospects</Link>
+                </Button>
+                <Button
+                  className="ml-2"
+                  onClick={() => rightSwipe()}
+                  variant="outline-light"
+                >
+                  {" "}
+                  Swipe Right
+                </Button>
+              </Row>
+            </Col>
+            {/* <Col>
                         <Row>
-                            <Button >
-                                <Link to="/prospects">My Prospects</Link>
-                            </Button>
                         </Row>
-                    </Col>
-                </Row>
-                <Row>
-                  {showErr()}
-                </Row>
+                    </Col> */}
+          </Row>
+          <Row>{showErr()}</Row>
 
-                {/* <Row>
+          {/* <Row>
                     <Button className="ml-2" onClick={()} variant="outline-light"> More Info Button</Button>
                 </Row> */}
-            </Container>
-        </Fragment>
+        </Container>
+      </Fragment>
     );
 };
     

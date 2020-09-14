@@ -11,6 +11,7 @@ const SDFlow = props => {
   let company = props.companyInfo;
   let logo = props.logo;
   let logoUrl = logo.url ? logo.url : "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/IXG.png";
+  
   return (
     // at 767 pixels, we change its width to 24rem
     <Card
@@ -31,26 +32,6 @@ const SDFlow = props => {
         </Card.Text>
 
         <Card.Text>Latest Price: ${stock.latestPrice}</Card.Text>
-
-        {/* <Table responsive  variant="dark">
-                <thead>
-                    <tr>
-                    <th>Ticker</th> 
-                    <th>Company</th>
-                    <th>Latest Price</th>
-                    </tr>
-                </thead>
-                {/* {console.log(props.value)} */}
-        {/* {props.value.map(item => ( */}
-        {/* <tbody>
-                    <tr>
-                    <td>{stock.symbol}</td>
-                    <td>{stock.companyName}</td>
-                    <td>${stock.latestPrice}</td>
-                    </tr>
-                </tbody> */}
-        {/* ))} */}
-        {/* </Table> */}
       </Card.Body>
     </Card>
   );
