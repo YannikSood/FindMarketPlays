@@ -1,10 +1,11 @@
 import React from 'react';
-import Table from 'react-bootstrap/Table';
 import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
-import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 import Image from 'react-bootstrap/Image';
-import Container from 'react-bootstrap/Container';
+
+// import Button from 'react-bootstrap/Button'
+// import TradingViewWidget, { Themes } from 'react-tradingview-widget';
+// import Container from 'react-bootstrap/Container';
+// import Table from 'react-bootstrap/Table';
 
 import "../../css/SDScreen.css";
 

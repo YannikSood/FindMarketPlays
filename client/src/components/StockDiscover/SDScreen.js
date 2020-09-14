@@ -4,26 +4,28 @@ import Col from 'react-bootstrap/Col';
 import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import InputGroup from "react-bootstrap/InputGroup";
-import Form from 'react-bootstrap/Form';
 import { useHistory, Link } from 'react-router-dom';
-import ScrollingWidget from '../Widgets/ScrollingWidget';
 import { debounce } from '../../helpers/SearchHelper';
-import SymbolErrors from '../Errors/SymbolErrors';
 import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
 import Axios from "axios";
 import SDFlow from './SDFlow';
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 import { receiveUserLists } from '../../actions/stockDiscover';
 import { receiveUserInfo } from '../../actions/userInfo';
-// import { userInfo } from 'os';
-import { current } from 'immer';
-import Card from 'react-bootstrap/Card'
-import ListGroup from 'react-bootstrap/ListGroup'
-import ListGroupItem from 'react-bootstrap/ListGroupItem'
 import firebase from "../../firebase/firebase";
 import SwipeErrors from '../Errors/SwipeErrors';
 import '../../css/SDScreen.css';
+
+//Unused
+// import { userInfo } from 'os';
+// import { current } from 'immer';
+// import Card from 'react-bootstrap/Card'
+// import ListGroup from 'react-bootstrap/ListGroup'
+// import ListGroupItem from 'react-bootstrap/ListGroupItem'
+// import SymbolErrors from '../Errors/SymbolErrors';
+// import ScrollingWidget from '../Widgets/ScrollingWidget';
+// import InputGroup from "react-bootstrap/InputGroup";
+// import Form from 'react-bootstrap/Form';
 
 // changed to send options as one object instead of an array to SDFlow because the return value of fetch is an object.
 // can change back to array depending on what we want (just wrap the object in a bracket) and uncomment
@@ -106,7 +108,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
             <Container>
               <Row>
                 <Col>
-                  <h1>Loading data. . .</h1>
+                  <h5>Loading data. . .</h5>
                 </Col>
               </Row>
             </Container>
@@ -209,7 +211,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                 counter = 1;
                 setErrors(false);
                 
-            } else if (time != 0) {
+            } else if (time !== 0) {
                 // set error in state
                 setErrors(true);
                 
@@ -262,7 +264,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
               time = 0;
               counter = 1;
               setErrors(false);
-            } else if (time != 0) {
+            } else if (time !== 0) {
               setErrors(true);
 
               return;
@@ -303,7 +305,8 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
           {/* <Row className="widget__wrapper"> */}
           <Col md={6}>
             {/* <Col md={6}> */}
-            <h1>Stock Discover</h1>
+            <h1>Discover New Stocks!</h1>
+            {/* <p>Add a stock to your watchlist. Get detailed information for a stock from your watchlist.</p> */}
           </Col>
 
           {loading()}
@@ -339,11 +342,11 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                   variant="outline-light"
                 >
                   {" "}
-                  Swipe Left
+                  Pass on Stock
                 </Button>
                 <Button className="ml-2">
                   {/* <Button className='mt-3'> */}
-                  <Link to="/prospects">My Prospects</Link>
+                  <Link to="/prospects">Watchlist</Link>
                 </Button>
                 <Button
                   className="ml-2"
@@ -351,7 +354,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                   variant="outline-light"
                 >
                   {" "}
-                  Swipe Right
+                  Add to Watchlist
                 </Button>
               </Row>
             </Col>
