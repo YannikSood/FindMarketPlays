@@ -332,7 +332,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
           </Row>
           <Row>
             <Col>
-              <Row className="d-flex justify-content-center">
+              <Row className="mt-2 d-flex justify-content-center">
                 <Button
                   className="ml-2"
                   onClick={() => leftSwipe()}
