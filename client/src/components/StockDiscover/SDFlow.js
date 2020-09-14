@@ -10,13 +10,13 @@ const SDFlow = props => {
   let company = props.companyInfo;
   let logo = props.logo;
   return (
-    <Card  className="bg-dark text-white" style={{ width: '24rem', height: '24rem'}}>
+    <Card  className="bg-dark text-white">
         
             <Card.Header as="h5">{company.companyName}</Card.Header>
             
             <Card.Body>
 
-            <Image src={logo.url} roundedCircle />
+            <Card.Img variant="top" src={logo.url} />
 
             <Card.Subtitle>
             ${stock.symbol}
