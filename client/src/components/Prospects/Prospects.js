@@ -10,26 +10,35 @@ import ProspectsFlow from './ProspectsFlow';
 import Axios from "axios";
 import { debounce } from "../../helpers/SearchHelper";
 
-const Prospects = ({isAuthed, prospect, currentUser}) => {
+const Prospects = ({isAuthed, prospect, currentUser, deletedProspect}) => {
     const history = useHistory();
     const [fetchedProspects, setFetchedProspects] = useState();
+    // const [deleted, setDelete] = useState(deletedProspect);
+
+    const fetching = () => {
+      if (!isAuthed) {
+          history.push("/login");
+        } else {
+          const fetchData = () => {
+            let url = `/prospects/${currentUser.email}/`;
+            Axios.get(url, {
+              headers: { "Content-Type": "application/json" },
+            })
+              .then((res) => {
+                setFetchedProspects(res.data.info);
+              })
+              .catch((err) => console.log(err));
+          };
+          debounce(fetchData());
+        }
+    }
 
     useEffect(() => {
-        if (!isAuthed) {
-            history.push('/login')
-        } else {
-            const fetchData = () => { 
-              let url = `/prospects/${currentUser.email}/`
-              Axios.get(url, {
-                headers: { "Content-Type": "application/json" }
-              })
-                .then((res) => {
-                  setFetchedProspects(res.data.info);
-                })
-                .catch(err => console.log(err))
-            }
-            debounce(fetchData())
-        }
+      fetching();     
+    }, [deletedProspect])
+    // clicking discard does not trip useEffect, which updates fetchedProspects for table
+    useEffect(() => {
+        fetching();
     }, [])
 
     return (
@@ -42,7 +51,6 @@ const Prospects = ({isAuthed, prospect, currentUser}) => {
             <Row>
               <h2>Data</h2>
             </Row>
-            {console.log(prospect)}
             <Row>Company: {prospect.name}</Row>
             <Row>Symbol: {prospect.symbol}</Row>
             <Row>
@@ -60,7 +68,8 @@ const Prospects = ({isAuthed, prospect, currentUser}) => {
 const MSTP = state => ({
     isAuthed: state.auth.isAuthed,
     currentUser: state.auth.currentUser,
-    prospect: state.prospect
+    prospect: state.prospect,
+    deletedProspect: state.deletedProspect
 })
 
 const MDTP = (dispatch) => ({

@@ -6,6 +6,7 @@ import advancedSearchReducer from './advancedSearchReducer';
 import stockDiscoverReducer from "./stockDiscoverReducer";
 import prospectReducer from './prospectReducer';
 import userInfoReducer from './userInfoReducer';
+import deletedProspectReducer from './deletedProspectReducer';
 
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   advancedSearch: advancedSearchReducer,
   stockDiscover: stockDiscoverReducer,
   prospect: prospectReducer,
+  deletedProspect: deletedProspectReducer,
   userInfo: userInfoReducer
 });
 

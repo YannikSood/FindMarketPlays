@@ -286,9 +286,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
     }
 
     const showFlow = () => {
-        debugger
         if (ticker && Object.keys(options).length) {
-            debugger
             return (
                 <Container>
                     <SDFlow value={options} companyInfo={company} logo={companyLogo}/>
