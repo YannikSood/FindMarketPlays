@@ -43,7 +43,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import AdvancedUOFeed from './components/Options/AdvancedUOFeed';
 import SDScreen from './components/StockDiscover/SDScreen';
 import Prospects from './components/Prospects/Prospects';
-// import fetchCounter from './util/swipeLimit';
 
 const App = () => {
 
@@ -61,7 +60,6 @@ const App = () => {
       if (user) {
         // User is signed in.
         setIsLoading(false);
-        // fetchCounter();
         dispatch(receiveUser(user));
       } else {
         // No user is signed in.
@@ -101,6 +99,10 @@ const App = () => {
 
                   <Route exact path={ROUTES.PROSPECTS}>
                     <Prospects/>
+                  </Route>
+
+                  <Route exact path={ROUTES.SHARE_LINK}>
+                    <Register/>
                   </Route>
 
                   <Route path={ROUTES.LOGIN}>

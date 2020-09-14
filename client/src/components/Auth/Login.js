@@ -8,6 +8,7 @@ import firebase from '../../firebase/firebase';
 import { receiveUser } from '../../reducers/authReducer';
 import LoginErrors from '../Errors/LoginErrors';
 import Axios from "axios";
+// import fetchCounter from '../../util/swipeLimit';
 import { receiveUserInfo } from '../../actions/userInfo';
 
 const Login = ({ isAuthed, receiveUserInfo, currentUser }) => {
@@ -26,29 +27,27 @@ const Login = ({ isAuthed, receiveUserInfo, currentUser }) => {
 
   const fetchCounter = (uid) => {
     const ref = firebase.database().ref(`users/${uid}`);
-    // const database = firebase.database()
-    // .ref(`users/${user.id}`);
+
     let data = null;
-    
+    // if no data exists, create new data for user in DB
+    // then, set it to state
+    // if data exists, set it to state
     ref.once('value')
       .then(snapshot => {
-        console.log(snapshot.val())
+
         data = snapshot.val()
+        if (!data) {
+
+          data = {
+            counter: 0,
+            time: 0,
+            share: false,
+            shareTime: 0
+          };
+          ref.set(data);
+        }
+        receiveUserInfo(data);
       })
-    if (!data) {
-      // create an object in DB that holds counter and time
-      data = {
-        id: uid,
-        counter: 0,
-        time: 0,
-      };
-      ref.set(data);
-    }
-
-    // set data to state
-    // needs reducer and actions
-
-    receiveUserInfo(data);
   }
 
   const handleSubmit = (event) => {
@@ -140,4 +139,5 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   receiveUserInfo: (userInfo) => dispatch(receiveUserInfo(userInfo))
 })
+// export default connect(mapStateToProps)(withRouter(Login));
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

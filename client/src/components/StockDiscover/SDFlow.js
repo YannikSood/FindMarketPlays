@@ -6,16 +6,13 @@ import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 import Image from 'react-bootstrap/Image'
 
 const SDFlow = props => {
-  // console.log(props.value)
   let stock = props.value;
   let company = props.companyInfo;
   let logo = props.logo;
-  console.log(logo);
   return (
     <Card  className="bg-dark text-white" style={{ width: '24rem', height: '24rem'}}>
         <Card.Body>
             <Card.Title>{stock.companyName} </Card.Title>
-
             <Image src={logo.url} roundedCircle />
 
             <Card.Subtitle>
