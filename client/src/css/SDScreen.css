@@ -13,9 +13,13 @@
     top: 70px; */
 }
 
+.flow-container {
+    
+}
+
 #background {
     background: #1a1a1a;
-    height: 320px;
+    height: 220px;
     width: 100%;
     min-width: 80%;
     border-radius: 5px;

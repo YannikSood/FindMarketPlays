@@ -4,6 +4,8 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 import Image from 'react-bootstrap/Image';
+import Container from 'react-bootstrap/Container';
+
 import "../../css/SDScreen.css";
 
 const SDFlow = props => {

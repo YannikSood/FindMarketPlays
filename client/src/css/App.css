@@ -70,6 +70,17 @@ a:hover {
 }
 
 /* Widgets */
+
+.sd_widget {
+  max-height: 350px;
+}
+
+@media only screen and (max-width: 767px) {
+  .sd_widget {
+    min-height: 400px;
+  }
+}
+
 .widget__col {
   min-height: 450px;
 }

@@ -309,9 +309,9 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
           {loading()}
           {/* </Row> */}
           <Row>
-            <Col className="widget__col">{showFlow()}</Col>
+            <Col className="mt-0 mb-0">{showFlow()}</Col>
 
-            <Col id="widgetLess" className="widget__col">
+            <Col id="widgetLess" className="sd_widget">
               <TradingViewWidget
                 symbol={ticker}
                 theme={Themes.DARK}
@@ -321,7 +321,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
             </Col>
           </Row>
           <Row>
-            <Col id="widgetGreater" className="widget__col">
+            <Col id="widgetGreater" className="sd_widget">
               <TradingViewWidget
                 symbol={ticker}
                 theme={Themes.DARK}
@@ -355,10 +355,6 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                 </Button>
               </Row>
             </Col>
-            {/* <Col>
-                        <Row>
-                        </Row>
-                    </Col> */}
           </Row>
           <Row>{showErr()}</Row>
 
