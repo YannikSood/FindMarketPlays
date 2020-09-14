@@ -61,56 +61,34 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                     Axios.get(url2, {
                       headers: { "Content-Type": "application/json" },
                     })
-                      // fetch(url2, {
-                      //     headers: { "Content-Type": "application/json" },
-                      // })
                       .then((res) => {
-                        // // res.json().then((json) => {
-                        //   console.log(res)
-                        // // //   setOptions(json.message || {});
-                        //   // console.log(`company: ` + json.message)
-                        //   //Get company info
+                            setOptions(res.data.message || {});
                             const url3 = `/getCompany/${res.data.message.symbol}`;
-                        //   Axios.get(url3, {
-                        //     headers: { "Content-Type": "application/json" }
-                        //   })
                             fetch(url3, {
                             headers: { "Content-Type": "application/json" },
                             })
                             .then(res2 => {
                                     res2.json().then(json => {
-                                        console.log(json.message)
+                                        setCompany(json.message)
+                                        const url4 = `/getLogo/${res.data.message.symbol}`
+
+                                        fetch(url4, {
+                                            headers: {
+                                                "Content-Type": "application/json",
+                                            }
+                                        })
+                                        .then(res3 => {
+                                            res3.json().then(json => {
+                                                setCompanyLogo(json.message || {});
+                                                setLoader(false);
+                                            })
+                                        })
+                                        .catch(err => console.log(err))
                                     })
 
-                            //   setCompany(res2.data.message || {});
                             })
                             .catch(err => console.log(err))
-                        //   fetch(url3, {
-                        //     headers: { "Content-Type": "application/json" },
-                        //   })
-                        //     .then((res2) =>
-                        //       res2.json().then((json) => {
-                        //         setCompany(json.message || {});
-                        //         // setLoader(false);
-
-                        //         const url4 = `/getLogo/${res.data.message}`;
-                        //         fetch(url4, {
-                        //           headers: {
-                        //             "Content-Type": "application/json",
-                        //           },
-                        //         })
-                        //           .then((res2) =>
-                        //             res2.json().then((json) => {
-                        //               // console.log("logo:" + json);
-                        //               setCompanyLogo(json.message || {});
-                        //               setLoader(false);
-                        //             })
-                        //           )
-                        //           .catch((err) => console.log(err));
-                        //       })
-                        //     )
-                        //     .catch((err) => console.log(err));
-                        // })
+                    
                       })
                       .catch((err) => console.log(err));
 
@@ -164,10 +142,22 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                         headers: { "Content-Type": "application/json" },
                     })
                     .then((res3) => {
-                        // console.log("company: " + res3.data.message)
                         setCompany(res3.data.message || {});
                         
-                        setLoader(false);
+                        const url4 = `/getLogo/${res.data.message.symbol}`;
+
+                        fetch(url4, {
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                        })
+                          .then((res3) => {
+                            res3.json().then((json) => {
+                              setCompanyLogo(json.message || {});
+                              setLoader(false);
+                            });
+                          })
+                          .catch((err) => console.log(err));
                     })
                     .catch((err) => console.log(err));
                  
@@ -192,12 +182,12 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
 
         if (share && shareTime >= Date.now()) {
             serverCall(swipeUrl, email);
+            counter = 0
             
         } else {
             // if not or if expired
             share = false;
             shareTime = 0;
-            counter = 0;
             
             if (counter < limit && time === 0) {
                 counter += 1;
@@ -250,11 +240,11 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         // checks if shareable link has been shared
         if (share && shareTime >= Date.now()) {
             serverCall(swipeUrl, email)
+            counter = 0;
         } else {
             // if not or if expired
             share = false;
             shareTime = 0;
-            counter = 0;
             if (counter < limit && time === 0) {
               counter += 1;
               time = 0;
@@ -296,7 +286,9 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
     }
 
     const showFlow = () => {
+        debugger
         if (ticker && Object.keys(options).length) {
+            debugger
             return (
                 <Container>
                     <SDFlow value={options} companyInfo={company} logo={companyLogo}/>

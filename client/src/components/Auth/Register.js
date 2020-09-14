@@ -22,7 +22,8 @@ const Register = ({ isAuthed, receiveUserInfo }) => {
   const checkURL = () => {
     const arr = window.location.href.split("/");
     const id = arr[arr.length - 1];
-    
+    console.log(id)
+    debugger
     let ref = firebase.database().ref(`users/${id}`);
     ref.once('value')
       .then(snapshot => {
@@ -30,11 +31,9 @@ const Register = ({ isAuthed, receiveUserInfo }) => {
         if (!data.share) {
           data.share = true;
           data.shareTime = Date.now() + 30 * 1000;
-          // data.shareTime = Date.now() + 24 * 60 * 60 * 1000;
         } else {
           data.shareTime = Date.now() + 30 * 1000;
         }
-        receiveUserInfo(data);
         ref.set(data)
       })
       .catch(err => console.log(err))
@@ -51,12 +50,24 @@ const Register = ({ isAuthed, receiveUserInfo }) => {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((user) => {
         console.log('Success signing up', user);
-        
+        checkURL();
+        let data = {
+          counter: 0,
+          time: 0,
+          share: false,
+          shareTime: 0,
+        };
+        debugger
+        let ref = firebase.database().ref(`users/${user.user.uid}`);
+        ref.set(data)
+        receiveUserInfo(data);
         let url = `/stockDiscover/${email}/register`
         Axios.post(url, {
           headers: {"Content-Type": "application/json"}
         })
-          .then(res => console.log(res))
+          .then(res => {
+            console.log(res);
+          })
           .catch(err => console.log(err))
       })
       .catch((error) => {
@@ -74,7 +85,6 @@ const Register = ({ isAuthed, receiveUserInfo }) => {
         </Row>
         <Row>
           <Col>
-          {checkURL()}
             {RegisterErrors(registerErrors)}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formBasicEmail">
