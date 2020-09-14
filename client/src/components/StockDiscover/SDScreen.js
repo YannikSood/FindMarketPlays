@@ -23,6 +23,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import ListGroupItem from 'react-bootstrap/ListGroupItem'
 import firebase from "../../firebase/firebase";
 import SwipeErrors from '../Errors/SwipeErrors';
+import '../../css/SDScreen.css';
 
 // changed to send options as one object instead of an array to SDFlow because the return value of fetch is an object.
 // can change back to array depending on what we want (just wrap the object in a bracket) and uncomment
@@ -288,7 +289,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
     const showFlow = () => {
         if (ticker && Object.keys(options).length) {
             return (
-                <Container>
+                <Container >
                     <SDFlow value={options} companyInfo={company} logo={companyLogo}/>
                 </Container>
             )
@@ -301,6 +302,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
             <Container>
                 {/* <Row className="widget__wrapper"> */}
                     <Col md={6}>
+                    {/* <Col md={6}> */}
                             <h1>Stock Discover</h1>
                     </Col>
 
@@ -332,7 +334,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                     </Col>
                     <Col>
                         <Row>
-                            <Button>
+                            <Button >
                                 <Link to="/prospects">My Prospects</Link>
                             </Button>
                         </Row>

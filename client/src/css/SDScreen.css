@@ -1,0 +1,19 @@
+.prospects {
+    margin-top: 5px;
+}
+
+.image {
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
+
+#background {
+    background: black;
+    height: 320px;
+    width: 320px;
+    border-radius: 5px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

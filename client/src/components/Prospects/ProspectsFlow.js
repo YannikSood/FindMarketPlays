@@ -12,9 +12,6 @@ import { receiveDeletedProspect } from '../../actions/deletedProspect';
 
 
 const ProspectsFlow = props => {
-    const [prospects, setProspects] = useState();
-    const [prospect, setProspect] = useState();
-    let [deletedIdx, deletingIdx] = useState('deleting');
 
     // handle Axios call to server on click of "Discard"
     const handleClick = (idx) => {
@@ -23,9 +20,9 @@ const ProspectsFlow = props => {
         headers: { "Content-Type": "application/json" }
       })
       .then(res => {
-        setProspects(res.data.message);
+        // set deleted prospect to state so that the prospects component 
+        // knows to re-fetch data for table
         props.receiveDeletedProspect(res.data.message);
-        // take the array of data and pass it BACK to the table??
       })
       .catch(err => console.log(err))
     }
@@ -45,7 +42,6 @@ const ProspectsFlow = props => {
                   <td onClick={() => 
                     {
                       handleClick(company.idx)
-                      // deletingIdx(company.idx)
                     }} 
                     >Discard</td>
               </tr>

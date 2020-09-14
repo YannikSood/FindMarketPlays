@@ -34,10 +34,12 @@ const Prospects = ({isAuthed, prospect, currentUser, deletedProspect}) => {
     }
 
     useEffect(() => {
+      // fetch data after a prospect is deleted
       fetching();     
     }, [deletedProspect])
-    // clicking discard does not trip useEffect, which updates fetchedProspects for table
+
     useEffect(() => {
+      // fetch data after loading page
         fetching();
     }, [])
 

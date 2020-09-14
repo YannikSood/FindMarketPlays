@@ -368,7 +368,7 @@ app.get("/getLogo/:ticker", async (req, res) => {
       
       tempJSON = json;
       console.log(tempJSON); 
-  }))
+  }))   
   .catch(err => console.error(err)); // eslint-disable-line
   
   
