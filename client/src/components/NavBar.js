@@ -29,10 +29,10 @@ const NavigationAuth = (location, clearProspect) => {
             ></i>
             {/* <MenuItem onClick={() => setSB(false)}>FMP Beta</MenuItem> */}
             {/* <MenuItem >Dashboard</MenuItem> */}
-            <SubMenu title="Discover Stocks">
+            <SubMenu title="Discover Companies">
               <MenuItem>
                 <Link onClick={() => setSB(false)} to="/sdScreen">
-                  Discover Stocks
+                  Discover Companies
                 </Link>
               </MenuItem>
               <MenuItem>
@@ -148,12 +148,12 @@ const NavigationAuth = (location, clearProspect) => {
                 <DropdownButton
                     // className="ml-2"
                     className="ml-2 d-none d-lg-flex"
-                    title="Discover Stocks"
+                    title="Discover Companies"
                     // size="md"
                     variant="warning"
                   >
                 <Dropdown.Item href={`${ROUTES.SD_SCREEN}`}>
-                  Discover Stocks
+                  Discover Companies
                 </Dropdown.Item>
                 <Dropdown.Divider />
                   <Dropdown.Item href={`${ROUTES.PROSPECTS}`}>
