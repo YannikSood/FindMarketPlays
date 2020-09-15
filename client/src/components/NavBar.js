@@ -151,7 +151,7 @@ const NavigationAuth = (location) => {
         </Nav>
       </Navbar.Collapse>
       <Button
-        className="d-none d-sm-flex"
+        className="d-none d-lg-flex"
         variant="primary"
         onClick={() => {
           firebase.auth().signOut();
@@ -161,7 +161,7 @@ const NavigationAuth = (location) => {
         Sign Out
       </Button>
     </Navbar>
-    {showSB()}
+      {showSB()}
   </Container>
   )
 };
