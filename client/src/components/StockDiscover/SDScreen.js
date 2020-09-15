@@ -400,9 +400,8 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
           </Row>
           <Row>{showErr()}</Row>
 
-          {/* <Row>
-                    <Button className="ml-2" onClick={()} variant="outline-light"> More Info Button</Button>
-                </Row> */}
+          
+          {/* </Row>  */}
         </Container>
       </Fragment>
     );

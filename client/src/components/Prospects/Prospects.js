@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -101,9 +101,18 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
 
     return (
       <Container>
+      <Fragment>
+
         <Row className="d-flex justify-content-center mb-5">
           <h1>My Watchlist</h1>
         </Row>
+        
+        <Row className="d-flex justify-content-center">
+        <Button className="mt-2">
+            <Link className="sdWatchLink" to="/sdScreen">Discover Stocks</Link>
+          </Button>
+        </Row>
+
         <Row>
 
         <Col id="table-col">
@@ -116,11 +125,8 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
             {displayData()}
           </Col>
         </Row>
-        <Row className="d-flex justify-content-center">
-          <Button className="mt-2">
-            <Link className="sdWatchLink" to="/sdScreen">Discover Stocks</Link>
-          </Button>
-        </Row>
+        
+        </Fragment>
       </Container>
     );
 }
