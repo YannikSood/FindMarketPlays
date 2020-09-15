@@ -14,23 +14,34 @@ import { receiveDeletingProspect } from '../../actions/deletingProspect';
 
 const ProspectsFlow = props => {
 
+    const [inProgress, setProgress] = useState(false);
+
     // handle Axios call to server on click of "Discard"
     const handleClick = (idx) => {
-      let url = `prospects/${props.currentUser.email}/${idx}`;
-      Axios.delete(url, {
-        headers: { "Content-Type": "application/json" }
-      })
-      .then(res => {
-        // sets state to re-render prospects table
-        props.receiveDeletingProspect(true)
+      if (!inProgress) {
+        props.receiveDeletingProspect(true);
+        setProgress(true)
+        let url = `prospects/${props.currentUser.email}/${idx}`;
+        Axios.delete(url, {
+          headers: { "Content-Type": "application/json" }
+        })
+        .then(res => {
+          // set deleting loader
+          props.receiveDeletingProspect(false);
+  
+          // set deleted prospect to state so that the prospects component 
+          // knows to re-fetch data for table. re-renders
+          props.receiveDeletedProspect(res.data.message);
 
-        // set deleted prospect to state so that the prospects component 
-        // knows to re-fetch data for table
-        props.receiveDeletedProspect(res.data.message);
-      })
-      .catch(err => console.log(err))
+          // set loading loader
+          setProgress(false)
+        })
+        .catch(err => console.log(err))
+      }
+
     }
-
+    debugger
+    console.log(props.value)
     if (props.value) {
       return (
         <Table responsive striped bordered hover variant="dark">

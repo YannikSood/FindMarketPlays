@@ -6,6 +6,7 @@
 #table-col {
     height: 300px;
     overflow-y: scroll;
+    border: 1px solid white;
 }
 
 #data-col {

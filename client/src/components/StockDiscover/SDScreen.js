@@ -105,29 +105,55 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         }
     }, []);
 
+    // render swipe buttons only after data is completely fetched
     const allowSwipes = () => {
       if (!inProgress) {
         return (
+          // 403px is when the buttons are in the wrong positions
           <Row className="mt-2 d-flex justify-content-center">
             <Button
               className="ml-2"
+              id="buttonsSmall"
               onClick={() => leftSwipe()}
               variant="outline-light"
             >
               {" "}
               Pass on Stock
             </Button>
-            <Button className="ml-2">
+            <Button className="ml-2"
+            id="buttonsSmall">
               {/* <Button className='mt-3'> */}
               <Link to="/prospects">Watchlist</Link>
             </Button>
             <Button
               className="ml-2"
+              id="buttonsSmall"
               onClick={() => rightSwipe()}
               variant="outline-light"
             >
               {" "}
               Add to Watchlist
+            </Button>
+
+            <Button
+              className="ml-2" id="buttonsLarge"
+              onClick={() => leftSwipe()}
+              variant="outline-light"
+            >
+              {" "}
+              Pass on Stock
+            </Button>
+            <Button
+              className="ml-2" id="buttonsLarge"
+              onClick={() => rightSwipe()}
+              variant="outline-light"
+            >
+              {" "}
+              Add to Watchlist
+            </Button>
+            <Button className="ml-2 mt-2" id="buttonsLarge">
+              {/* <Button className='mt-3'> */}
+              <Link to="/prospects">Watchlist</Link>
             </Button>
           </Row>
         );
@@ -318,7 +344,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
 
     const showErr = () => {
         if (errors) {
-            return SwipeErrors()
+            return <SwipeErrors />
         }
     }
 

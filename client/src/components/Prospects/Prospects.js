@@ -9,6 +9,7 @@ import Axios from "axios";
 import { debounce } from "../../helpers/SearchHelper";
 import { receiveProspectUO } from '../../actions/prospectUO';
 import { receiveDeletingProspect } from '../../actions/deletingProspect';
+import Button from "react-bootstrap/Button";
 import "../../css/Prospects.css";
 
 const Prospects = ({deletingProspect, isAuthed, prospect, currentUser, deletedProspect, receiveProspectUO, receiveDeletingProspect}) => {
@@ -50,45 +51,52 @@ const Prospects = ({deletingProspect, isAuthed, prospect, currentUser, deletedPr
     }
 
     const displayData = () => {
-
       // WHILE DELETINGPROSPECT IS TRUE, RETURN A LOADER
-
-      console.log(prospect)
-      if (Object.keys(prospect).length) {
+      if (deletingProspect) {
         return (
-          <Col id="data-col">
-            <Row className="p-2">{prospect.name}</Row>
-            <Row className="p-2">{prospect.symbol}</Row>
+          <Col className="d-flex justify-content-center" id="data-col">
             <Row className="p-2">
-              <Link
-                className="prospectUO"
-                onClick={() => handleClick(prospect)}
-                to="/basicOptionSearch"
-              >
-                Unusual Options
-              </Link>
-            </Row>
-            <Row className="p-2">
-              <Link
-                className="prospectUO"
-                onClick={() => handleClick(prospect)}
-                to="/stock"
-              >
-                Stock Lookup
-              </Link>
+              <h2>Deleting...</h2>
             </Row>
           </Col>
         );
       } else {
-        return (
-          <Col className="d-flex justify-content-center" id="data-col">
-            <Row className="p-2">
-              <h2>Select a match!</h2>
-            </Row>
+          if (Object.keys(prospect).length) {
+            return (
+              <Col id="data-col">
+                <Row className="p-2">{prospect.name}</Row>
+                <Row className="p-2">{prospect.symbol}</Row>
+                <Row className="p-2">
+                  <Link
+                    className="prospectUO"
+                    onClick={() => handleClick(prospect)}
+                    to="/basicOptionSearch"
+                  >
+                    Unusual Options
+                  </Link>
+                </Row>
+                <Row className="p-2">
+                  <Link
+                    className="prospectUO"
+                    onClick={() => handleClick(prospect)}
+                    to="/stock"
+                  >
+                    Stock Lookup
+                  </Link>
+                </Row>
+              </Col>
+            );
+          } else {
+            return (
+              <Col className="d-flex justify-content-center" id="data-col">
+                <Row className="p-2">
+                  <h2>Select a match!</h2>
+                </Row>
 
-          </Col>
-        );
-      }
+              </Col>
+            );
+          }
+      }      
     }
 
     return (
@@ -101,6 +109,11 @@ const Prospects = ({deletingProspect, isAuthed, prospect, currentUser, deletedPr
           <Col id="table-col">
             <ProspectsFlow value={fetchedProspects} />
           </Col>
+        </Row>
+        <Row className="d-flex justify-content-center">
+          <Button className="mt-2">
+            <Link to="/sdScreen">Go to Stock Discover</Link>
+          </Button>
         </Row>
       </Container>
     );
