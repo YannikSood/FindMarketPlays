@@ -113,47 +113,29 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
           <Row className="mt-2 d-flex justify-content-center">
             <Button
               className="ml-2"
-              id="buttonsSmall"
               onClick={() => leftSwipe()}
               variant="outline-light"
             >
               {" "}
               Pass
             </Button>
-            <Button className="ml-2"
-            id="buttonsSmall">
+            <Button className="ml-2" >
               {/* <Button className='mt-3'> */}
-              <Link className = "sdWatchLink" to="/prospects">My Watchlist</Link>
+              <Link
+                onClick={() => window.scrollTo(0, 0)}
+                className="sdWatchLink"
+                to="/prospects"
+              >
+                My Watchlist
+              </Link>
             </Button>
             <Button
-              className="ml-2"
-              id="buttonsSmall"
+              className="ml-2 mr-1"
               onClick={() => rightSwipe()}
               variant="outline-light"
             >
               {" "}
               Add
-            </Button>
-
-            <Button
-              className="ml-2" id="buttonsLarge"
-              onClick={() => leftSwipe()}
-              variant="outline-light"
-            >
-              {" "}
-              Pass
-            </Button>
-            <Button
-              className="ml-2" id="buttonsLarge"
-              onClick={() => rightSwipe()}
-              variant="outline-light"
-            >
-              {" "}
-              Add
-            </Button>
-            <Button className="ml-2 mt-2" id="buttonsLarge">
-              {/* <Button className='mt-3'> */}
-              <Link to="/prospects">My Watchlist</Link>
             </Button>
           </Row>
         );
