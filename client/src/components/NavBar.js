@@ -40,7 +40,7 @@ const NavigationAuth = (location) => {
               <MenuItem><Link onClick={() => setSB(false)} to="/advOptionFeed">Advanced Feed</Link></MenuItem>
             </SubMenu>
             <MenuItem><Link onClick={() => setSB(false)} to="/sdScreen">Stock Discover</Link></MenuItem>
-            <MenuItem><Link onClick={() => setSB(false)} to="/prospects">Prospects</Link></MenuItem>
+            <MenuItem><Link onClick={() => setSB(false)} to="/prospects">Watchlist</Link></MenuItem>
             <MenuItem><Link onClick={() => setSB(false)} to="/profile">Account</Link></MenuItem>
             <MenuItem className="signout"><Link onClick={() => {
               firebase.auth().signOut();
@@ -151,7 +151,7 @@ const NavigationAuth = (location) => {
         </Nav>
       </Navbar.Collapse>
       <Button
-        className="d-none d-sm-flex"
+        className="d-none d-lg-flex"
         variant="primary"
         onClick={() => {
           firebase.auth().signOut();
@@ -161,7 +161,7 @@ const NavigationAuth = (location) => {
         Sign Out
       </Button>
     </Navbar>
-    {showSB()}
+      {showSB()}
   </Container>
   )
 };

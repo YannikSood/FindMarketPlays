@@ -72,7 +72,14 @@ a:hover {
 /* Widgets */
 
 .sd_widget {
-  max-height: 350px;
+  max-height: 385px;
+  margin-top: 15px;
+}
+
+@media only screen and (max-width: 992px) {
+  .sd_widget {
+    max-height: 409px;
+  }
 }
 
 @media only screen and (max-width: 767px) {

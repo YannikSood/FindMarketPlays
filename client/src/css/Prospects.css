@@ -6,10 +6,16 @@
 #table-col {
     height: 300px;
     overflow-y: scroll;
+    border: 1px solid white;
 }
 
 #data-col {
     border: 1px white solid;
+}
+
+#row:hover {
+    cursor: pointer;
+    background: #1a1a1a
 }
 
 .prospectUO {

@@ -1,6 +1,6 @@
 import { RECEIVE_DELETING_PROSPECT } from '../actions/deletingProspect';
 
-const deletingProspectReducer = (state={}, action) => {
+const deletingProspectReducer = (state=false, action) => {
     Object.freeze(state);
 
     switch(action.type) {

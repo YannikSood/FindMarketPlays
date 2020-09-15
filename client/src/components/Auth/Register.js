@@ -27,11 +27,16 @@ const Register = ({ isAuthed, receiveUserInfo }) => {
     ref.once('value')
       .then(snapshot => {
         let data = snapshot.val();
+        // set timer for unlimited swipes
+        // Date.now is in milliseconds, so add your hours in milliseconds
         if (!data.share) {
           data.share = true;
           data.shareTime = Date.now() + 30 * 1000;
+          data.time = 0;
         } else {
+          // if someone shared multiple times and the timer is still active
           data.shareTime = Date.now() + 30 * 1000;
+          data.time = 0;
         }
         ref.set(data)
       })

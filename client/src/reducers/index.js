@@ -8,7 +8,7 @@ import prospectReducer from './prospectReducer';
 import userInfoReducer from './userInfoReducer';
 import deletedProspectReducer from './deletedProspectReducer';
 import prospectUOReducer from './prospectUOReducer';
-import deletingProspectReducer from './deletedProspectReducer';
+import deletingProspectReducer from './deletingProspectReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
