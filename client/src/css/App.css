@@ -17,9 +17,9 @@ body,
   margin: 15px auto;
 }
 
-/* a {
+a {
   color: rgba(255,255,255,.9)
-} */
+}
 
 a:hover {
   color: rgba(255,255,255,.75);
@@ -166,6 +166,6 @@ a:hover {
   color: rgba(255,255,255,.9);;
 } */
 
-.sdWatchLink {
+/* .sdWatchLink {
   color: rgba(255,255,255,.9);
-}
+} */

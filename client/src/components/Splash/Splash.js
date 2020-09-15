@@ -13,7 +13,7 @@ const Splash = () => {
           <Col className="text-center pt-5 mt-5">
           <img
             src={logo}
-            width="290"
+            width="320"
             height="170"
             className="d-inline-block align-top"
             alt="React Bootstrap logo"
