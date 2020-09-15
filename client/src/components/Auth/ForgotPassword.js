@@ -63,7 +63,7 @@ const ForgotPassword = ({ isAuthed }) => {
         <Row>
           <Col>
 
-            <Button href={ROUTES.LOGIN} variant="secondary">Login Page </Button>
+            <Button className="mt-2" href={ROUTES.LOGIN} variant="secondary">Login Page </Button>
 
           </Col>
         </Row>
@@ -71,7 +71,7 @@ const ForgotPassword = ({ isAuthed }) => {
         <Row>
           <Col>
 
-            <Button href={ROUTES.REGISTER} variant="secondary">Register Page</Button>
+            <Button className="mt-2" href={ROUTES.REGISTER} variant="secondary">Register Page</Button>
 
           </Col>
         </Row>

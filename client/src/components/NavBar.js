@@ -8,11 +8,12 @@ import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import '../css/Navbar.css';
 import logo from './Logos/fmp-dark-bg.png'
+import { clearProspect } from '../actions/prospect';
 
-const Navigation = ({ isAuthed, location }) => (
-  <div>{isAuthed ? NavigationAuth(location): NavigationNonAuth(location)}</div>
+const Navigation = ({ isAuthed, location, clearProspect }) => (
+  <div>{isAuthed ? NavigationAuth(location, clearProspect): NavigationNonAuth(location)}</div>
 );
-const NavigationAuth = (location) => {
+const NavigationAuth = (location, clearProspect) => {
   const [SBstatus, setSB] = useState();
   const history = useHistory();
 
@@ -102,6 +103,7 @@ const NavigationAuth = (location) => {
                   firebase.auth().signOut();
                   history.push("/");
                   setSB(false);
+                  clearProspect();
                 }}
                 to="/"
               >
@@ -232,7 +234,8 @@ const NavigationAuth = (location) => {
         variant="primary"
         onClick={() => {
           firebase.auth().signOut();
-          history.push('/')
+          history.push("/");
+          clearProspect();
         }}
       >
         Sign Out
@@ -297,4 +300,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(withRouter(Navigation));
+const MDTP = dispatch => ({
+  clearProspect: () => dispatch(clearProspect())
+})
+
+export default connect(mapStateToProps, MDTP)(withRouter(Navigation));
