@@ -137,7 +137,7 @@ const NavigationAuth = (location, clearProspect) => {
             <Navbar.Brand href={"/"}>
               <img
               src={logo}
-              width="220"
+              width="240"
               height="50"
               className="d-inline-block align-top"
               alt="React Bootstrap logo"
@@ -261,7 +261,7 @@ const NavigationNonAuth = (location) => {
       <Navbar.Brand href={"/"}>
             <img
             src={logo}
-            width="220"
+            width="240"
             height="50"
             className="d-inline-block align-top"
             alt="React Bootstrap logo"
