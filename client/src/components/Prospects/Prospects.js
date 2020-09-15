@@ -10,6 +10,7 @@ import { debounce } from "../../helpers/SearchHelper";
 import { receiveProspectUO } from '../../actions/prospectUO';
 import { receiveDeletingProspect } from '../../actions/deletingProspect';
 import { receiveFromProspect } from '../../actions/fromProspect';
+import { clearProspect } from '../../actions/prospect';
 import Button from "react-bootstrap/Button";
 import "../../css/Prospects.css";
 
@@ -108,20 +109,20 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
         </Row>
         
         <Row className="d-flex justify-content-center">
-        <Button className="mt-2">
+        <Button className="mb-2">
             <Link className="sdWatchLink" to="/sdScreen">Discover Stocks</Link>
           </Button>
         </Row>
 
-        <Row>
+        <Row className="mb-3">
 
-        <Col id="table-col">
+          <Col id="table-col">
             <ProspectsFlow value={fetchedProspects} />
           </Col>
          
         </Row>
         <Row>
-          <Col id="table-col">
+          <Col id="table-wrap">
             {displayData()}
           </Col>
         </Row>
