@@ -109,7 +109,12 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
         <Col id="table-col">
             <ProspectsFlow value={fetchedProspects} />
           </Col>
-          {displayData()}
+         
+        </Row>
+        <Row>
+          <Col id="table-col">
+            {displayData()}
+          </Col>
         </Row>
         <Row className="d-flex justify-content-center">
           <Button className="mt-2">
