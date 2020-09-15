@@ -40,8 +40,6 @@ const ProspectsFlow = props => {
       }
 
     }
-    debugger
-    console.log(props.value)
     if (props.value) {
       return (
         <Table responsive striped bordered hover variant="dark">
