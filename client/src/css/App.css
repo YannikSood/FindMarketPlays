@@ -17,9 +17,9 @@ body,
   margin: 15px auto;
 }
 
-a {
+/* a {
   color: rgba(255,255,255,.9)
-}
+} */
 
 a:hover {
   color: rgba(255,255,255,.75);
@@ -155,4 +155,17 @@ a:hover {
   background-color: #004545;
   border-bottom: 1px solid #FFFFFF;
   border-radius: 1px
+}
+
+.discover-card {
+  background-color: #1E1E1E;
+  text-align: center;
+}
+
+.discover-link {
+  text-decoration-color: rgba(100,255,255,.9);
+}
+
+.sdWatchLink {
+  color: rgba(255,255,255,.9);
 }

@@ -83,10 +83,26 @@ const NavigationAuth = (location) => {
           <Navbar.Collapse id="responsive-navbar-nav" >
             <Nav className="d-flex justify-content-right" activeKey={location.pathname}>
                 <DropdownButton
+                    // className="ml-2"
+                    className="ml-2 d-none d-lg-flex"
+                    title="Discover Stocks"
+                    // size="md"
+                    variant="warning"
+                  >
+                <Dropdown.Item href={`${ROUTES.SD_SCREEN}`}>
+                  Discover Stocks
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                  <Dropdown.Item href={`${ROUTES.PROSPECTS}`}>
+                    My Watchlist
+                  </Dropdown.Item>
+                </DropdownButton>{' '} 
+
+                <DropdownButton
                   drop={"down"}
                   className="ml-2 d-none d-lg-flex"
                   // className="ml-2"
-                  title="Stocks Hub"
+                  title="Market Hub"
                   // size="md"
                   variant="light"
                 >
@@ -144,8 +160,8 @@ const NavigationAuth = (location) => {
             </DropdownButton>{' '} 
 
            
-            <Button className="ml-2 d-none d-lg-flex" onClick={() => history.push("/sdScreen")} variant="outline-light"> Stock Discover</Button>
-            <Button className="ml-2 d-none d-lg-flex" onClick={() => history.push("/prospects")} variant="outline-light"> Watchlist</Button>
+            {/* <Button className="ml-2 d-none d-lg-flex" onClick={() => history.push("/sdScreen")} variant="outline-light"> Stock Discover</Button> */}
+            {/* <Button className="ml-2 d-none d-lg-flex" onClick={() => history.push("/prospects")} variant="outline-light"> Watchlist</Button> */}
             <Button className="ml-2 d-none d-lg-flex" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
 
         </Nav>

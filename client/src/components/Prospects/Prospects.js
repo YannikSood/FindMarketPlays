@@ -105,14 +105,15 @@ const Prospects = ({deletingProspect, isAuthed, prospect, currentUser, deletedPr
           <h1>My Watchlist</h1>
         </Row>
         <Row>
-          {displayData()}
-          <Col id="table-col">
+
+        <Col id="table-col">
             <ProspectsFlow value={fetchedProspects} />
           </Col>
+          {displayData()}
         </Row>
         <Row className="d-flex justify-content-center">
           <Button className="mt-2">
-            <Link to="/sdScreen">Go to Stock Discover</Link>
+            <Link className="sdWatchLink" to="/sdScreen">Discover Stocks</Link>
           </Button>
         </Row>
       </Container>

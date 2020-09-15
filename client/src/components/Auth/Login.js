@@ -18,7 +18,7 @@ const Login = ({ isAuthed, receiveUserInfo, currentUser }) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (isAuthed) history.push('/market')
+    if (isAuthed) history.push('/sdScreen')
   }, [isAuthed, history]);
 
   const handleChange = (e) => {

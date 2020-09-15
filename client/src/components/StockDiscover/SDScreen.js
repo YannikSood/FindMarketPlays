@@ -118,12 +118,12 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
               variant="outline-light"
             >
               {" "}
-              Pass on Stock
+              Pass
             </Button>
             <Button className="ml-2"
             id="buttonsSmall">
               {/* <Button className='mt-3'> */}
-              <Link to="/prospects">Watchlist</Link>
+              <Link className = "sdWatchLink" to="/prospects">My Watchlist</Link>
             </Button>
             <Button
               className="ml-2"
@@ -132,7 +132,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
               variant="outline-light"
             >
               {" "}
-              Add to Watchlist
+              Add
             </Button>
 
             <Button
@@ -141,7 +141,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
               variant="outline-light"
             >
               {" "}
-              Pass on Stock
+              Pass
             </Button>
             <Button
               className="ml-2" id="buttonsLarge"
@@ -149,11 +149,11 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
               variant="outline-light"
             >
               {" "}
-              Add to Watchlist
+              Add
             </Button>
             <Button className="ml-2 mt-2" id="buttonsLarge">
               {/* <Button className='mt-3'> */}
-              <Link to="/prospects">Watchlist</Link>
+              <Link to="/prospects">My Watchlist</Link>
             </Button>
           </Row>
         );
@@ -205,7 +205,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                     .then((res3) => {
                         setCompany(res3.data.message || {});
                         
-                        const url4 = `/getLogo/${res.data.message.symbol}`;
+                        const url4 = `/getLogo/${res3.data.message.symbol}`;
 
                         fetch(url4, {
                           headers: {
@@ -365,7 +365,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
           {/* <Row className="widget__wrapper"> */}
           <Col md={6}>
             {/* <Col md={6}> */}
-            <h1>Discover New Stocks!</h1>
+            <h1>Discover New Companies!</h1>
             {/* <p>Add a stock to your watchlist. Get detailed information for a stock from your watchlist.</p> */}
           </Col>
 
