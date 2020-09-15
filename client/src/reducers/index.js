@@ -9,6 +9,7 @@ import userInfoReducer from './userInfoReducer';
 import deletedProspectReducer from './deletedProspectReducer';
 import prospectUOReducer from './prospectUOReducer';
 import deletingProspectReducer from './deletingProspectReducer';
+import fromProspectReducer from './fromProspectReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   deletedProspect: deletedProspectReducer,
   prospectUO: prospectUOReducer,
   deletingProspect: deletingProspectReducer,
+  fromProspect: fromProspectReducer,
   userInfo: userInfoReducer
 });
 

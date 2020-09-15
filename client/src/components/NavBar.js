@@ -21,35 +21,96 @@ const NavigationAuth = (location) => {
       return (
         <ProSidebar className="sidebar">
           <Menu>
-            <i onClick={() => setSB(false)} class="menu-icon fa-2x fa fa-bars" aria-hidden="true"></i>
+            <i
+              onClick={() => setSB(false)}
+              class="menu-icon fa-2x fa fa-bars"
+              aria-hidden="true"
+            ></i>
             {/* <MenuItem onClick={() => setSB(false)}>FMP Beta</MenuItem> */}
             {/* <MenuItem >Dashboard</MenuItem> */}
-            <SubMenu title="Stocks Hub" >
-              <MenuItem><Link onClick={() => setSB(false)} to="/market">Market Overview</Link></MenuItem>
-              <MenuItem><Link onClick={() => setSB(false)} to="/stock">Single Stock Lookup</Link></MenuItem>
+            <SubMenu title="Discover Stocks">
+              <MenuItem>
+                <Link onClick={() => setSB(false)} to="/sdScreen">
+                  Discover Stocks
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link onClick={() => setSB(false)} to="/prospects">
+                  My Watchlist
+                </Link>
+              </MenuItem>
             </SubMenu>
-            <SubMenu title="Research Hub" >
-              <MenuItem><Link onClick={() => setSB(false)} to="/DD">Reddit Research</Link></MenuItem>
-              <MenuItem><Link onClick={() => setSB(false)} to="newsFeed">News Search</Link></MenuItem>
-              <MenuItem><Link onClick={() => setSB(false)} to="/notes">My Research</Link></MenuItem>
+            <SubMenu title="Stocks Hub">
+              <MenuItem>
+                <Link onClick={() => setSB(false)} to="/market">
+                  Market Overview
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link onClick={() => setSB(false)} to="/stock">
+                  Single Stock Lookup
+                </Link>
+              </MenuItem>
             </SubMenu>
-            <SubMenu title="Unusual Options" >
-              <MenuItem><Link onClick={() => setSB(false)} to="/basicOptionSearch">Search</Link></MenuItem>
-              <MenuItem><Link onClick={() => setSB(false)} to="/basicOptionFeed">Feed</Link></MenuItem>
-              <MenuItem><Link onClick={() => setSB(false)} to="/advancedOptionSearch">Advanced Search</Link></MenuItem>
-              <MenuItem><Link onClick={() => setSB(false)} to="/advOptionFeed">Advanced Feed</Link></MenuItem>
+            <SubMenu title="Research Hub">
+              <MenuItem>
+                <Link onClick={() => setSB(false)} to="/DD">
+                  Reddit Research
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link onClick={() => setSB(false)} to="newsFeed">
+                  News Search
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link onClick={() => setSB(false)} to="/notes">
+                  My Research
+                </Link>
+              </MenuItem>
             </SubMenu>
-            <MenuItem><Link onClick={() => setSB(false)} to="/sdScreen">Stock Discover</Link></MenuItem>
-            <MenuItem><Link onClick={() => setSB(false)} to="/prospects">Watchlist</Link></MenuItem>
-            <MenuItem><Link onClick={() => setSB(false)} to="/profile">Account</Link></MenuItem>
-            <MenuItem className="signout"><Link onClick={() => {
-              firebase.auth().signOut();
-              history.push('/')
-              setSB(false)
-              }} to="/">Sign Out</Link></MenuItem>
+            <SubMenu title="Unusual Options">
+              <MenuItem>
+                <Link onClick={() => setSB(false)} to="/basicOptionSearch">
+                  Search
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link onClick={() => setSB(false)} to="/basicOptionFeed">
+                  Feed
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link onClick={() => setSB(false)} to="/advancedOptionSearch">
+                  Advanced Search
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link onClick={() => setSB(false)} to="/advOptionFeed">
+                  Advanced Feed
+                </Link>
+              </MenuItem>
+            </SubMenu>
+            <MenuItem>
+              <Link onClick={() => setSB(false)} to="/profile">
+                Account
+              </Link>
+            </MenuItem>
+            <MenuItem className="signout">
+              <Link
+                onClick={() => {
+                  firebase.auth().signOut();
+                  history.push("/");
+                  setSB(false);
+                }}
+                to="/"
+              >
+                Sign Out
+              </Link>
+            </MenuItem>
           </Menu>
         </ProSidebar>
-      )
+      );
     } else {
       return (
         <ProSidebar width={100} collapsed={true} className="sidebar-c">

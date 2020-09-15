@@ -62,7 +62,7 @@ const Login = ({ isAuthed, receiveUserInfo, currentUser }) => {
         .then(res => console.log(res))
         .catch(err => console.log(err))
         fetchCounter(res.user.uid)
-        dispatch(receiveUser(res));
+        dispatch(receiveUser(res.user));
       })
       .catch((error) => {
         // Handle Errors here.

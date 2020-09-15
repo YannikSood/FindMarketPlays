@@ -9,10 +9,11 @@ import Axios from "axios";
 import { debounce } from "../../helpers/SearchHelper";
 import { receiveProspectUO } from '../../actions/prospectUO';
 import { receiveDeletingProspect } from '../../actions/deletingProspect';
+import { receiveFromProspect } from '../../actions/fromProspect';
 import Button from "react-bootstrap/Button";
 import "../../css/Prospects.css";
 
-const Prospects = ({deletingProspect, isAuthed, prospect, currentUser, deletedProspect, receiveProspectUO, receiveDeletingProspect}) => {
+const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, currentUser, deletedProspect, receiveProspectUO, receiveDeletingProspect}) => {
     const history = useHistory();
     const [fetchedProspects, setFetchedProspects] = useState();
     const [deleting, setDeleting] = useState(false);
@@ -46,8 +47,8 @@ const Prospects = ({deletingProspect, isAuthed, prospect, currentUser, deletedPr
     }, [])
 
     const handleClick = (prospect) => {
-      console.log(prospect)
       receiveProspectUO(prospect.symbol);
+      receiveFromProspect(true);
     }
 
     const displayData = () => {
@@ -130,8 +131,8 @@ const MSTP = state => ({
 
 const MDTP = (dispatch) => ({
   receiveProspectUO: prospectUO => dispatch(receiveProspectUO(prospectUO)),
-  receiveDeletingProspect: deletingProspect => dispatch(receiveDeletingProspect(deletingProspect))
-  // receiveProspect: (prospect) => dispatch(receiveProspect(prospect)),
+  receiveDeletingProspect: deletingProspect => dispatch(receiveDeletingProspect(deletingProspect)),
+  receiveFromProspect: flag => dispatch(receiveFromProspect(flag))
 });
 
 export default connect(MSTP, MDTP)(Prospects);

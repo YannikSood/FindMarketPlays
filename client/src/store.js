@@ -7,7 +7,7 @@ import storage from 'redux-persist/lib/storage';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ["auth", "userInfo", "stockDiscover"]
+  blacklist: ["fromProspect"]
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -15,7 +15,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware({ serializableCheck: false, immutableCheck: false })
-    // .concat(logger)
+    .concat(logger)
 });
 
 export const persistor = persistStore(store);

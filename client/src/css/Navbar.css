@@ -1,8 +1,10 @@
 .sidebar {
     margin-left: 0px;
-    margin-top: 75px;
+    top: 75px;
     z-index: 9999;
-    overflow-y: scroll
+    overflow-y: scroll;
+    position: fixed;
+    height: auto;
 }
 
 .navbar {

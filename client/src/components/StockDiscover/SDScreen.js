@@ -39,7 +39,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
     const [company, setCompany] = useState({});
     const [companyLogo, setCompanyLogo] = useState({});
     const [inProgress, setProgress] = useState(false);
-    const waitTime = 4 * 60 * 60 * 1000;
+    const waitTime = 3 * 60 * 60 * 1000;
     let limit = 40;
     
     const history = useHistory();
