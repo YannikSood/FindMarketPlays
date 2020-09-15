@@ -162,9 +162,9 @@ a:hover {
   text-align: center;
 }
 
-.discover-link {
-  text-decoration-color: rgba(100,255,255,.9);
-}
+/* .discover-link {
+  color: rgba(255,255,255,.9);;
+} */
 
 .sdWatchLink {
   color: rgba(255,255,255,.9);
