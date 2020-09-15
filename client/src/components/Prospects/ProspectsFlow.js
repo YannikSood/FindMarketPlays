@@ -45,7 +45,7 @@ const ProspectsFlow = props => {
         <Table responsive striped bordered hover variant="dark">
           <thead>
             <tr>
-              <th>Matches</th>
+              <th>My Companies</th>
             </tr>
           </thead>
           <tbody >

@@ -57,7 +57,7 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
         return (
           <Col className="d-flex justify-content-center" id="data-col">
             <Row className="p-2">
-              <h2>Deleting...</h2>
+              <h4>Deleting...</h4>
             </Row>
           </Col>
         );
@@ -65,15 +65,14 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
           if (Object.keys(prospect).length) {
             return (
               <Col id="data-col">
-                <Row className="p-2">{prospect.name}</Row>
-                <Row className="p-2">{prospect.symbol}</Row>
+                <Row className="p-2"><h4>{prospect.name} [${prospect.symbol}]</h4></Row>
                 <Row className="p-2">
                   <Link
                     className="prospectUO"
                     onClick={() => handleClick(prospect)}
                     to="/basicOptionSearch"
                   >
-                    Unusual Options
+                    See Unusual Options Activity for ${prospect.symbol}
                   </Link>
                 </Row>
                 <Row className="p-2">
@@ -82,7 +81,7 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
                     onClick={() => handleClick(prospect)}
                     to="/stock"
                   >
-                    Stock Lookup
+                    Lookup ${prospect.symbol} using our stock tool!
                   </Link>
                 </Row>
               </Col>
@@ -91,7 +90,7 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
             return (
               <Col className="d-flex justify-content-center" id="data-col">
                 <Row className="p-2">
-                  <h2>Select a match!</h2>
+                  <h5>Select a company!</h5>
                 </Row>
 
               </Col>
