@@ -1,4 +1,4 @@
-import { RECEIVE_PROSPECT } from "../actions/prospect";
+import { RECEIVE_PROSPECT, CLEAR_PROSPECT } from "../actions/prospect";
 
 const prospectReducer = (state = {}, action) => {
   Object.freeze(state);
@@ -6,6 +6,8 @@ const prospectReducer = (state = {}, action) => {
   switch (action.type) {
     case RECEIVE_PROSPECT:
       return action.prospect;
+    case CLEAR_PROSPECT:
+      return {};
     default:
       return state;
   }

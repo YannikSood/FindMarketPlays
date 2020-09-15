@@ -31,11 +31,11 @@ const Register = ({ isAuthed, receiveUserInfo }) => {
         // Date.now is in milliseconds, so add your hours in milliseconds
         if (!data.share) {
           data.share = true;
-          data.shareTime = Date.now() + 30 * 1000;
+          data.shareTime = Date.now() + 3 * 60 * 60 * 1000;
           data.time = 0;
         } else {
           // if someone shared multiple times and the timer is still active
-          data.shareTime = Date.now() + 30 * 1000;
+          data.shareTime = Date.now() + 3 * 60 * 60 * 1000;
           data.time = 0;
         }
         ref.set(data)

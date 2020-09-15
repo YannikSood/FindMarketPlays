@@ -1,6 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Row, Col, Container, Form } from 'react-bootstrap';
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
+import Button from "react-bootstrap/Button";
 import ScrollingWidget from '../Widgets/ScrollingWidget';
 import TAWidget from '../Widgets/TAWidget';
 import SSIWidget from '../Widgets/SingleStockInfo';
@@ -8,9 +9,10 @@ import SSFWidget from '../Widgets/SSFinancials';
 import StockProfile from '../Widgets/StockProfile';
 import { debounce } from '../../helpers/SearchHelper';
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+import { receiveFromProspect } from '../../actions/fromProspect';
 
-const OneStock = ({isAuthed, prospectUO}) => {
+const OneStock = ({isAuthed, prospectUO, fromProspect, receiveFromProspect}) => {
   // Hooks
   const [searchedValue, setSearchedValue] = useState(Object.keys(prospectUO).length ? prospectUO : "TSLA");
   const history = useHistory();
@@ -20,11 +22,26 @@ const OneStock = ({isAuthed, prospectUO}) => {
     debounce(setSearchedValue(event.target.value.toUpperCase()), 300);
   };
 
+  const handleBack = () => {
+    history.push('/prospects');
+    receiveFromProspect();
+  }
+
   useEffect(() => {
     if (!isAuthed) {
        history.push("/login")
     }
   }, [])
+
+    const toProspect = () => {
+      if (fromProspect) {
+        return (
+          <Button className="mb-2" onClick={() => handleBack()} >
+            Back to WatchList
+          </Button>
+        );
+      }
+    };
 
   return (
     <Fragment>
@@ -34,7 +51,14 @@ const OneStock = ({isAuthed, prospectUO}) => {
           <Col md={7}>
             <Form>
               <h1>Research A Single Stock</h1>
-              <h5>ENTER STOCK TICKER</h5>
+              <Row>
+                <Col>
+                  <h5>ENTER STOCK TICKER</h5>
+                </Col>
+                <Col>
+                  {toProspect()}
+                </Col>
+              </Row>
               <Form.Group>
                 <Form.Control
                   type="text"
@@ -80,7 +104,12 @@ const OneStock = ({isAuthed, prospectUO}) => {
 
 const MSTP = (state) => ({
   isAuthed: state.auth.isAuthed,
-  prospectUO: state.prospectUO
+  prospectUO: state.prospectUO,
+  fromProspect: state.fromProspect
 });
 
-export default connect(MSTP)(OneStock);
+const MDTP = dispatch => ({
+  receiveFromProspect: () => dispatch(receiveFromProspect(false))
+})
+
+export default connect(MSTP, MDTP)(OneStock);

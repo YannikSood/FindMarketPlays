@@ -209,14 +209,12 @@ app.post('/stockDiscover/:email/swipeLeft/:index', (req, res) => {
 // Log in again to regenerate a new list
 app.post("/stockDiscover/:email/login", async (req, res) => {
   let email = `${req.params.email}`;
-
   // // find master list
 
   // if (!userRes.masterList) {
         MasterList.find({})
           .toArray()
           .then((masterRes) => {
-            // console.log("here1")
             let userLists = {
               email: email,
               masterList: new Array(masterRes.length),
@@ -228,11 +226,9 @@ app.post("/stockDiscover/:email/login", async (req, res) => {
             UserLists.find({ email: email })
               .toArray()
               .then((findRes) => {
-                // console.log('here2')
 
                 // if no email found in MongoDB, create an object in DB
                 if (!findRes.length) {
-                  // console.log('here4')
                   UserLists.insertOne(userLists);
                   res.send({ message: userLists, test:'test' });
                 } else if (findRes.length && !findRes[0].masterList) {
@@ -240,7 +236,6 @@ app.post("/stockDiscover/:email/login", async (req, res) => {
                   // if email is found in MongoDB, but you dont have any lists
                   UserLists.replaceOne({ email: email }, userLists)
                     .then((insertRes) => {
-                      // console.log('here5');
                       res.send({ message: insertRes.ops[0]});
                     })
                     .catch((err) => res.status(400).send(err))
@@ -267,7 +262,7 @@ app.get(`/stockDiscover/:email/fetch`, (req,res) => {
     .toArray()
     .then(masterRes => {
       let length = masterRes.length
-
+      // console.log(masterRes)
       //Find the specific users' DB with the email
       UserLists.find( { 'email': `${email}` } )
         .toArray()

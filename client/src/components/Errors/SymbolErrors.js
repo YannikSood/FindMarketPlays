@@ -5,7 +5,7 @@ function SymbolErrors() {
     return (
         <Alert variant="danger" >
             <p>
-                Invalid symbol or no unusual options.
+                We didn't find unusual options for this ticker! There is either no activity, or the ticker is incorrect.
             </p>
         </Alert>
     )

@@ -3,15 +3,17 @@ import Row from 'react-bootstrap/Row';
 import { connect } from "react-redux";
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from 'react-bootstrap/Form';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import ScrollingWidget from '../Widgets/ScrollingWidget';
 import BasicOptionsFlow from './BasicOptionsFlow';
 import { debounce } from '../../helpers/SearchHelper';
 import SymbolErrors from '../Errors/SymbolErrors';
+import { receiveFromProspect } from '../../actions/fromProspect'
 
-const BasicUnusualOptions = ({ isAuthed, prospectUO }) => {
+const BasicUnusualOptions = ({ isAuthed, prospectUO, fromProspect, receiveFromProspect }) => {
   // Hooks
   const [searchedValue, setSearchedValue] = useState("AMZN,TSLA");
   const [options, setOptions] = useState([]);
@@ -58,6 +60,21 @@ const BasicUnusualOptions = ({ isAuthed, prospectUO }) => {
     }
   };
 
+  const handleBack = () => {
+    history.push('/prospects');
+    receiveFromProspect();
+  }
+
+  const toProspect = () => {
+    if (fromProspect) {
+      return (
+        <Button className="mb-2" onClick={() => handleBack()}>
+          Back to Watchlist
+        </Button>
+      )
+    }
+  }
+
   // Handlers
   const handleInputChange = (event) => {
     setSearchedValue(event.target.value.toUpperCase());
@@ -71,7 +88,14 @@ const BasicUnusualOptions = ({ isAuthed, prospectUO }) => {
           <Col md={7}>
             <Form>
               <h1>Unusual Options Search</h1>
-              <h5>ENTER STOCK TICKER(S)</h5>
+              <Row>
+                <Col>
+                  <h5>ENTER STOCK TICKER(S)</h5>
+                </Col>
+                <Col>
+                  {toProspect()}
+                </Col>
+              </Row>
               <InputGroup>
                 <Form.Control
                   type="text"
@@ -99,7 +123,12 @@ const BasicUnusualOptions = ({ isAuthed, prospectUO }) => {
 
 const MSTP = (state) => ({
   isAuthed: state.auth.isAuthed,
-  prospectUO: state.prospectUO
+  prospectUO: state.prospectUO,
+  fromProspect: state.fromProspect
+});
+
+const MDTP = dispatch => ({
+  receiveFromProspect: () => dispatch(receiveFromProspect(false))
 })
 
-export default connect(MSTP)(BasicUnusualOptions);
+export default connect(MSTP, MDTP)(BasicUnusualOptions);
