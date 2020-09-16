@@ -114,25 +114,16 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
             <Button
               className="ml-2"
               onClick={() => leftSwipe()}
-              variant="outline-light"
+              variant="danger"
             >
               {" "}
-              Pass
+              Pass 
             </Button>
-            <Button className="ml-2" >
-              {/* <Button className='mt-3'> */}
-              <Link
-                onClick={() => window.scrollTo(0, 0)}
-                className="sdWatchLink"
-                to="/prospects"
-              >
-                My Watchlist
-              </Link>
-            </Button>
+            
             <Button
               className="ml-2 mr-1"
               onClick={() => rightSwipe()}
-              variant="outline-light"
+              variant="success"
             >
               {" "}
               Add
@@ -347,15 +338,29 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
           {/* <Row className="widget__wrapper"> */}
           <Col md={6}>
             {/* <Col md={6}> */}
-            <h1>Discover New Companies!</h1>
-            {/* <p>Add a stock to your watchlist. Get detailed information for a stock from your watchlist.</p> */}
+            <h2>Discover New Companies!</h2>
+            <p>Our algorithm shows you different companies. You can add the company to your watchlist, or pass on the company.</p>
+          </Col>
+
+          <Col md={6}>
+            <Button className="mt-2" >
+              {/* <Button className='mt-3'> */}
+              <Link
+                onClick={() => window.scrollTo(0, 0)}
+                className="sdWatchLink"
+                to="/prospects"
+              >
+                My Watchlist
+              </Link>
+            </Button>
           </Col>
 
           {loading()}
-          {/* </Row> */}
+
+          
           <Row>
             <Col className="mt-0 mb-0">{showFlow()}</Col>
-
+{/* 
             <Col id="widgetLess" className="sd_widget">
               <TradingViewWidget
                 symbol={ticker}
@@ -363,8 +368,8 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                 locale="en"
                 autosize
               />
-            </Col>
-          </Row>
+            </Col> */}
+          {/* </Row>
           <Row>
             <Col id="widgetGreater" className="sd_widget">
               <TradingViewWidget
@@ -373,7 +378,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                 locale="en"
                 autosize
               />
-            </Col>
+            </Col> */}
           </Row>
           <Row>
             <Col>
