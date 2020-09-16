@@ -3,11 +3,24 @@
     top: 50px
 }
 
+.company-header {
+    background-color: #00cc81;
+    border-radius: 4px;
+    /* margin-left: .2px;
+    margin-right: .2px; */
+}
+
+.company-links {
+    /* margin-left: .2px;
+    margin-right: .2px; */
+}
+
 #table-col {
     height: 300px;
     /* width: 400px; */
     overflow-y: scroll;
-    /* border: 1px solid white; */
+    border: 1px solid white;
+    border-radius: 5px;
 }
 
 #table-wrap {
@@ -15,8 +28,8 @@
 }
 
 #data-col {
-    height: 300px;
     border: 1px white solid;
+    border-radius: 5px;
 }
 
 #row:hover {
