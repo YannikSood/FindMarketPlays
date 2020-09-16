@@ -16,11 +16,11 @@ const Dashboard = ({isAuthed}) => {
   
   const history = useHistory();
   
-  useEffect(() => {
-    if (!isAuthed) {
-      history.push("/login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!isAuthed) {
+  //     history.push("/login");
+  //   }
+  // }, []);
   
   return (
      <Fragment>

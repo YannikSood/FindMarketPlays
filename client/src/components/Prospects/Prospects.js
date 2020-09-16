@@ -104,7 +104,7 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
       <Container>
       <Fragment>
 
-        <Row className="d-flex justify-content-center mb-5">
+        <Row className="d-flex justify-content-center mb-2">
           <h1>My Watchlist</h1>
         </Row>
         
