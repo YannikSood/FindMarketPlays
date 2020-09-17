@@ -10,12 +10,108 @@ import '../css/Navbar.css';
 import logo from './Logos/fmp-dark-bg.png'
 import { clearProspect } from '../actions/prospect';
 
-const Navigation = ({ isAuthed, location, clearProspect }) => (
-  <div>{isAuthed ? NavigationAuth(location, clearProspect): NavigationNonAuth(location)}</div>
-);
-const NavigationAuth = (location, clearProspect) => {
+const Navigation = ({ isAuthed, location, clearProspect }) => {
+  // <div>{isAuthed ? NavigationAuth(location, clearProspect): NavigationNonAuth(location)}</div>
+  return (
+    <div>
+      {NavigationAuth(isAuthed, location, clearProspect)}
+    </div>      
+  );
+};
+
+const NavigationAuth = (isAuthed, location, clearProspect) => {
   const [SBstatus, setSB] = useState();
   const history = useHistory();
+
+  const authedAccountNav = () => {
+    if (isAuthed) {
+      return (
+        <Button
+          className="ml-2 d-none d-lg-flex"
+          onClick={() => history.push("/profile")}
+          variant="outline-light"
+        >
+          {" "}
+          Account
+        </Button>
+      );
+    }
+  }
+
+  const authedAccountDrop = () => {
+    if (isAuthed) {
+      return (
+        <MenuItem>
+          <Link onClick={() => setSB(false)} to="/profile">
+            Account
+          </Link>
+        </MenuItem>
+      );
+    }
+  }
+
+  const whichAuthNav = () => {
+    if (isAuthed) {
+      return (
+        <Button
+          className="d-none d-lg-flex"
+          variant="primary"
+          onClick={() => {
+            firebase.auth().signOut();
+            history.push("/");
+            clearProspect();
+          }}
+        >
+          Sign Out
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          className="d-none d-lg-flex"
+          variant="primary"
+          onClick={() => {
+            history.push("/login");
+          }}
+        >
+          Login
+        </Button>
+      );
+    }
+  }
+
+  const whichAuthDrop = () => {
+    if (isAuthed) {
+      return (
+        <MenuItem className="signout">
+          <Link
+            onClick={() => {
+              firebase.auth().signOut();
+              history.push("/");
+              setSB(false);
+              clearProspect();
+            }}
+            to="/"
+          >
+            Sign Out
+          </Link>
+        </MenuItem>
+      );
+    } else {
+      return (
+        <MenuItem className="signout">
+          <Link
+            onClick={() => {
+              setSB(false);
+            }}
+            to="/login"
+          >
+            Login
+          </Link>
+        </MenuItem>
+      );
+    }
+  }
 
   const showSB = () => {
     if (SBstatus) {
@@ -27,8 +123,6 @@ const NavigationAuth = (location, clearProspect) => {
               class="menu-icon fa-2x fa fa-bars"
               aria-hidden="true"
             ></i>
-            {/* <MenuItem onClick={() => setSB(false)}>FMP Beta</MenuItem> */}
-            {/* <MenuItem >Dashboard</MenuItem> */}
             <SubMenu title="Discover Companies">
               <MenuItem>
                 <Link onClick={() => setSB(false)} to="/sdScreen">
@@ -92,24 +186,8 @@ const NavigationAuth = (location, clearProspect) => {
                 </Link>
               </MenuItem>
             </SubMenu>
-            <MenuItem>
-              <Link onClick={() => setSB(false)} to="/profile">
-                Account
-              </Link>
-            </MenuItem>
-            <MenuItem className="signout">
-              <Link
-                onClick={() => {
-                  firebase.auth().signOut();
-                  history.push("/");
-                  setSB(false);
-                  clearProspect();
-                }}
-                to="/"
-              >
-                Sign Out
-              </Link>
-            </MenuItem>
+            <authedAccountDrop />
+            {whichAuthDrop()}
           </Menu>
         </ProSidebar>
       );
@@ -126,12 +204,7 @@ const NavigationAuth = (location, clearProspect) => {
   return (
       <Container className="navbarContainer m-0 p-0"> 
           <Navbar
-            // collapseOnSelect
-            // expand="sm"
             className="justify-content-center navbar"
-            // className="justify-content-center d-none d-lg-flex"
-            // bg="dark"
-            // variant="dark"
             fixed="top"
           >
             <Navbar.Brand href={"/"}>
@@ -146,10 +219,8 @@ const NavigationAuth = (location, clearProspect) => {
           <Navbar.Collapse id="responsive-navbar-nav" >
             <Nav className="d-flex justify-content-right" activeKey={location.pathname}>
                 <DropdownButton
-                    // className="ml-2"
                     className="ml-2 d-none d-lg-flex"
                     title="Discover Companies"
-                    // size="md"
                     variant="warning"
                   >
                 <Dropdown.Item href={`${ROUTES.SD_SCREEN}`}>
@@ -164,9 +235,7 @@ const NavigationAuth = (location, clearProspect) => {
                 <DropdownButton
                   drop={"down"}
                   className="ml-2 d-none d-lg-flex"
-                  // className="ml-2"
                   title="Market Hub"
-                  // size="md"
                   variant="light"
                 >
                   <Dropdown.Item href={`${ROUTES.DASHBOARD}`}>
@@ -180,9 +249,7 @@ const NavigationAuth = (location, clearProspect) => {
 
                 <DropdownButton
                   className="ml-2 d-none d-lg-flex"
-                  // className="ml-2"
                   title="Research Hub"
-                  // size="md"
                   variant="info"
                 >
                   <Dropdown.Item href={`${ROUTES.DD}`}>
@@ -199,10 +266,8 @@ const NavigationAuth = (location, clearProspect) => {
                 </DropdownButton>
 
               <DropdownButton
-                // className="ml-2"
                 className="ml-2 d-none d-lg-flex"
                 title="Unusual Options"
-                // size="md"
                 variant="success"
               >
                             <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
@@ -221,78 +286,40 @@ const NavigationAuth = (location, clearProspect) => {
                 Advanced Feed
               </Dropdown.Item>
             </DropdownButton>{' '} 
-
-           
-            {/* <Button className="ml-2 d-none d-lg-flex" onClick={() => history.push("/sdScreen")} variant="outline-light"> Stock Discover</Button> */}
-            {/* <Button className="ml-2 d-none d-lg-flex" onClick={() => history.push("/prospects")} variant="outline-light"> Watchlist</Button> */}
-            <Button className="ml-2 d-none d-lg-flex" onClick={() => history.push("/profile")} variant="outline-light"> Account</Button>
-
+            {authedAccountNav()}
         </Nav>
       </Navbar.Collapse>
-      <Button
-        className="d-none d-lg-flex"
-        variant="primary"
-        onClick={() => {
-          firebase.auth().signOut();
-          history.push("/");
-          clearProspect();
-        }}
-      >
-        Sign Out
-      </Button>
+      {whichAuthNav()}
     </Navbar>
       {showSB()}
   </Container>
   )
 };
 
-const NavigationNonAuth = (location) => {
-  const history = useHistory();
-  return (
-    <Navbar
-      collapseOnSelect
-      expand="sm"
-      className="justify-content-center"
-      // className="justify-content-center d-none d-lg-flex"
-      bg="dark"
-      variant="dark"
-      fixed="top"
-    >
-      <Navbar.Brand href={"/"}>
-            <img
-            src={logo}
-            width="240"
-            height="50"
-            className="d-inline-block align-top"
-            alt="React Bootstrap logo"
-          /></Navbar.Brand>
-      {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav"> */}
-        {/* <Nav activeKey={location.pathname}>
-          <Nav.Link className="nav-link" href={`${ROUTES.DASHBOARD}`}>Market Overview</Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
-            Stock Lookup
-          </Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.DD}`}>Research </Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.NOTES}`}>Notes </Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>Options Feed</Nav.Link>
-          <Nav.Link className="nav-link" href={`${ROUTES.NEWS_FEED}`}>News Feed</Nav.Link>
-          <Nav.Link className="nav-link" to={ROUTES.ABOUT}>About </Nav.Link>
+// const NavigationNonAuth = (location) => {
+//   const history = useHistory();
+//   return (
+//     <Navbar
+//       collapseOnSelect
+//       expand="sm"
+//       className="justify-content-center"
+//       bg="dark"
+//       variant="dark"
+//       fixed="top"
+//     >
+//       <Navbar.Brand href={"/"}>
+//             <img
+//             src={logo}
+//             width="240"
+//             height="50"
+//             className="d-inline-block align-top"
+//             alt="React Bootstrap logo"
+//           /></Navbar.Brand>
 
-          <Button class="ml-2" onClick={() => history.push("/login")} variant="primary">
-              Login/Signup
-          </Button> */}
+//     </Navbar>
 
-        {/* </Nav> */}
-      {/* </Navbar.Collapse> */}
-      {/* <Button class="ml-2" onClick={() => history.push("/login")} variant="primary">
-          Login/Signup
-        </Button> */}
-
-    </Navbar>
-
-  )
-};
+//   )
+// };
 const mapStateToProps = (state) => {
   const { auth } = state;
   return {

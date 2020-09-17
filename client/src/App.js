@@ -17,7 +17,7 @@ import Navigation from './components/NavBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import About from './components/About';
 import Auth from './components/Research/DDAuth'
-// import DD from './components/Research/DD';
+import DD from './components/Research/DD';
 import BasicUnusualOptions from './components/Options/BasicUnusualOptions';
 import BasicUnusualOptionsFeed from './components/Options/BasicUOFeed';
 import AdvancedUnusualOptions from './components/Options/AdvancedUnusualOptions';
@@ -126,7 +126,7 @@ const App = () => {
                   </Route>
 
                   <Route path={ROUTES.DD}>
-                    <Auth />
+                    <DD />
                   </Route>
 
                   <Route path={ROUTES.NEW_NOTE}>

@@ -65,11 +65,11 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
       } else {
           if (Object.keys(prospect).length) {
             return (
-              <Col id="data-col">
-                <Row className="p-2"><h4>{prospect.name} [${prospect.symbol}]</h4></Row>
+              <Col className="" id="data-col">
+                <Row className="company-header p-2"><h4>{prospect.name} [${prospect.symbol}]</h4></Row>
                 <Row className="p-2">
                   <Link
-                    className="prospectUO"
+                    className="company-links prospectUO"
                     onClick={() => handleClick(prospect)}
                     to="/basicOptionSearch"
                   >
@@ -78,7 +78,7 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
                 </Row>
                 <Row className="p-2">
                   <Link
-                    className="prospectUO"
+                    className="company-links prospectUO"
                     onClick={() => handleClick(prospect)}
                     to="/stock"
                   >
@@ -104,7 +104,7 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
       <Container>
       <Fragment>
 
-        <Row className="d-flex justify-content-center mb-5">
+        <Row className="d-flex justify-content-center mb-2">
           <h1>My Watchlist</h1>
         </Row>
         

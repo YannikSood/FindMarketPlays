@@ -27,11 +27,11 @@ const OneStock = ({isAuthed, prospectUO, fromProspect, receiveFromProspect}) => 
     receiveFromProspect();
   }
 
-  useEffect(() => {
-    if (!isAuthed) {
-       history.push("/login")
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!isAuthed) {
+  //      history.push("/login")
+  //   }
+  // }, [])
 
     const toProspect = () => {
       if (fromProspect) {
