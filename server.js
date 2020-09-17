@@ -104,6 +104,18 @@ app.delete("/prospects/:email/:idx", (req, res) => {
     .catch(err => console.log(err))
 })
 
+app.get(`/stockDiscover/guest/fetch`, (req, res) => {
+  MasterList.find({})
+  .toArray()
+  .then(masterRes => {
+      let num = Math.floor(Math.random() * Math.floor(masterRes.length));
+      let stock = masterRes[num];
+      console.log(stock)
+      res.send({message: stock.symbol});
+    })
+    .catch(err => console.log(err))
+}) 
+
 //1) Generate the Lists upon Registration: 
 app.post("/stockDiscover/:email/register", async (req, res) => {
   let email = `${req.params.email}`;
@@ -179,34 +191,6 @@ app.post('/stockDiscover/:email/swipeLeft/:index', (req, res) => {
 //2) Generate the Lists upon next successful Login.
 //Should only generate on first successful login after publishing.
 
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// !!!!!!!!!!!POTENTIAL BUG!!!!!!!!!!
-// I noticed that sometimes, rightList receives an undefined value instead of an index
-// this causes an error that says it cannot do something of "idx of undefined"
-// To temporarily ignore this, delete the user in MongoDB's UserLists DB
-// Log in again to regenerate a new list
 app.post("/stockDiscover/:email/login", async (req, res) => {
   let email = `${req.params.email}`;
   // // find master list
@@ -292,14 +276,9 @@ app.get(`/stockDiscover/:email/fetch`, (req,res) => {
                 'email': `${email}`,
               },
               userRes
-              // {
-              //   email: email,
-              //   masterList: userMasterL,
-              //   leftList: [],
-              //   rightList: [],
-              // }
+
             )
-              .then((res) => console.log(res)) //[Not Logging]
+              .then((res) => console.log(res)) 
               .catch((err) => console.log(err));
             
             //Get the stock information, return the ticker [Not Returning]

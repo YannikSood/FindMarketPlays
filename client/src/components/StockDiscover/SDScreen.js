@@ -14,6 +14,7 @@ import { receiveUserLists } from '../../actions/stockDiscover';
 import { receiveUserInfo } from '../../actions/userInfo';
 import firebase from "../../firebase/firebase";
 import SwipeErrors from '../Errors/SwipeErrors';
+import GuestSwipeErrors from '../Errors/GuestSwipeErrors';
 import '../../css/SDScreen.css';
 
 //Unused
@@ -27,18 +28,17 @@ import '../../css/SDScreen.css';
 // import InputGroup from "react-bootstrap/InputGroup";
 // import Form from 'react-bootstrap/Form';
 
-// changed to send options as one object instead of an array to SDFlow because the return value of fetch is an object.
-// can change back to array depending on what we want (just wrap the object in a bracket) and uncomment
-// a few lines in SDFlow
 const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUserInfo}) => {
     const [loader, setLoader] = useState(true);
     const [ticker, setTicker] = useState();
     const [index, setIndex] = useState();
     const [options, setOptions] = useState({});
     const [errors, setErrors] = useState(false);
+    const [guestErrors, setGuestErrors] = useState(false);
     const [company, setCompany] = useState({});
     const [companyLogo, setCompanyLogo] = useState({});
     const [inProgress, setProgress] = useState(false);
+    const [guest, setGuest] = useState();
     const waitTime = 3 * 60 * 60 * 1000;
     let limit = 40;
     
@@ -46,7 +46,23 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
 
     useEffect(() => {
         if (!isAuthed) {
-            history.push("/login")
+            // history.push("/login")
+
+            let storage = window.localStorage;
+            let guestInfo = {
+              counter: 0,
+              time: 0,
+            };
+
+            if (!storage.getItem("guestInfo")) {
+              storage.setItem("guestInfo", JSON.stringify(guestInfo));
+            } else {
+              guestInfo = JSON.parse(storage.getItem("guestInfo"));
+              setGuest(guestInfo);
+            }
+            
+            guestServerCall('/stockDiscover/guest/fetch');
+
         } else {
           setProgress(true);
             const fetchData = () => {
@@ -108,28 +124,45 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
     // render swipe buttons only after data is completely fetched
     const allowSwipes = () => {
       if (!inProgress) {
-        return (
-          // 403px is when the buttons are in the wrong positions
-          <Row className="mt-2 d-flex justify-content-center">
-            <Button
-              className="ml-2"
-              onClick={() => leftSwipe()}
-              variant="danger"
-            >
-              {" "}
-              Pass 
-            </Button>
-            
-            <Button
-              className="ml-2 mr-1"
-              onClick={() => rightSwipe()}
-              variant="success"
-            >
-              {" "}
-              Add
-            </Button>
-          </Row>
-        );
+
+        if (isAuthed) {
+          return (
+            // 403px is when the buttons are in the wrong positions
+            <Row className="mt-2 d-flex justify-content-center">
+              <Button
+                className="ml-2"
+                onClick={() => leftSwipe()}
+                variant="danger"
+              >
+                {" "}
+                Pass 
+              </Button>
+              
+              <Button
+                className="ml-2 mr-1"
+                onClick={() => rightSwipe()}
+                variant="success"
+              >
+                {" "}
+                Add
+              </Button>
+            </Row>
+  
+          );
+        } else {
+          return (
+             <Row className="mt-2 d-flex justify-content-center">
+              <Button
+                className="ml-2 mr-1"
+                onClick={() => guestSwipe()}
+                variant="success"
+              >
+                {" "}
+                Next
+              </Button>
+             </Row>
+          )
+        }
       }
     }
 
@@ -146,6 +179,50 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
           );
         }
       };
+
+      const guestServerCall = (swipeurl) => {
+        Axios.get(swipeurl, {
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((res) => {
+            setTicker(res.data.message);
+            setIndex(res.data.index);
+            const url2 = `/getTicker/${res.data.message}`;
+            Axios.get(url2, {
+              // get ticker data from iex
+              headers: { "Content-Type": "application/json" },
+            })
+              .then((res2) => {
+                setOptions(res2.data.message || {});
+                const url3 = `/getCompany/${res.data.message}`;
+                Axios.get(url3, {
+                  headers: { "Content-Type": "application/json" },
+                })
+                  .then((res3) => {
+                    setCompany(res3.data.message || {});
+
+                    const url4 = `/getLogo/${res3.data.message.symbol}`;
+
+                    fetch(url4, {
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                    })
+                      .then((res3) => {
+                        res3.json().then((json) => {
+                          setCompanyLogo(json.message || {});
+                          setLoader(false);
+                          setProgress(false);
+                        });
+                      })
+                      .catch((err) => console.log(err));
+                  })
+                  .catch((err) => console.log(err));
+              })
+              .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err));
+      }
 
       const serverCall = (swipeUrl, email) => {
         Axios.post(swipeUrl, {
@@ -203,6 +280,48 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
           })
           .catch((err) => console.log(err));
       };
+
+      const guestSwipe = () => {
+        let storage = window.localStorage;
+        const swipeurl = `/stockDiscover/guest/fetch`
+        setProgress(true);
+        let counter = guest.counter;
+        let time = guest.time;
+        
+        if (counter < limit && time === 0) {
+          
+          counter += 1;
+          time = 0;
+          // swipe server call
+          guestServerCall(swipeurl)
+
+        } else if (counter >= limit && time === 0) {
+          
+            let currentTime = Date.now();
+            let nextTime = currentTime + waitTime;
+            // set error in state
+            setGuestErrors(true);
+            time = nextTime;
+        } else if (Date.now() >= time) {
+          
+            guestServerCall(swipeurl);
+            time = 0;
+            counter = 1;
+            setGuestErrors(false);
+        } else if (time !== 0) {
+          
+            // set error in state
+            setGuestErrors(true);
+
+            return;
+        } 
+        
+        let updateInfo = {
+          counter: counter,
+          time: time
+        }
+        storage.setItem('guestInfo', JSON.stringify(updateInfo));
+      }
 
      const rightSwipe = () => {   
         const email = currentUser.email;
@@ -315,6 +434,14 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         firebase.database().ref(`users/${currentUser.id}`).set(newUserInfo);
     };
 
+    const ShowGuestErr = () => {
+      if (guestErrors) {
+        return <GuestSwipeErrors />
+      } else {
+        return null;
+      }
+    }
+
     const showErr = () => {
         if (errors) {
             return <SwipeErrors />
@@ -333,17 +460,17 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
 
     return (
       <Fragment>
-        {/* <ScrollingWidget className="scrolling"/> */}
         <Container className="parent">
-          {/* <Row className="widget__wrapper"> */}
           <Col md={6}>
-            {/* <Col md={6}> */}
             <h2>Discover New Companies!</h2>
-            <p>Our algorithm shows you different companies. You can add the company to your watchlist, or pass on the company.</p>
+            <p>
+              Our algorithm shows you different companies. You can add the
+              company to your watchlist, or pass on the company.
+            </p>
           </Col>
 
           <Col md={6}>
-            <Button className="mt-2" >
+            <Button className="mt-2">
               {/* <Button className='mt-3'> */}
               <Link
                 onClick={() => window.scrollTo(0, 0)}
@@ -357,38 +484,15 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
 
           {loading()}
 
-          
           <Row>
             <Col className="mt-0 mb-0">{showFlow()}</Col>
-{/* 
-            <Col id="widgetLess" className="sd_widget">
-              <TradingViewWidget
-                symbol={ticker}
-                theme={Themes.DARK}
-                locale="en"
-                autosize
-              />
-            </Col> */}
-          {/* </Row>
-          <Row>
-            <Col id="widgetGreater" className="sd_widget">
-              <TradingViewWidget
-                symbol={ticker}
-                theme={Themes.DARK}
-                locale="en"
-                autosize
-              />
-            </Col> */}
           </Row>
           <Row>
-            <Col>
-              {allowSwipes()}
-            </Col>
+            <Col>{allowSwipes()}</Col>
           </Row>
           <Row>{showErr()}</Row>
-
-          
-          {/* </Row>  */}
+          <Row> <ShowGuestErr /> </Row>
+          {/* <Row> <GuestSwipeErrors /> </Row> */}
         </Container>
       </Fragment>
     );
