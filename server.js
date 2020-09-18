@@ -1,3 +1,5 @@
+const ids = require('./ids');
+
 const express = require("express"),
   app = express(),
   cors = require("cors");
@@ -37,43 +39,60 @@ MongoClient.connect(
   }
 );
 
+app.get('/test', (req, res) => {
+  MasterList.distinct("_id", {})
+  // .toArray()
+  .then(masterRes => res.send({message: masterRes}))
+  .catch(err => console.log(err))
+})
+
 // receive prospect informations
 app.get('/prospects/:email/', (req, res) => {
   let email = req.params.email;
-
-  // get Master List
-  MasterList.find({})
-    .toArray()
-    .then(masterRes => {
 
       // get User lists
       UserLists.find({ 'email': email })
         .toArray()
         .then(userRes => {
-          let infoArr = [];
           let rightList = userRes[0].rightList;
+          let idArray = [];
+          let idxArray = [];
           
-          // push information into array
           rightList.forEach(idx => {
-            masterRes[parseInt(idx)].idx = idx;
-            infoArr.push(masterRes[parseInt(idx)])
+            // for each idx, look up its corresponding id
+            let id = new ObjectId(ids[idx]);
+            // set to object id and push into array
+            idxArray.push(idx);
+            idArray.push(id);
           })
-          res.send({ info: infoArr })
+
+          // query for object ids in MasterList
+          MasterList.find( {_id: { $in: idArray}})
+          .toArray()
+          .then(masterRes => {
+            for(let i = 0; i < masterRes.length; i += 1) {
+              masterRes[i].index = idxArray[i];
+            }
+            res.send({ info: masterRes });
+          })
+          .catch(err => console.log(err))
+
         })
         .catch(err => console.log(err))
-    })
-    .catch(err => console.log(err))
 })
 
 // delete prospect
 app.delete("/prospects/:email/:idx", (req, res) => {
+
+  // deleting the wrong idx
   let email = req.params.email;
   let idx = parseInt(req.params.idx, 10);
-
+  console.log(idx)
+  console.log(req.params)
   // get Master List
-  MasterList.find({})
-    .toArray()
-    .then(masterRes => {
+  // MasterList.find({})
+  //   .toArray()
+  //   .then(masterRes => {
 
       // get User List
       UserLists.find({'email': email})
@@ -84,6 +103,9 @@ app.delete("/prospects/:email/:idx", (req, res) => {
 
           // get index of rightList's idx value
           let rightIdx = userRes[0].rightList.indexOf(`${idx}`);
+          // console.log(rightIdx)
+          // console.log(`${idx}`)
+          console.log(userRes[0].rightList)
 
           // push rightList's stock index into leftList
           userRes[0].leftList.push(userRes[0].rightList[rightIdx]);
@@ -100,40 +122,40 @@ app.delete("/prospects/:email/:idx", (req, res) => {
 
         })
         .catch(err => console.log(err))
-    })
-    .catch(err => console.log(err))
+    // })
+    // .catch(err => console.log(err))
 })
 
 app.get(`/stockDiscover/guest/fetch`, (req, res) => {
-  MasterList.find({})
-  .toArray()
-  .then(masterRes => {
-      let num = Math.floor(Math.random() * Math.floor(masterRes.length));
-      let stock = masterRes[num];
-      console.log(stock)
-      res.send({message: stock.symbol});
-    })
-    .catch(err => console.log(err))
+  // MasterList.find({})
+  // .toArray()
+  // .then(masterRes => {
+  //     let num = Math.floor(Math.random() * Math.floor(masterRes.length));
+  //     let stock = masterRes[num];
+  //     console.log(stock)
+  //     res.send({message: stock.symbol});
+  //   })
+  //   .catch(err => console.log(err))
+  let num = Math.floor(Math.random() * Math.floor(ids.length));
+  let objectId = new ObjectId(ids[num]);
+  // console.log(id)
+  MasterList.findOne( {_id:  objectId} )
+  .then(masterRes => res.send({message: masterRes.symbol}))
+  .catch(err => console.log(err))
 }) 
 
 //1) Generate the Lists upon Registration: 
 app.post("/stockDiscover/:email/register", async (req, res) => {
   let email = `${req.params.email}`;
-  MasterList.find({})
-    .toArray()
-    .then(stuff1 => { 
       let userLists = {
         email: email,
-        masterList: new Array(stuff1.length),
+        masterList: new Array(ids.length),
         leftList: [],
         rightList: []
       }
-
       UserLists.insertOne(userLists)
         .then((stuff2) => res.send({ message: stuff2.ops[0] }))
         .catch((err) => console.log(err))
-      })
-    .catch(err => console.log(err))
 });
 
 app.post('/stockDiscover/:email/swipeRight/:index', (req, res) => {
@@ -196,12 +218,10 @@ app.post("/stockDiscover/:email/login", async (req, res) => {
   // // find master list
 
   // if (!userRes.masterList) {
-        MasterList.find({})
-          .toArray()
-          .then((masterRes) => {
+
             let userLists = {
               email: email,
-              masterList: new Array(masterRes.length),
+              masterList: new Array(ids.length),
               leftList: [],
               rightList: [],
             };
@@ -226,10 +246,6 @@ app.post("/stockDiscover/:email/login", async (req, res) => {
                 }
               })
               .catch((err) => res.status(400).send(err))
-
-          })
-
-          .catch((err) => res.status(400).send(err))
 })
 
 //Get the user's database reference using email
@@ -242,10 +258,7 @@ app.post("/stockDiscover/:email/login", async (req, res) => {
 app.get(`/stockDiscover/:email/fetch`, (req,res) => {
   //Get the user's database reference using email
   let email = `${req.params.email}`;
-  MasterList.find({})
-    .toArray()
-    .then(masterRes => {
-      let length = masterRes.length
+      let length = ids.length
       // console.log(masterRes)
       //Find the specific users' DB with the email
       UserLists.find( { 'email': `${email}` } )
@@ -282,13 +295,20 @@ app.get(`/stockDiscover/:email/fetch`, (req,res) => {
               .catch((err) => console.log(err));
             
             //Get the stock information, return the ticker [Not Returning]
-            let stock = masterRes[num];
-            let ticker = stock.symbol;
-            res.send( { message: `${ticker}`, index: num } )
+
+            // getting the information directly
+            // we want to do a mongodb query here with the objectId
+
+            let objectId = new ObjectId(ids[num]);
+            MasterList.findOne({_id: objectId})
+            .then(masterRes => res.send({message:masterRes.symbol, index: num}))
+            .catch(err => console.log(err))
+
+            // let stock = masterRes[num];
+            // let ticker = stock.symbol;
+            // res.send( { message: `${ticker}`, index: num } )
         })
         .catch(err => console.log(err))
-    })
-    .catch(err => console.log(err))
 })
 
 

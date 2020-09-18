@@ -18,7 +18,6 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
     const history = useHistory();
     const [fetchedProspects, setFetchedProspects] = useState();
     const [deleting, setDeleting] = useState(false);
-
     const fetching = () => {
       if (!isAuthed) {
           history.push("/login");
@@ -40,6 +39,7 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
     useEffect(() => {
       // fetch data after a prospect is deleted
       fetching();     
+      console.log(fetchedProspects)
     }, [deletedProspect])
 
     useEffect(() => {

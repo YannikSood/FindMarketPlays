@@ -72,34 +72,35 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                   headers: { "Content-Type": "application/json" }
                 })
                 //res.data.message
-                .then(res => {
+                .then(res1 => {
                     // save ticker and index to state
-                    setTicker(res.data.message);
-                    setIndex(res.data.index);
+                    setTicker(res1.data.message);
+                    setIndex(res1.data.index);
 
                     // fetch ticker info from iex
-                    const url2 = `/getTicker/${res.data.message}`;
+                    const url2 = `/getTicker/${res1.data.message}`;
                     Axios.get(url2, {
                       headers: { "Content-Type": "application/json" },
                     })
-                      .then((res) => {
-                            setOptions(res.data.message || {});
-                            const url3 = `/getCompany/${res.data.message.symbol}`;
+                      .then((res2) => {
+                            const companyInfo = res2.data.message;
+                            setOptions(companyInfo || {});
+                            const url3 = `/getCompany/${res1.data.message}`;
                             fetch(url3, {
                             headers: { "Content-Type": "application/json" },
                             })
-                            .then(res2 => {
-                                    res2.json().then(json => {
+                            .then(res3 => {
+                                    res3.json().then(json => {
                                         setCompany(json.message)
-                                        const url4 = `/getLogo/${res.data.message.symbol}`
+                                        const url4 = `/getLogo/${res1.data.message}`
 
                                         fetch(url4, {
                                             headers: {
                                                 "Content-Type": "application/json",
                                             }
                                         })
-                                        .then(res3 => {
-                                            res3.json().then(json => {
+                                        .then(res4 => {
+                                            res4.json().then(json => {
                                                 setCompanyLogo(json.message || {});
                                                 setLoader(false);
                                                 setProgress(false);
@@ -247,7 +248,8 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                 headers: { "Content-Type": "application/json" },
                 })
                 .then((res2) => {
-                    setOptions(res2.data.message || {});
+                    const companyInfo = res2.data.message;
+                    setOptions(companyInfo || {});
                     const url3 = `/getCompany/${res.data.message}`;
                     Axios.get(url3, {
                         headers: { "Content-Type": "application/json" },
