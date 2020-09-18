@@ -39,11 +39,18 @@ MongoClient.connect(
   }
 );
 
-app.get('/test', (req, res) => {
-  MasterList.distinct("_id", {})
-  // .toArray()
-  .then(masterRes => res.send({message: masterRes}))
+app.get('/test/:idx', (req, res) => {
+  let idx = parseInt(req.params.idx, 10);
+
+  let idsIdx = ids[idx];
+  let objectId = new ObjectId(idsIdx)
+  MasterList.findOne({ _id: objectId})
+  .then(masterRes => res.send(masterRes))
   .catch(err => console.log(err))
+  // MasterList.distinct("_id", {})
+  // // .toArray()
+  // .then(masterRes => res.send({message: masterRes}))
+  // .catch(err => console.log(err))
 })
 
 // receive prospect informations
@@ -55,25 +62,53 @@ app.get('/prospects/:email/', (req, res) => {
         .toArray()
         .then(userRes => {
           let rightList = userRes[0].rightList;
+
+          // for the MasterList query
           let idArray = [];
-          let idxArray = [];
+
+          // for sorting
+          let idxIdArray = [];
           
           rightList.forEach(idx => {
             // for each idx, look up its corresponding id
             let id = new ObjectId(ids[idx]);
             // set to object id and push into array
-            idxArray.push(idx);
+            idxIdArray.push({idx: idx, id: id})
+            // idxArray.push(idx);
             idArray.push(id);
           })
+
+          // sort by id
+           let sortedIdxIdArray = idxIdArray.sort(function(a, b) {
+                if ( a.id > b.id ){
+                  return -1;
+                }
+                if ( a.id < b.id ){
+                  return 1;
+                }
+                return 0;
+            })
 
           // query for object ids in MasterList
           MasterList.find( {_id: { $in: idArray}})
           .toArray()
           .then(masterRes => {
-            for(let i = 0; i < masterRes.length; i += 1) {
-              masterRes[i].index = idxArray[i];
+
+            // sort by _id, now this array will match up with idxIdArray's order
+            let sortedRes = masterRes.sort(function(a, b) {
+                if ( a._id > b._id ){
+                  return -1;
+                }
+                if ( a._id < b._id ){
+                  return 1;
+                }
+                return 0;
+            })
+            console.log(sortedRes)
+            for(let i = 0; i < sortedRes.length; i += 1) {
+              sortedRes[i].index = sortedIdxIdArray[i].idx;
             }
-            res.send({ info: masterRes });
+            res.send({ info: sortedRes });
           })
           .catch(err => console.log(err))
 
@@ -87,12 +122,6 @@ app.delete("/prospects/:email/:idx", (req, res) => {
   // deleting the wrong idx
   let email = req.params.email;
   let idx = parseInt(req.params.idx, 10);
-  console.log(idx)
-  console.log(req.params)
-  // get Master List
-  // MasterList.find({})
-  //   .toArray()
-  //   .then(masterRes => {
 
       // get User List
       UserLists.find({'email': email})
@@ -103,42 +132,27 @@ app.delete("/prospects/:email/:idx", (req, res) => {
 
           // get index of rightList's idx value
           let rightIdx = userRes[0].rightList.indexOf(`${idx}`);
-          // console.log(rightIdx)
-          // console.log(`${idx}`)
-          console.log(userRes[0].rightList)
 
           // push rightList's stock index into leftList
           userRes[0].leftList.push(userRes[0].rightList[rightIdx]);
-          // console.log(userRes[0].leftList)
           
           // cut out rightList's stock index
           userRes[0].rightList.splice(rightIdx, 1)
-          // console.log(userRes[0].rightList)
 
           // repalce the old object in DB with this updated one
           UserLists.replaceOne({'email': email}, userRes[0])
-            .then(replaceRes => res.send( { message: replaceRes.ops[0].rightList } ))
+            .then(replaceRes => {
+              res.send( { message: replaceRes.ops[0].rightList } )
+            })
             .catch(err => console.log(err))
-
+          // replace all three lists, not just rightList
         })
         .catch(err => console.log(err))
-    // })
-    // .catch(err => console.log(err))
 })
 
 app.get(`/stockDiscover/guest/fetch`, (req, res) => {
-  // MasterList.find({})
-  // .toArray()
-  // .then(masterRes => {
-  //     let num = Math.floor(Math.random() * Math.floor(masterRes.length));
-  //     let stock = masterRes[num];
-  //     console.log(stock)
-  //     res.send({message: stock.symbol});
-  //   })
-  //   .catch(err => console.log(err))
   let num = Math.floor(Math.random() * Math.floor(ids.length));
   let objectId = new ObjectId(ids[num]);
-  // console.log(id)
   MasterList.findOne( {_id:  objectId} )
   .then(masterRes => res.send({message: masterRes.symbol}))
   .catch(err => console.log(err))
@@ -215,9 +229,6 @@ app.post('/stockDiscover/:email/swipeLeft/:index', (req, res) => {
 
 app.post("/stockDiscover/:email/login", async (req, res) => {
   let email = `${req.params.email}`;
-  // // find master list
-
-  // if (!userRes.masterList) {
 
             let userLists = {
               email: email,
@@ -291,7 +302,7 @@ app.get(`/stockDiscover/:email/fetch`, (req,res) => {
               userRes
 
             )
-              .then((res) => console.log(res)) 
+              .then((res) => console.log('Successfully fetched')) 
               .catch((err) => console.log(err));
             
             //Get the stock information, return the ticker [Not Returning]
@@ -303,10 +314,6 @@ app.get(`/stockDiscover/:email/fetch`, (req,res) => {
             MasterList.findOne({_id: objectId})
             .then(masterRes => res.send({message:masterRes.symbol, index: num}))
             .catch(err => console.log(err))
-
-            // let stock = masterRes[num];
-            // let ticker = stock.symbol;
-            // res.send( { message: `${ticker}`, index: num } )
         })
         .catch(err => console.log(err))
 })

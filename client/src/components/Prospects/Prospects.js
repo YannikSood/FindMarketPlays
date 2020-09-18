@@ -28,6 +28,7 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
               headers: { "Content-Type": "application/json" },
             })
               .then((res) => {
+                debugger
                 setFetchedProspects(res.data.info);
               })
               .catch((err) => console.log(err));
@@ -38,6 +39,7 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
 
     useEffect(() => {
       // fetch data after a prospect is deleted
+      debugger
       fetching();     
       console.log(fetchedProspects)
     }, [deletedProspect])

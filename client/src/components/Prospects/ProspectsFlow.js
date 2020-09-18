@@ -15,9 +15,10 @@ import { receiveDeletingProspect } from '../../actions/deletingProspect';
 const ProspectsFlow = props => {
 
     const [inProgress, setProgress] = useState(false);
-  // debugger
+  debugger
     // handle Axios call to server on click of "Discard"
     const handleClick = (idx) => {
+      // debugger
       if (!inProgress) {
         props.receiveDeletingProspect(true);
         setProgress(true)
@@ -26,6 +27,7 @@ const ProspectsFlow = props => {
           headers: { "Content-Type": "application/json" }
         })
         .then(res => {
+          debugger
           // set deleting loader
           props.receiveDeletingProspect(false);
   
@@ -51,6 +53,7 @@ const ProspectsFlow = props => {
           <tbody >
             {props.value.map(company => (
               <tr key={`${company.index}`}>
+                {console.log(company)}
                   <td id="row" onClick={() => props.receiveProspect(company)}>{company.name}</td>
                   <td id="row" onClick={() => 
                     {
