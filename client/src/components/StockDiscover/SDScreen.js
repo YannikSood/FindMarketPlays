@@ -15,6 +15,8 @@ import { receiveUserInfo } from '../../actions/userInfo';
 import firebase from "../../firebase/firebase";
 import SwipeErrors from '../Errors/SwipeErrors';
 import GuestSwipeErrors from '../Errors/GuestSwipeErrors';
+import { receiveGuestStock } from '../../actions/guestStock';
+import { receiveFromSDScreen } from '../../actions/fromSDScreen'
 import '../../css/SDScreen.css';
 
 //Unused
@@ -28,7 +30,16 @@ import '../../css/SDScreen.css';
 // import InputGroup from "react-bootstrap/InputGroup";
 // import Form from 'react-bootstrap/Form';
 
-const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUserInfo}) => {
+const SDScreen = ({
+  isAuthed, 
+  currentUser, 
+  receiveUserLists, 
+  userInfo, 
+  receiveUserInfo, 
+  receiveGuestStock,
+  receiveFromSDScreen,
+  guestStock
+}) => {
     const [loader, setLoader] = useState(true);
     const [ticker, setTicker] = useState();
     const [index, setIndex] = useState();
@@ -46,7 +57,6 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
 
     useEffect(() => {
         if (!isAuthed) {
-            // history.push("/login")
 
             let storage = window.localStorage;
             let guestInfo = {
@@ -64,7 +74,7 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
             guestServerCall('/stockDiscover/guest/fetch');
 
         } else {
-          setProgress(true);
+            setProgress(true);
             const fetchData = () => {
                 // fetch ticker from DB
                 const url1 = `/stockDiscover/${currentUser.email}/fetch`;
@@ -119,8 +129,14 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                 .catch(err => console.log(err))
             };
             debounce(fetchData());
-        }
+          }
     }, []);
+
+    const handleClick = () => {
+      setOptions({...options, index: index});
+      receiveFromSDScreen(true);
+      receiveGuestStock(options);
+    }
 
     // render swipe buttons only after data is completely fetched
     const allowSwipes = () => {
@@ -128,7 +144,6 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
 
         if (isAuthed) {
           return (
-            // 403px is when the buttons are in the wrong positions
             <Row className="mt-2 d-flex justify-content-center">
               <Button
                 className="ml-2"
@@ -152,17 +167,22 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
           );
         } else {
           return (
-             <Row className="mt-2 d-flex justify-content-center">
-              <Button
-                className="ml-2 mr-1"
-                onClick={() => guestSwipe()}
-                variant="success"
-              >
-                {" "}
-                Next
-              </Button>
-             </Row>
-          )
+            <Container>
+              <Row className="mt-2 d-flex justify-content-center">
+                <Button
+                  className="ml-2 mr-1"
+                  onClick={() => guestSwipe()}
+                  variant="success"
+                >
+                  {" "}
+                  Next
+                </Button>
+              </Row>
+              <Row className="mt-2 d-flex justify-content-center">
+                <h5 className="tag-line">Log in to save stocks to your watchlist!</h5>
+              </Row>
+            </Container>
+          );
         }
       }
     }
@@ -182,27 +202,23 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
       };
 
       const guestServerCall = (swipeurl) => {
-        Axios.get(swipeurl, {
-          headers: { "Content-Type": "application/json" },
-        })
-          .then((res) => {
-            setTicker(res.data.message);
-            setIndex(res.data.index);
-            const url2 = `/getTicker/${res.data.message}`;
+        // three of the four axios requests are in this method
+        const call = (ticker) => {
+          const url2 = `/getTicker/${ticker}`;
             Axios.get(url2, {
               // get ticker data from iex
               headers: { "Content-Type": "application/json" },
             })
               .then((res2) => {
                 setOptions(res2.data.message || {});
-                const url3 = `/getCompany/${res.data.message}`;
+                const url3 = `/getCompany/${ticker}`;
                 Axios.get(url3, {
                   headers: { "Content-Type": "application/json" },
                 })
                   .then((res3) => {
                     setCompany(res3.data.message || {});
 
-                    const url4 = `/getLogo/${res3.data.message.symbol}`;
+                    const url4 = `/getLogo/${ticker}`;
 
                     fetch(url4, {
                       headers: {
@@ -221,9 +237,26 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
                   .catch((err) => console.log(err));
               })
               .catch((err) => console.log(err));
-          })
-          .catch((err) => console.log(err));
-      }
+        }
+
+
+        if (Object.keys(guestStock).length) {
+          call(guestStock.symbol);
+          // skips the first axios request
+          setTicker(guestStock.symbol);
+        } else {
+          // sends the first axios request before sending the next 3
+            Axios.get(swipeurl, {
+              headers: { "Content-Type": "application/json" },
+            })
+              .then((res) => {
+                setTicker(res.data.message);
+                setIndex(res.data.index);
+                call(res.data.message)
+              })
+              .catch((err) => console.log(err));
+          }
+        }
 
       const serverCall = (swipeUrl, email) => {
         Axios.post(swipeUrl, {
@@ -460,30 +493,81 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         }
     }
 
+    const authedButtons = () => {
+      if (!isAuthed) {
+        return (
+          <Row>
+            <Col className="d-flex justify-content-center">
+              <Button
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  history.push("/prospects");
+                  handleClick();
+                }}
+                className="mt-2 sdWatchLink"
+              >
+                My Watchlist
+              </Button>
+            </Col>
+            <Col className="d-flex justify-content-center">
+              <Button
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  history.push("/stock");
+                  handleClick();
+                }}
+                className="mt-2 sdWatchLink"
+              >
+                Research Stock
+              </Button>
+            </Col>
+            <Col className="d-flex justify-content-center">
+              <Button
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  history.push("/basicOptionSearch");
+                  handleClick();
+                }}
+                className="mt-2 sdWatchLink"
+              >
+                Unusual Options
+              </Button>
+            </Col>
+          </Row>
+        );
+      } else {
+        return (
+          <Row>
+            <Col>
+              <Button
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  history.push("/prospects");
+                }}
+                className="mt-2 sdWatchLink"
+              >
+                My Watchlist
+              </Button>
+            </Col>
+          </Row>
+        );
+      }
+    }
+
     return (
       <Fragment>
         <Container className="parent">
-          <Col md={6}>
-            <h2>Discover New Companies!</h2>
-            <p>
-              Our algorithm shows you different companies. You can add the
-              company to your watchlist, or pass on the company.
-            </p>
-          </Col>
-
-          <Col md={6}>
-            <Button className="mt-2">
-              {/* <Button className='mt-3'> */}
-              <Link
-                onClick={() => window.scrollTo(0, 0)}
-                className="sdWatchLink"
-                to="/prospects"
-              >
-                My Watchlist
-              </Link>
-            </Button>
-          </Col>
-
+          <Row>
+            <Col md={6}>
+              <h2>Discover New Companies!</h2>
+              <p>
+                Our algorithm shows you different companies. You can add the
+                company to your watchlist, or pass on the company.
+              </p>
+            </Col>  
+          </Row>
+        
+          {authedButtons()}
           {loading()}
 
           <Row>
@@ -493,7 +577,10 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
             <Col>{allowSwipes()}</Col>
           </Row>
           <Row>{showErr()}</Row>
-          <Row> <ShowGuestErr /> </Row>
+          <Row>
+            {" "}
+            <ShowGuestErr />{" "}
+          </Row>
           {/* <Row> <GuestSwipeErrors /> </Row> */}
         </Container>
       </Fragment>
@@ -509,7 +596,8 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
             results: advancedSearch.results,
             sort: sort,
             currentUser: auth.currentUser,
-            userInfo: userInfo
+            userInfo: userInfo,
+            guestStock: state.guestStock
         }
     };
     
@@ -517,7 +605,9 @@ const SDScreen = ({isAuthed, currentUser, receiveUserLists, userInfo, receiveUse
         sendTicker: (ticker) => dispatch(receiveTicker(ticker)),
         resetResults: () => dispatch(receiveResults({})),
         receiveUserLists: (userLists) => dispatch(receiveUserLists(userLists)),
-        receiveUserInfo: userInfo => dispatch(receiveUserInfo(userInfo))
+        receiveUserInfo: userInfo => dispatch(receiveUserInfo(userInfo)),
+        receiveGuestStock: guestStock => dispatch(receiveGuestStock(guestStock)),
+        receiveFromSDScreen: (flag) => dispatch(receiveFromSDScreen(flag))
     })
 
 

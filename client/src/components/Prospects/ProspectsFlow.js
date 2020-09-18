@@ -15,10 +15,8 @@ import { receiveDeletingProspect } from '../../actions/deletingProspect';
 const ProspectsFlow = props => {
 
     const [inProgress, setProgress] = useState(false);
-  debugger
     // handle Axios call to server on click of "Discard"
     const handleClick = (idx) => {
-      // debugger
       if (!inProgress) {
         props.receiveDeletingProspect(true);
         setProgress(true)
@@ -27,7 +25,6 @@ const ProspectsFlow = props => {
           headers: { "Content-Type": "application/json" }
         })
         .then(res => {
-          debugger
           // set deleting loader
           props.receiveDeletingProspect(false);
   

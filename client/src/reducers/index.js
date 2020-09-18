@@ -10,6 +10,8 @@ import deletedProspectReducer from './deletedProspectReducer';
 import prospectUOReducer from './prospectUOReducer';
 import deletingProspectReducer from './deletingProspectReducer';
 import fromProspectReducer from './fromProspectReducer';
+import guestStockReducer from './guestStockReducer';
+import fromSDScreenReducer from './fromSDScreenReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -22,7 +24,9 @@ const rootReducer = combineReducers({
   prospectUO: prospectUOReducer,
   deletingProspect: deletingProspectReducer,
   fromProspect: fromProspectReducer,
-  userInfo: userInfoReducer
+  fromSDScreen: fromSDScreenReducer,
+  userInfo: userInfoReducer,
+  guestStock: guestStockReducer
 });
 
 export default rootReducer;
