@@ -21,6 +21,11 @@ export const TOS = "/tos";
 export const STOCK_DISCOVER = "/stockDiscover"
 export const SD_SCREEN = "/sdScreen";
 export const PROSPECTS = '/prospects';
-export const SHARE_LINK = '/register/:id'
+export const SHARE_LINK = '/register/:id';
+export const LONG_CALL = '/calculator/longCall';
+export const LONG_PUT = '/calculator/longPut';
+export const COVERED_CALL = '/calculator/coveredCall';
+export const NAKED_CALL = '/calculator/nakedCall';
+export const NAKED_PUT = '/calculator/nakedPut';
 
 

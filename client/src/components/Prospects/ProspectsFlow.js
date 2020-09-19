@@ -15,7 +15,6 @@ import { receiveDeletingProspect } from '../../actions/deletingProspect';
 const ProspectsFlow = props => {
 
     const [inProgress, setProgress] = useState(false);
-
     // handle Axios call to server on click of "Discard"
     const handleClick = (idx) => {
       if (!inProgress) {
@@ -50,11 +49,12 @@ const ProspectsFlow = props => {
           </thead>
           <tbody >
             {props.value.map(company => (
-              <tr key={`${company.idx}`}>
+              <tr key={`${company.index}`}>
+                {console.log(company)}
                   <td id="row" onClick={() => props.receiveProspect(company)}>{company.name}</td>
                   <td id="row" onClick={() => 
                     {
-                      handleClick(company.idx)
+                      handleClick(company.index)
                     }} 
                     >Discard</td>
               </tr>

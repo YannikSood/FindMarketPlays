@@ -18,7 +18,6 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
     const history = useHistory();
     const [fetchedProspects, setFetchedProspects] = useState();
     const [deleting, setDeleting] = useState(false);
-
     const fetching = () => {
       if (!isAuthed) {
           history.push("/login");
@@ -40,6 +39,7 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
     useEffect(() => {
       // fetch data after a prospect is deleted
       fetching();     
+      console.log(fetchedProspects)
     }, [deletedProspect])
 
     useEffect(() => {
@@ -102,31 +102,25 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
 
     return (
       <Container>
-      <Fragment>
+        <Fragment>
+          <Row className="d-flex justify-content-center mb-2">
+            <h1>My Watchlist</h1>
+          </Row>
 
-        <Row className="d-flex justify-content-center mb-2">
-          <h1>My Watchlist</h1>
-        </Row>
-        
-        <Row className="d-flex justify-content-center">
-        <Button className="mb-2">
-            <Link className="sdWatchLink" to="/sdScreen">Discover Stocks</Link>
-          </Button>
-        </Row>
+          <Row className="d-flex justify-content-center">
+            <Button onClick={() => history.push("/sdScreen")} className="mb-2 sdWatchLink">
+              Discover Stocks
+            </Button>
+          </Row>
 
-        <Row className="mb-3">
-
-          <Col id="table-col">
-            <ProspectsFlow value={fetchedProspects} />
-          </Col>
-         
-        </Row>
-        <Row>
-          <Col id="table-wrap">
-            {displayData()}
-          </Col>
-        </Row>
-        
+          <Row className="mb-3">
+            <Col id="table-col">
+              <ProspectsFlow value={fetchedProspects} />
+            </Col>
+          </Row>
+          <Row>
+            <Col id="table-wrap">{displayData()}</Col>
+          </Row>
         </Fragment>
       </Container>
     );

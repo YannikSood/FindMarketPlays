@@ -38,17 +38,17 @@ const NavigationAuth = (isAuthed, location, clearProspect) => {
     }
   }
 
-  const authedAccountDrop = () => {
-    if (isAuthed) {
-      return (
-        <MenuItem>
-          <Link onClick={() => setSB(false)} to="/profile">
-            Account
-          </Link>
-        </MenuItem>
-      );
-    }
-  }
+  // const authedAccountDrop = () => {
+  //   if (isAuthed) {
+  //     return (
+  //       <MenuItem>
+  //         <Link onClick={() => setSB(false)} to="/profile">
+  //           Account
+  //         </Link>
+  //       </MenuItem>
+  //     );
+  //   }
+  // }
 
   const whichAuthNav = () => {
     if (isAuthed) {
@@ -80,21 +80,37 @@ const NavigationAuth = (isAuthed, location, clearProspect) => {
     }
   }
 
+  const WhichAuthAccount = () => {
+    if (isAuthed) {
+      return (
+        <MenuItem
+          onClick={() => {
+            history.push("/profile");
+            setSB(false);
+          }}
+          className="signout"
+        >
+          Account
+        </MenuItem>
+      );
+    } else {
+      return null;
+    }
+  }
+
   const whichAuthDrop = () => {
     if (isAuthed) {
       return (
-        <MenuItem className="signout">
-          <Link
-            onClick={() => {
-              firebase.auth().signOut();
-              history.push("/");
-              setSB(false);
-              clearProspect();
-            }}
-            to="/"
-          >
+        <MenuItem
+          onClick={() => {
+            firebase.auth().signOut();
+            history.push("/");
+            setSB(false);
+            clearProspect();
+          }}
+          className="signout"
+        >
             Sign Out
-          </Link>
         </MenuItem>
       );
     } else {
@@ -186,7 +202,7 @@ const NavigationAuth = (isAuthed, location, clearProspect) => {
                 </Link>
               </MenuItem>
             </SubMenu>
-            <authedAccountDrop />
+            <WhichAuthAccount />
             {whichAuthDrop()}
           </Menu>
         </ProSidebar>

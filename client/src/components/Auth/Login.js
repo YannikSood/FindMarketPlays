@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { Row, Col, Container, Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import { useHistory, withRouter} from 'react-router-dom';
+import { useHistory, withRouter, Link} from 'react-router-dom';
 import * as ROUTES from '../../routes/routes';
 import firebase from '../../firebase/firebase';
 import { receiveUser } from '../../reducers/authReducer';
@@ -10,8 +10,9 @@ import LoginErrors from '../Errors/LoginErrors';
 import Axios from "axios";
 // import fetchCounter from '../../util/swipeLimit';
 import { receiveUserInfo } from '../../actions/userInfo';
+import { receiveFromSDScreen } from "../../actions/fromSDScreen";
 
-const Login = ({ isAuthed, receiveUserInfo, currentUser }) => {
+const Login = ({ isAuthed, receiveUserInfo, receiveFromSDScreen, fromSDScreen }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const [loginErrors, setErrors] = useState({});
   const dispatch = useDispatch();
@@ -24,6 +25,26 @@ const Login = ({ isAuthed, receiveUserInfo, currentUser }) => {
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
+  
+  const BackSDScreen = () => {
+    if (fromSDScreen) {
+      return (
+        // <Button onClick={() => {
+        //   history.push('/sdScreen');
+        //   receiveFromSDScreen();
+        // }}>
+        //   Back to Stock Discover
+        // </Button>
+        <Link to="/sdScreen" onClick={() => {
+          receiveFromSDScreen();
+        }}>
+          Back to Stock Discover
+        </Link>
+      )
+    } else {
+      return null;
+    }
+  }
 
   const fetchCounter = (uid) => {
     const ref = firebase.database().ref(`users/${uid}`);
@@ -72,7 +93,6 @@ const Login = ({ isAuthed, receiveUserInfo, currentUser }) => {
   return (
     <Fragment>
       <Container>
-
         <Row>
           <Col>
             <h1>Login to access the full platform.</h1>
@@ -81,13 +101,18 @@ const Login = ({ isAuthed, receiveUserInfo, currentUser }) => {
 
         <Row>
           <Col>
-          {LoginErrors(loginErrors)}
+            {LoginErrors(loginErrors)}
 
             <Form onSubmit={handleSubmit}>
-
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control name="email" type="email" placeholder="Enter email" onChange={handleChange} value={credentials.email} />
+                <Form.Control
+                  name="email"
+                  type="email"
+                  placeholder="Enter email"
+                  onChange={handleChange}
+                  value={credentials.email}
+                />
                 <Form.Text className="text-muted">
                   We&apos;ll never share your email with anyone else.
                 </Form.Text>
@@ -95,49 +120,58 @@ const Login = ({ isAuthed, receiveUserInfo, currentUser }) => {
 
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control name="password" type="password" placeholder="Password" onChange={handleChange} value={credentials.password} />
+                <Form.Control
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  onChange={handleChange}
+                  value={credentials.password}
+                />
               </Form.Group>
 
               <Button variant="primary" type="submit">
                 Submit
               </Button>
             </Form>
-
           </Col>
         </Row>
 
         <Row>
           <Col>
-
-            <Button className="mt-2" href={ROUTES.REGISTER} variant="secondary">New User? Register Here</Button>
-
+            <Button className="mt-2" href={ROUTES.REGISTER} variant="secondary">
+              New User? Register Here
+            </Button>
           </Col>
         </Row>
 
         <Row>
-          <Col>
-
-            <Button href={ROUTES.FORGOT_PASSWORD} variant="link">Forgot Password</Button>
-
+          <Col className="pl-0">
+            <Button href={ROUTES.FORGOT_PASSWORD} variant="link">
+              Forgot Password
+            </Button>
           </Col>
         </Row>
-
+        <Row>
+          <Col>
+            <BackSDScreen/>
+          </Col>
+        </Row>
       </Container>
     </Fragment>
-
   );
 };
 const mapStateToProps = (state) => {
-  const { auth } = state;
+  const { auth, fromSDScreen } = state;
 
   return {
     isAuthed: auth.isAuthed,
-    currentUser: auth.currentUser
+    fromSDScreen: fromSDScreen
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  receiveUserInfo: (userInfo) => dispatch(receiveUserInfo(userInfo))
-})
+const mapDispatchToProps = (dispatch) => ({
+  receiveUserInfo: (userInfo) => dispatch(receiveUserInfo(userInfo)),
+  receiveFromSDScreen: () => dispatch(receiveFromSDScreen(false))
+});
 // export default connect(mapStateToProps)(withRouter(Login));
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));
