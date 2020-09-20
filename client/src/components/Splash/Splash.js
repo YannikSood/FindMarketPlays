@@ -4,9 +4,16 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { useHistory, Link } from "react-router-dom";
-import logo from '../Logos/fmp-dark-transparent-bg_2.png'
-const Splash = () => {
+import logo from '../Logos/fmp-dark-transparent-bg_2.png';
+import { connect } from "react-redux";
+
+const Splash = ({isAuthed}) => {
     const history = useHistory();
+
+    const handleClick = () => {
+        history.push("/sdScreen");
+    }
+
     return (
       <Container>
         <Row>
@@ -29,7 +36,7 @@ const Splash = () => {
         </Row>
         <Row>
           <Col className="text-center">
-            <Button onClick={() => history.push("/login")} variant="light">Get Started</Button>
+            <Button onClick={() => handleClick()} variant="light">Get Started</Button>
           </Col>
         </Row>
         <Row>
@@ -41,4 +48,8 @@ const Splash = () => {
     );
 }
 
-export default Splash;
+const MSTP = state => ({
+  isAuthed: state.auth.isAuthed
+})
+
+export default connect(MSTP)(Splash);

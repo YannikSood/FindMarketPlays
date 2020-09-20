@@ -12,6 +12,10 @@
     max-width: 200px;
 }
 
+.login-link {
+    color: #1672EB;
+}
+
 .parent {
     /* position: absolute;
     top: 70px; */

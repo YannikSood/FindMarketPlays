@@ -179,7 +179,10 @@ const SDScreen = ({
                 </Button>
               </Row>
               <Row className="mt-2 d-flex justify-content-center">
-                <h5 className="tag-line">Log in to save stocks to your watchlist!</h5>
+                <h5 className="tag-line">
+                  <Link className="login-link" to="/login">Log in</Link> to save stocks to your
+                  watchlist!
+                </h5>
               </Row>
             </Container>
           );
@@ -369,10 +372,9 @@ const SDScreen = ({
         setProgress(true);  
         // check if shareable link has been shared
 
-        if (share && shareTime >= Date.now()) {
+        if (share) {
             serverCall(swipeUrl, email);
             counter = 0
-            
         } else {
             // if not or if expired
             share = false;
@@ -410,8 +412,8 @@ const SDScreen = ({
         let newUserInfo = {
             counter: counter, 
             time: time,
-            share: share,
-            shareTime: shareTime
+            share: share
+            // shareTime: shareTime
         }
         
         receiveUserInfo(newUserInfo);
@@ -424,17 +426,16 @@ const SDScreen = ({
         let counter = userInfo.counter;
         let time = userInfo.time;
         let share = userInfo.share;
-        let shareTime = userInfo.shareTime;
 
         setProgress(true);
         // checks if shareable link has been shared
-        if (share && shareTime >= Date.now()) {
+        if (share) {
             serverCall(swipeUrl, email)
-            counter = 0;
+            counter = null;
+            time = 0;
         } else {
             // if not or if expired
             share = false;
-            shareTime = 0;
             if (counter < limit && time === 0) {
               counter += 1;
               time = 0;
@@ -462,7 +463,6 @@ const SDScreen = ({
             counter: counter,
             time: time,
             share: share,
-            shareTime: shareTime
         };
            
         receiveUserInfo(newUserInfo);
