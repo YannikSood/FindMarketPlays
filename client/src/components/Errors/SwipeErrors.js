@@ -28,8 +28,7 @@ function SwipeErrors({currentUser}) {
       return (
         <Container>
           <Alert className="d-flex justify-content-center mt-3" variant="danger">
-            You've hit your swipe limit! Please come back in {timeHR} hours and {timeMIN} minutes. Or share the
-            following link to unlock unlimited swipes for 3 hours:
+            You've hit your swipe limit! Please come back in {timeHR} hours and {timeMIN} minutes. Or unlock unlimited swipes by inviting a friend with the following link:
           </Alert>
           <Alert className="d-flex justify-content-center mt-3" variant="danger">
             <span id="shared-link">{link}</span>

@@ -20,25 +20,23 @@ const Register = ({ isAuthed, receiveUserInfo }) => {
   }, [isAuthed, history]);
 
   const checkURL = () => {
+    // take id of user who is sharing the link
     const arr = window.location.href.split("/");
     const id = arr[arr.length - 1];
-    console.log(id)
+    // console.log(id)
     let ref = firebase.database().ref(`users/${id}`);
     ref.once('value')
       .then(snapshot => {
         let data = snapshot.val();
-        // set timer for unlimited swipes
+        let newData;
         // Date.now is in milliseconds, so add your hours in milliseconds
         if (!data.share) {
-          data.share = true;
-          data.shareTime = Date.now() + 3 * 60 * 60 * 1000;
-          data.time = 0;
-        } else {
-          // if someone shared multiple times and the timer is still active
-          data.shareTime = Date.now() + 3 * 60 * 60 * 1000;
-          data.time = 0;
+          newData = {
+            share: true,
+            time: 0
+          }
         }
-        ref.set(data)
+        ref.set(newData)
       })
       .catch(err => console.log(err))
 
@@ -59,7 +57,6 @@ const Register = ({ isAuthed, receiveUserInfo }) => {
           counter: 0,
           time: 0,
           share: false,
-          shareTime: 0,
         };
         let ref = firebase.database().ref(`users/${user.user.uid}`);
         ref.set(data)
