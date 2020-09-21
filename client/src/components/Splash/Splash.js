@@ -30,7 +30,7 @@ const Splash = ({isAuthed}) => {
         <Row>
           <Col className="text-center pt-2">
             <p>
-                Simple trading research is overdue
+                Simple Trading
             </p>
           </Col>
         </Row>
