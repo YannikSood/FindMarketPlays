@@ -40,6 +40,10 @@ const Login = ({ isAuthed, receiveUserInfo, receiveFromSDScreen, fromSDScreen })
         }}>
           Back to Stock Discover
         </Link>
+
+        // <Button className="mt-2" href={ROUTES.SD_SCREEN} variant="secondary">
+        //   Back to SD
+        // </Button>
       )
     } else {
       return null;
@@ -136,6 +140,13 @@ const Login = ({ isAuthed, receiveUserInfo, receiveFromSDScreen, fromSDScreen })
           </Col>
         </Row>
 
+
+        <Row>
+          <Col>
+            <BackSDScreen/>
+          </Col>
+        </Row>
+
         <Row>
           <Col>
             <Button className="mt-2" href={ROUTES.REGISTER} variant="secondary">
@@ -149,11 +160,6 @@ const Login = ({ isAuthed, receiveUserInfo, receiveFromSDScreen, fromSDScreen })
             <Button href={ROUTES.FORGOT_PASSWORD} variant="link">
               Forgot Password
             </Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <BackSDScreen/>
           </Col>
         </Row>
       </Container>
