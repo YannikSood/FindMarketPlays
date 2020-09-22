@@ -348,7 +348,7 @@ const SDScreen = ({
 
         if (counter < limit && time === 0) {
           
-          // counter += 1;
+          counter += 1;
           time = 0;
           // swipe server call
           guestServerCall(swipeurl)
@@ -535,18 +535,6 @@ const SDScreen = ({
               <Button
                 onClick={() => {
                   window.scrollTo(0, 0);
-                  history.push("/prospects");
-                  handleClick();
-                }}
-                className="sd-buttons mt-2 sdWatchLink"
-              >
-                My Watchlist
-              </Button>
-            </Col>
-            <Col className="d-flex justify-content-center">
-              <Button
-                onClick={() => {
-                  window.scrollTo(0, 0);
                   history.push("/stock");
                   handleClick();
                 }}
@@ -565,6 +553,18 @@ const SDScreen = ({
                 className="sd-buttons mt-2 sdWatchLink"
               >
                 See Unusual Options
+              </Button>
+            </Col>
+            <Col className="d-flex justify-content-center">
+              <Button
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  history.push("/prospects");
+                  handleClick();
+                }}
+                className="sd-buttons mt-2 sdWatchLink"
+              >
+                My Watchlist
               </Button>
             </Col>
           </Row>
