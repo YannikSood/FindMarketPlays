@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import { receiveFromProspect } from '../../actions/fromProspect';
 import { clearProspectUO } from '../../actions/prospectUO';
-import { clearGuestStock } from '../../actions/guestStock';
+// import { clearGuestStock } from '../../actions/guestStock';
 import { receiveFromSDScreen } from '../../actions/fromSDScreen';
 
 const OneStock = ({guestStock, prospectUO, fromProspect, receiveFromSDScreen , receiveFromProspect, fromSDScreen}) => {
@@ -36,7 +36,7 @@ const OneStock = ({guestStock, prospectUO, fromProspect, receiveFromSDScreen , r
 
   const handleBackSD = () => {
     history.push('/sdScreen');
-    receiveFromSDScreen()
+    receiveFromSDScreen();
   }
 
   const handleBackProspect = () => {
@@ -136,7 +136,7 @@ const MSTP = (state) => ({
 const MDTP = dispatch => ({
   receiveFromProspect: () => dispatch(receiveFromProspect(false)),
   clearProspectUO: () => dispatch(clearProspectUO()),
-  clearGuestStock: () => dispatch(clearGuestStock()),
+  // clearGuestStock: () => dispatch(clearGuestStock()),
   receiveFromSDScreen: () => dispatch(receiveFromSDScreen(false))
 })
 

@@ -11,6 +11,7 @@ import Axios from "axios";
 // import fetchCounter from '../../util/swipeLimit';
 import { receiveUserInfo } from '../../actions/userInfo';
 import { receiveFromSDScreen } from "../../actions/fromSDScreen";
+import '../../css/Auth.css';
 
 const Login = ({ isAuthed, receiveUserInfo, receiveFromSDScreen, fromSDScreen }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -29,17 +30,17 @@ const Login = ({ isAuthed, receiveUserInfo, receiveFromSDScreen, fromSDScreen })
   const BackSDScreen = () => {
     if (fromSDScreen) {
       return (
-        // <Button onClick={() => {
-        //   history.push('/sdScreen');
-        //   receiveFromSDScreen();
-        // }}>
-        //   Back to Stock Discover
-        // </Button>
-        <Link to="/sdScreen" onClick={() => {
+        <Button className="login-buttons mt-2" variant="danger" onClick={() => {
+          history.push('/sdScreen');
           receiveFromSDScreen();
         }}>
           Back to Stock Discover
-        </Link>
+        </Button>
+        // <Link to="/sdScreen" onClick={() => {
+        //   receiveFromSDScreen();
+        // }}>
+        //   Back to Stock Discover
+        // </Link>
 
         // <Button className="mt-2" href={ROUTES.SD_SCREEN} variant="secondary">
         //   Back to SD
@@ -133,7 +134,7 @@ const Login = ({ isAuthed, receiveUserInfo, receiveFromSDScreen, fromSDScreen })
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit">
+              <Button className="login-buttons" variant="primary" type="submit">
                 Submit
               </Button>
             </Form>
@@ -149,14 +150,14 @@ const Login = ({ isAuthed, receiveUserInfo, receiveFromSDScreen, fromSDScreen })
 
         <Row>
           <Col>
-            <Button className="mt-2" href={ROUTES.REGISTER} variant="secondary">
+            <Button className="login-buttons mt-2" href={ROUTES.REGISTER} variant="secondary">
               New User? Register Here
             </Button>
           </Col>
         </Row>
 
         <Row>
-          <Col className="pl-0">
+          <Col  >
             <Button href={ROUTES.FORGOT_PASSWORD} variant="link">
               Forgot Password
             </Button>

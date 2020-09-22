@@ -82,7 +82,7 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
                     onClick={() => handleClick(prospect)}
                     to="/stock"
                   >
-                    Lookup ${prospect.symbol} using our stock tool!
+                    Look up ${prospect.symbol} using our stock tool!
                   </Link>
                 </Row>
               </Col>
