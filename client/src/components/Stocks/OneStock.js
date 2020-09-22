@@ -49,7 +49,7 @@ const OneStock = ({guestStock, prospectUO, fromProspect, receiveFromSDScreen , r
     if (fromProspect) {
       return (
         <Button className="mb-2" onClick={() => handleBackProspect()} >
-          Back to WatchList
+          Back
         </Button>
       );
     }
@@ -59,7 +59,7 @@ const OneStock = ({guestStock, prospectUO, fromProspect, receiveFromSDScreen , r
     if (fromSDScreen) {
       return (
         <Button className="mb-2" onClick={() => handleBackSD()} >
-          Back to Stock Research
+          Back
         </Button>
       );
     }

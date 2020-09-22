@@ -18,7 +18,7 @@ import GuestSwipeErrors from '../Errors/GuestSwipeErrors';
 import { receiveGuestStock } from '../../actions/guestStock';
 import { receiveFromSDScreen } from '../../actions/fromSDScreen'
 import '../../css/SDScreen.css';
-
+import ReactGA from 'react-ga';
 //Unused
 // import { userInfo } from 'os';
 // import { current } from 'immer';
@@ -362,6 +362,10 @@ const SDScreen = ({
           time: time
         }
         storage.setItem('guestInfo', JSON.stringify(updateInfo));
+        ReactGA.event({
+          category: "Next",
+          action: "Guest pressed the next button",
+        });
       }
 
      const rightSwipe = () => {   
@@ -421,6 +425,11 @@ const SDScreen = ({
         
         receiveUserInfo(newUserInfo);
         firebase.database().ref(`users/${currentUser.id}`).set(newUserInfo);
+
+        ReactGA.event({
+          category: "Right",
+          action: "User pressed the right button",
+        });
     };
 
     const leftSwipe = () => {
@@ -470,6 +479,11 @@ const SDScreen = ({
            
         receiveUserInfo(newUserInfo);
         firebase.database().ref(`users/${currentUser.id}`).set(newUserInfo);
+
+        ReactGA.event({
+          category: "Left",
+          action: "User pressed the left button",
+        });
     };
 
     const ShowGuestErr = () => {
@@ -521,7 +535,7 @@ const SDScreen = ({
                 }}
                 className="mt-2 sdWatchLink"
               >
-                Research Stock
+                Research This Stock
               </Button>
             </Col>
             <Col className="d-flex justify-content-center">
@@ -533,7 +547,7 @@ const SDScreen = ({
                 }}
                 className="mt-2 sdWatchLink"
               >
-                Unusual Options
+                See Unusual Options
               </Button>
             </Col>
           </Row>
@@ -570,7 +584,6 @@ const SDScreen = ({
             </Col>  
           </Row>
         
-          {authedButtons()}
           {loading()}
 
           <Row>
@@ -579,6 +592,8 @@ const SDScreen = ({
           <Row>
             <Col>{allowSwipes()}</Col>
           </Row>
+
+          {authedButtons()}
           <Row>{showErr()}</Row>
           <Row>
             {" "}

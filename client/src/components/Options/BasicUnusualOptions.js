@@ -69,7 +69,7 @@ const BasicUnusualOptions = ({ isAuthed, prospectUO, fromProspect, receiveFromPr
     if (fromProspect) {
       return (
         <Button className="mb-2" onClick={() => handleBack()}>
-          Back to Watchlist
+          Back
         </Button>
       )
     }
