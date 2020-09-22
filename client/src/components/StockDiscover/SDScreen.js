@@ -171,7 +171,10 @@ const SDScreen = ({
               <Row className="mt-2 d-flex justify-content-center">
                 <Button
                   className="ml-2 mr-1"
-                  onClick={() => guestSwipe()}
+                  onClick={() => {
+                    guestSwipe();
+                    window.scrollTo(0, 0)
+                  }}
                   variant="success"
                 >
                   {" "}
