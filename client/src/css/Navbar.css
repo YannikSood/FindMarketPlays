@@ -37,7 +37,7 @@
     position: absolute;
 }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1131px) {
     .sidebar-c {
         margin-top: 5px;
         margin-left: 260px;
@@ -59,13 +59,17 @@
     }
 }
 
-/* @media only screen and (min-width: 575px) {
-    .signout {
-        display: none;
+@media only screen and (max-width: 1131px) {
+    #test {
+        display: none !important;
     }
-} */
 
-@media only screen and (min-width: 992px) {
+    .signoutB {
+        display: none !important;
+    }
+}
+
+@media only screen and (min-width: 1131px) {
     .account {
         position: absolute;
         right: 150px;

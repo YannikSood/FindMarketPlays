@@ -34,7 +34,7 @@ const Dashboard = ({isAuthed}) => {
           </Col>
         </Row>
         <Row className="d-flex align-content-center">
-          <Col md={12} lg={4}>
+          <Col className="widget-containers" md={12} lg={4}>
             <h3>
               <Badge className="widget-headers" variant="light">
                 Biggest Movers Today
@@ -43,7 +43,7 @@ const Dashboard = ({isAuthed}) => {
             <MarketDataWidget />
           </Col>
 
-          <Col md={12} lg={4}>
+          <Col className="widget-containers" md={12} lg={4}>
             <h3>
               <Badge className="widget-headers" variant="light">
                 Market Overview
@@ -52,7 +52,7 @@ const Dashboard = ({isAuthed}) => {
             <MarketOverviewWidget />
           </Col>
 
-          <Col md={12} lg={4}>
+          <Col className="widget-containers" md={12} lg={4}>
             <h3>
               <Badge className="widget-headers" variant="light">
                 Upcoming Economic Events

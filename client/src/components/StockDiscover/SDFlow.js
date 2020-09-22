@@ -14,19 +14,18 @@ const SDFlow = props => {
   let company = props.companyInfo;
   let logo = props.logo;
   // let logoChange = logo.url ? "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/IXG.png" 
-  // let logoUrl = logo.url ? logo.url : "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/IXG.png";
-  let logoUrl = logo.url;
+  let logoUrl = logo.url ? logo.url : "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/IXG.png";
+  // let logoUrl = logo.url;
   let companyDescription = company.description ? company.description : "No Company Description Available";
   let companyWebsite = company.website ? "See Website" : "";
 
-  if (
-    logoUrl ===
-    "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/IXG.png"
-  ) {
-    logoUrl = false;
-  };
+  // if (
+  //   logoUrl ===
+  //   "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/IXG.png"
+  // ) {
+  //   logoUrl = false;
+  // };
     const showImg = () => {
-      debugger
       if (logoUrl) {
         return (
           <div id="img-background">

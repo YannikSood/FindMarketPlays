@@ -9,6 +9,7 @@ import firebase from '../../firebase/firebase';
 import RegisterErrors from '../Errors/RegisterError';
 import Axios from "axios";
 import { receiveUserInfo } from "../../actions/userInfo";
+import "../../css/Auth.css";
 
 const Register = ({ isAuthed, receiveUserInfo }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -110,7 +111,7 @@ const Register = ({ isAuthed, receiveUserInfo }) => {
                   value={credentials.password}
                 />
               </Form.Group>
-              <Button variant="primary" type="submit">
+              <Button className="login-buttons" variant="primary" type="submit">
                 Submit
               </Button>
             </Form>
@@ -118,7 +119,7 @@ const Register = ({ isAuthed, receiveUserInfo }) => {
         </Row>
         <Row>
           <Col>
-            <Button className="mt-2" href={ROUTES.LOGIN} variant="secondary">
+            <Button className="login-buttons mt-2" href={ROUTES.LOGIN} variant="secondary">
               Back to Login
             </Button>
           </Col>

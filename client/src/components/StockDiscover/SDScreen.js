@@ -20,6 +20,7 @@ import { receiveFromSDScreen } from '../../actions/fromSDScreen'
 import '../../css/SDScreen.css';
 import ReactGA from 'react-ga';
 import { clearGuestStock } from '../../actions/guestStock';
+import Loader from '../Loader';
 
 //Unused
 // import { userInfo } from 'os';
@@ -155,7 +156,10 @@ const SDScreen = ({
             <Row className="mt-2 d-flex justify-content-center">
               <Button
                 className="ml-2"
-                onClick={() => leftSwipe()}
+                onClick={() => {
+                  leftSwipe();
+                  window.scrollTo(0, 0);
+                }}
                 variant="danger"
               >
                 {" "}
@@ -164,7 +168,10 @@ const SDScreen = ({
               
               <Button
                 className="ml-2 mr-1"
-                onClick={() => rightSwipe()}
+                onClick={() => {
+                  rightSwipe();
+                  window.scrollTo(0, 0);
+                }}
                 variant="success"
               >
                 {" "}
@@ -207,7 +214,8 @@ const SDScreen = ({
             <Container>
               <Row>
                 <Col>
-                  <h5>Loading data. . .</h5>
+                  <Loader />
+                  {/* <h5>Loading data. . .</h5> */}
                 </Col>
               </Row>
             </Container>

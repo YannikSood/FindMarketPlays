@@ -58,7 +58,10 @@ const OneStock = ({guestStock, prospectUO, fromProspect, receiveFromSDScreen , r
   const toSDScreen = () => {
     if (fromSDScreen) {
       return (
-        <Button className="mb-2" onClick={() => handleBackSD()} >
+        <Button
+          className="mb-2"
+          onClick={() => handleBackSD()}
+        >
           Back
         </Button>
       );
@@ -77,7 +80,7 @@ const OneStock = ({guestStock, prospectUO, fromProspect, receiveFromSDScreen , r
                 <Col>
                   <h5>ENTER STOCK TICKER</h5>
                 </Col>
-                <Col>
+                <Col className="d-flex justify-content-end">
                   {toProspect()}
                   {toSDScreen()}
                 </Col>
@@ -88,7 +91,9 @@ const OneStock = ({guestStock, prospectUO, fromProspect, receiveFromSDScreen , r
                   value={searchedValue}
                   onChange={handleInputChange}
                   placeholder="Enter Stock Ticker"
-                  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
+                  onKeyPress={(e) => {
+                    e.key === "Enter" && e.preventDefault();
+                  }}
                 />
               </Form.Group>
             </Form>

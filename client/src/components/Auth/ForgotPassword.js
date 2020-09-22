@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import { useHistory } from 'react-router-dom';
 import * as ROUTES from '../../routes/routes';
 import firebase from '../../firebase/firebase';
+import "../../css/Auth.css";
 
 const ForgotPassword = ({ isAuthed }) => {
   const [credentials, setCredentials] = useState({ email: '' });
@@ -52,7 +53,7 @@ const ForgotPassword = ({ isAuthed }) => {
                 </Form.Text>
               </Form.Group>
 
-              <Button variant="primary" type="submit">
+              <Button className="login-buttons" variant="primary" type="submit">
                 Submit
               </Button>
 
@@ -63,7 +64,7 @@ const ForgotPassword = ({ isAuthed }) => {
         <Row>
           <Col>
 
-            <Button className="mt-2" href={ROUTES.LOGIN} variant="secondary">Login Page </Button>
+            <Button className="login-buttons mt-2" href={ROUTES.LOGIN} variant="secondary">Login Page </Button>
 
           </Col>
         </Row>
@@ -71,7 +72,7 @@ const ForgotPassword = ({ isAuthed }) => {
         <Row>
           <Col>
 
-            <Button className="mt-2" href={ROUTES.REGISTER} variant="secondary">Register Page</Button>
+            <Button className="login-buttons mt-2" href={ROUTES.REGISTER} variant="secondary">Register Page</Button>
 
           </Col>
         </Row>

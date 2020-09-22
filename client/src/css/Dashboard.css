@@ -2,3 +2,9 @@
     width: 309px;
     margin-top: 15px;
 }
+
+.widget-containers {
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
