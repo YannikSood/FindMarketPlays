@@ -73,7 +73,7 @@ const SDFlow = props => {
         <Card.Text className="discover-link"><a href={company.website} target="popup">{companyWebsite}</a></Card.Text>
       </Card.Body>
     <Card.Footer>
-      <small className="text-muted">{company.sector}, {company.industry}</small>
+      <small className="text-muted">[${stock.symbol}]: {company.sector}, {company.industry}</small>
     </Card.Footer>
     </Card>
   );
