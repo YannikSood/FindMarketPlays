@@ -92,7 +92,7 @@ const BasicUnusualOptions = ({ isAuthed, prospectUO, fromProspect, receiveFromPr
                 <Col>
                   <h5>ENTER STOCK TICKER(S)</h5>
                 </Col>
-                <Col>
+                <Col className="d-flex justify-content-end">
                   {toProspect()}
                 </Col>
               </Row>

@@ -67,9 +67,9 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
             return (
               <Col className="" id="data-col">
                 <Row className="company-header p-2"><h4>{prospect.name} [${prospect.symbol}]</h4></Row>
-                <Row className="p-2">
+                <Row className=" p-2">
                   <Link
-                    className="company-links prospectUO"
+                    className="prospectUO"
                     onClick={() => handleClick(prospect)}
                     to="/basicOptionSearch"
                   >
@@ -78,11 +78,11 @@ const Prospects = ({receiveFromProspect, deletingProspect, isAuthed, prospect, c
                 </Row>
                 <Row className="p-2">
                   <Link
-                    className="company-links prospectUO"
+                    className="prospectUO"
                     onClick={() => handleClick(prospect)}
                     to="/stock"
                   >
-                    Lookup ${prospect.symbol} using our stock tool!
+                    Look up ${prospect.symbol} using our stock tool!
                   </Link>
                 </Row>
               </Col>

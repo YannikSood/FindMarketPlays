@@ -13,6 +13,7 @@ import { debounce } from '../../helpers/SearchHelper';
 import SymbolErrors from '../Errors/SymbolErrors';
 import { receiveTicker, receiveResults } from '../../actions/advancedSearch';
 import Axios from "axios";
+import '../../css/AdvancedUOSearch.css';
 
 const AdvancedUnusualOptions = ({ isAuthed, resetResults }) => {
     // Hooks
@@ -96,36 +97,40 @@ const AdvancedUnusualOptions = ({ isAuthed, resetResults }) => {
 
     const filter = () => {
         return (
-            <Container>
-                <Row className="d-flex justify-content-center">
+          <Container>
+            <Row className="d-flex justify-content-center">
+              <Col>
+                <InputGroup>
+                  <Row>
                     <Col>
-                        <InputGroup>
-                            <Row>
-                                <Col>
-                                    <InputGroup.Append>From this date</InputGroup.Append>
-                                    <Form.Control
-                                        placeholder="YYYY-MM-DD"
-                                        onChange={(e) => setBeforeDate(e.target.value)}
-                                    ></Form.Control>
-                                </Col>
-                                <Col>
-                                    <InputGroup.Append>To this date</InputGroup.Append>
-                                    <Form.Control
-                                        placeholder="YYYY-MM-DD"
-                                        onChange={(e) => setAfterDate(e.target.value)}
-                                    ></Form.Control>
-                                </Col>
-                                <Col>
-                                    <Row>
-                                        <Button onClick={() => search()}>Search</Button>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        </InputGroup>
+                      <InputGroup.Append className="date-inputs">
+                        From
+                      </InputGroup.Append>
+                      <Form.Control
+                        placeholder="YYYY-MM-DD"
+                        onChange={(e) => setBeforeDate(e.target.value)}
+                      ></Form.Control>
                     </Col>
-                </Row>
-            </Container>
-        )
+                    <Col>
+                      <InputGroup.Append className="date-inputs">
+                        To
+                      </InputGroup.Append>
+                      <Form.Control
+                        placeholder="YYYY-MM-DD"
+                        onChange={(e) => setAfterDate(e.target.value)}
+                      ></Form.Control>
+                    </Col>
+                    <Col className="d-flex justify-content-center">
+                      <Row className="d-flex align-items-end">
+                        <Button className="mt-2" onClick={() => search()}>Search</Button>
+                      </Row>
+                    </Col>
+                  </Row>
+                </InputGroup>
+              </Col>
+            </Row>
+          </Container>
+        );
     }
 
     return (

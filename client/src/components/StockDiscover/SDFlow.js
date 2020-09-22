@@ -15,8 +15,25 @@ const SDFlow = props => {
   let logo = props.logo;
   // let logoChange = logo.url ? "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/IXG.png" 
   let logoUrl = logo.url ? logo.url : "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/IXG.png";
+  // let logoUrl = logo.url;
   let companyDescription = company.description ? company.description : "No Company Description Available";
   let companyWebsite = company.website ? "See Website" : "";
+
+  // if (
+  //   logoUrl ===
+  //   "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/IXG.png"
+  // ) {
+  //   logoUrl = false;
+  // };
+    const showImg = () => {
+      if (logoUrl) {
+        return (
+          <div id="img-background">
+            <Image className="image" src={logoUrl} />
+          </div>
+        );
+      }
+    };
   
   return (
     // at 767 pixels, we change its width to 24rem
@@ -29,11 +46,10 @@ const SDFlow = props => {
     >
       <Card.Header as="h5">{stock.companyName} [${stock.symbol}] 
       
-      <div id="img-background">
-          <Image className="image" src={logoUrl} />
-        </div>
+        {showImg()}
+
         
-        </Card.Header>
+      </Card.Header>
       {/* // <Card  className="bg-dark text-white" style={{ height: '515px'}}> */}
       <Card.Body>
 

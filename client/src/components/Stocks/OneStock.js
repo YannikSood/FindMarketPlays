@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import { receiveFromProspect } from '../../actions/fromProspect';
 import { clearProspectUO } from '../../actions/prospectUO';
-import { clearGuestStock } from '../../actions/guestStock';
+// import { clearGuestStock } from '../../actions/guestStock';
 import { receiveFromSDScreen } from '../../actions/fromSDScreen';
 
 const OneStock = ({guestStock, prospectUO, fromProspect, receiveFromSDScreen , receiveFromProspect, fromSDScreen}) => {
@@ -36,7 +36,7 @@ const OneStock = ({guestStock, prospectUO, fromProspect, receiveFromSDScreen , r
 
   const handleBackSD = () => {
     history.push('/sdScreen');
-    receiveFromSDScreen()
+    receiveFromSDScreen();
   }
 
   const handleBackProspect = () => {
@@ -58,7 +58,10 @@ const OneStock = ({guestStock, prospectUO, fromProspect, receiveFromSDScreen , r
   const toSDScreen = () => {
     if (fromSDScreen) {
       return (
-        <Button className="mb-2" onClick={() => handleBackSD()} >
+        <Button
+          className="mb-2"
+          onClick={() => handleBackSD()}
+        >
           Back
         </Button>
       );
@@ -77,7 +80,7 @@ const OneStock = ({guestStock, prospectUO, fromProspect, receiveFromSDScreen , r
                 <Col>
                   <h5>ENTER STOCK TICKER</h5>
                 </Col>
-                <Col>
+                <Col className="d-flex justify-content-end">
                   {toProspect()}
                   {toSDScreen()}
                 </Col>
@@ -88,7 +91,9 @@ const OneStock = ({guestStock, prospectUO, fromProspect, receiveFromSDScreen , r
                   value={searchedValue}
                   onChange={handleInputChange}
                   placeholder="Enter Stock Ticker"
-                  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
+                  onKeyPress={(e) => {
+                    e.key === "Enter" && e.preventDefault();
+                  }}
                 />
               </Form.Group>
             </Form>
@@ -136,7 +141,7 @@ const MSTP = (state) => ({
 const MDTP = dispatch => ({
   receiveFromProspect: () => dispatch(receiveFromProspect(false)),
   clearProspectUO: () => dispatch(clearProspectUO()),
-  clearGuestStock: () => dispatch(clearGuestStock()),
+  // clearGuestStock: () => dispatch(clearGuestStock()),
   receiveFromSDScreen: () => dispatch(receiveFromSDScreen(false))
 })
 

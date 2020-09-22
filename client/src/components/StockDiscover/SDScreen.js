@@ -19,6 +19,9 @@ import { receiveGuestStock } from '../../actions/guestStock';
 import { receiveFromSDScreen } from '../../actions/fromSDScreen'
 import '../../css/SDScreen.css';
 import ReactGA from 'react-ga';
+import { clearGuestStock } from '../../actions/guestStock';
+import Loader from '../Loader';
+
 //Unused
 // import { userInfo } from 'os';
 // import { current } from 'immer';
@@ -38,7 +41,8 @@ const SDScreen = ({
   receiveUserInfo, 
   receiveGuestStock,
   receiveFromSDScreen,
-  guestStock
+  guestStock,
+  clearGuestStock
 }) => {
     const [loader, setLoader] = useState(true);
     const [ticker, setTicker] = useState();
@@ -50,10 +54,15 @@ const SDScreen = ({
     const [companyLogo, setCompanyLogo] = useState({});
     const [inProgress, setProgress] = useState(false);
     const [guest, setGuest] = useState();
+    const [stockState, setStockState] = useState(guestStock);
     const waitTime = 3 * 60 * 60 * 1000;
     let limit = 40;
     
     const history = useHistory();
+
+    useEffect(() => {
+      clearGuestStock();
+    }, stockState)
 
     useEffect(() => {
         if (!isAuthed) {
@@ -147,7 +156,10 @@ const SDScreen = ({
             <Row className="mt-2 d-flex justify-content-center">
               <Button
                 className="ml-2"
-                onClick={() => leftSwipe()}
+                onClick={() => {
+                  leftSwipe();
+                  window.scrollTo(0, 0);
+                }}
                 variant="danger"
               >
                 {" "}
@@ -156,7 +168,10 @@ const SDScreen = ({
               
               <Button
                 className="ml-2 mr-1"
-                onClick={() => rightSwipe()}
+                onClick={() => {
+                  rightSwipe();
+                  window.scrollTo(0, 0);
+                }}
                 variant="success"
               >
                 {" "}
@@ -171,7 +186,10 @@ const SDScreen = ({
               <Row className="mt-2 d-flex justify-content-center">
                 <Button
                   className="ml-2 mr-1"
-                  onClick={() => guestSwipe()}
+                  onClick={() => {
+                    guestSwipe();
+                    window.scrollTo(0, 0)
+                  }}
                   variant="success"
                 >
                   {" "}
@@ -196,7 +214,8 @@ const SDScreen = ({
             <Container>
               <Row>
                 <Col>
-                  <h5>Loading data. . .</h5>
+                  <Loader />
+                  {/* <h5>Loading data. . .</h5> */}
                 </Col>
               </Row>
             </Container>
@@ -325,10 +344,11 @@ const SDScreen = ({
         setProgress(true);
         let counter = guest.counter;
         let time = guest.time;
-        
+        setStockState({});
+
         if (counter < limit && time === 0) {
           
-          counter += 1;
+          // counter += 1;
           time = 0;
           // swipe server call
           guestServerCall(swipeurl)
@@ -518,7 +538,7 @@ const SDScreen = ({
                   history.push("/prospects");
                   handleClick();
                 }}
-                className="mt-2 sdWatchLink"
+                className="sd-buttons mt-2 sdWatchLink"
               >
                 My Watchlist
               </Button>
@@ -530,7 +550,7 @@ const SDScreen = ({
                   history.push("/stock");
                   handleClick();
                 }}
-                className="mt-2 sdWatchLink"
+                className="sd-buttons mt-2 sdWatchLink"
               >
                 Research This Stock
               </Button>
@@ -542,7 +562,7 @@ const SDScreen = ({
                   history.push("/basicOptionSearch");
                   handleClick();
                 }}
-                className="mt-2 sdWatchLink"
+                className="sd-buttons mt-2 sdWatchLink"
               >
                 See Unusual Options
               </Button>
@@ -552,7 +572,7 @@ const SDScreen = ({
       } else {
         return (
           <Row>
-            <Col>
+            <Col className="d-flex justify-content-center">
               <Button
                 onClick={() => {
                   window.scrollTo(0, 0);
@@ -622,7 +642,8 @@ const SDScreen = ({
         receiveUserLists: (userLists) => dispatch(receiveUserLists(userLists)),
         receiveUserInfo: userInfo => dispatch(receiveUserInfo(userInfo)),
         receiveGuestStock: guestStock => dispatch(receiveGuestStock(guestStock)),
-        receiveFromSDScreen: (flag) => dispatch(receiveFromSDScreen(flag))
+        receiveFromSDScreen: (flag) => dispatch(receiveFromSDScreen(flag)),
+        clearGuestStock: () => dispatch(clearGuestStock())
     })
 
 

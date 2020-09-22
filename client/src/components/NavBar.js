@@ -54,7 +54,7 @@ const NavigationAuth = (isAuthed, location, clearProspect) => {
     if (isAuthed) {
       return (
         <Button
-          className="d-none d-lg-flex"
+          className="signoutB"
           variant="primary"
           onClick={() => {
             firebase.auth().signOut();
@@ -218,98 +218,97 @@ const NavigationAuth = (isAuthed, location, clearProspect) => {
     }
   }
   return (
-      <Container className="navbarContainer m-0 p-0"> 
-          <Navbar
-            className="justify-content-center navbar"
-            fixed="top"
+    <Container className="navbarContainer m-0 p-0">
+      <Navbar className=" test justify-content-center navbar" fixed="top">
+        <Navbar.Brand href={"/"}>
+          <img
+            src={logo}
+            width="240"
+            height="50"
+            className="d-inline-block align-top"
+            alt="React Bootstrap logo"
+          />
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="test responsive-navbar-nav">
+          <Nav
+            id="test"
+            className="d-flex justify-content-right"
+            activeKey={location.pathname}
           >
-            <Navbar.Brand href={"/"}>
-              <img
-              src={logo}
-              width="240"
-              height="50"
-              className="d-inline-block align-top"
-              alt="React Bootstrap logo"
-            /></Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav" >
-            <Nav className="d-flex justify-content-right" activeKey={location.pathname}>
-                <DropdownButton
-                    className="ml-2 d-none d-lg-flex"
-                    title="Discover Companies"
-                    variant="warning"
-                  >
-                <Dropdown.Item href={`${ROUTES.SD_SCREEN}`}>
-                  Discover Companies
-                </Dropdown.Item>
-                <Dropdown.Divider />
-                  <Dropdown.Item href={`${ROUTES.PROSPECTS}`}>
-                    My Watchlist
-                  </Dropdown.Item>
-                </DropdownButton>{' '} 
-
-                <DropdownButton
-                  drop={"down"}
-                  className="ml-2 d-none d-lg-flex"
-                  title="Market Hub"
-                  variant="light"
-                >
-                  <Dropdown.Item href={`${ROUTES.DASHBOARD}`}>
-                    Market Overview
-                  </Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
-                    Single Stock Lookup
-                  </Dropdown.Item>
-                </DropdownButton>
-
-                <DropdownButton
-                  className="ml-2 d-none d-lg-flex"
-                  title="Research Hub"
-                  variant="info"
-                >
-                  <Dropdown.Item href={`${ROUTES.DD}`}>
-                    Reddit Research
-                  </Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item href={`${ROUTES.NEWS_FEED}`}>
-                    News Search
-                  </Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item href={`${ROUTES.NOTES}`}>
-                    My Research
-                  </Dropdown.Item>
-                </DropdownButton>
-
-              <DropdownButton
-                className="ml-2 d-none d-lg-flex"
-                title="Unusual Options"
-                variant="success"
-              >
-                            <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
-              Search
-            </Dropdown.Item>
-            <Dropdown.Divider />
+            <DropdownButton
+              className="ml-2 d-none d-lg-flex"
+              title="Discover Companies"
+              variant="warning"
+            >
+              <Dropdown.Item href={`${ROUTES.SD_SCREEN}`}>
+                Discover Companies
+              </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item href={`${ROUTES.PROSPECTS}`}>
+                My Watchlist
+              </Dropdown.Item>
+            </DropdownButton>{" "}
+            <DropdownButton
+              drop={"down"}
+              className="ml-2 d-none d-lg-flex"
+              title="Market Hub"
+              variant="light"
+            >
+              <Dropdown.Item href={`${ROUTES.DASHBOARD}`}>
+                Market Overview
+              </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item href={`${ROUTES.SINGLE_STOCK_RESEARCH}`}>
+                Single Stock Lookup
+              </Dropdown.Item>
+            </DropdownButton>
+            <DropdownButton
+              className="ml-2 d-none d-lg-flex"
+              title="Research Hub"
+              variant="info"
+            >
+              <Dropdown.Item href={`${ROUTES.DD}`}>
+                Reddit Research
+              </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item href={`${ROUTES.NEWS_FEED}`}>
+                News Search
+              </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item href={`${ROUTES.NOTES}`}>
+                My Research
+              </Dropdown.Item>
+            </DropdownButton>
+            <DropdownButton
+              className="ml-2 d-none d-lg-flex"
+              title="Unusual Options"
+              variant="success"
+            >
+              <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS}`}>
+                Search
+              </Dropdown.Item>
+              <Dropdown.Divider />
               <Dropdown.Item href={`${ROUTES.BASIC_UNUSUAL_OPTIONS_FEED}`}>
                 Feed
               </Dropdown.Item>
-            <Dropdown.Divider />  
+              <Dropdown.Divider />
               <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS}`}>
                 Advanced Search
               </Dropdown.Item>
-            <Dropdown.Divider />
+              <Dropdown.Divider />
               <Dropdown.Item href={`${ROUTES.ADVANCED_UNUSUAL_OPTIONS_FEED}`}>
                 Advanced Feed
               </Dropdown.Item>
-            </DropdownButton>{' '} 
+            </DropdownButton>{" "}
             {authedAccountNav()}
-        </Nav>
-      </Navbar.Collapse>
-      {whichAuthNav()}
-    </Navbar>
+          </Nav>
+        </Navbar.Collapse>
+        {whichAuthNav()}
+      </Navbar>
       {showSB()}
-  </Container>
-  )
+    </Container>
+  );
 };
 
 // const NavigationNonAuth = (location) => {
