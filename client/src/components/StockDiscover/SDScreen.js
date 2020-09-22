@@ -530,7 +530,7 @@ const SDScreen = ({
                   history.push("/prospects");
                   handleClick();
                 }}
-                className="mt-2 sdWatchLink"
+                className="sd-buttons mt-2 sdWatchLink"
               >
                 My Watchlist
               </Button>
@@ -542,7 +542,7 @@ const SDScreen = ({
                   history.push("/stock");
                   handleClick();
                 }}
-                className="mt-2 sdWatchLink"
+                className="sd-buttons mt-2 sdWatchLink"
               >
                 Research This Stock
               </Button>
@@ -554,7 +554,7 @@ const SDScreen = ({
                   history.push("/basicOptionSearch");
                   handleClick();
                 }}
-                className="mt-2 sdWatchLink"
+                className="sd-buttons mt-2 sdWatchLink"
               >
                 See Unusual Options
               </Button>
