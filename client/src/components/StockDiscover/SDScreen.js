@@ -391,7 +391,6 @@ const SDScreen = ({
         let counter = userInfo.counter;
         let time = userInfo.time;
         let share = userInfo.share;
-        let shareTime = userInfo.shareTime;
 
         setProgress(true);  
         // check if shareable link has been shared
@@ -402,7 +401,11 @@ const SDScreen = ({
         } else {
             // if not or if expired
             share = false;
-            shareTime = 0;
+
+            if (time != 0 && time - Date.now() < 0) {
+              time = 0;
+              counter = 0;
+            };
             
             if (counter < limit && time === 0) {
                 counter += 1;
@@ -465,6 +468,12 @@ const SDScreen = ({
         } else {
             // if not or if expired
             share = false;
+
+            if (time != 0 && time - Date.now() < 0) {
+              time = 0;
+              counter = 0;
+            };
+
             if (counter < limit && time === 0) {
               counter += 1;
               time = 0;

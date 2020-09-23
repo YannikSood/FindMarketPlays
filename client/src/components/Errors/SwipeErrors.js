@@ -19,6 +19,8 @@ function SwipeErrors({currentUser}) {
       let remainingTimeMS = nextTime - currentTime;
       let remainingTimeHRS = Math.floor(remainingTimeMS / 1000 / 60 / 60);
       let remainingTimeMIN = Math.floor((remainingTimeMS / 1000 / 60) % 60);
+      if (nextTime != 0 && remainingTimeMS < 0) remainingTimeMS = 0;
+
       setTimeHR(remainingTimeHRS);
       setTimeMIN(remainingTimeMIN);
     })
